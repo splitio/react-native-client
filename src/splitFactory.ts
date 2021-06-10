@@ -7,8 +7,8 @@ import { merge } from '@splitsoftware/splitio-commons/src/utils/lang';
 /**
  * SplitFactory for React Native.
  *
- * @param config configuration object used to instantiates the SDK
- * @param customModules optional object of SDK modules to overwrite default ones. Use with caution since, unlike `config`, this param is not validated.
+ * @param config         Configuration object used to instantiates the SDK
+ * @param customModules  Optional object of SDK modules to overwrite default ones. Use with caution since, unlike `config`, this param is not validated.
  * @throws Will throw an error if the provided config is invalid.
  */
 export function SplitFactory(
