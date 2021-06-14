@@ -1,0 +1,17 @@
+language: node_js
+
+node_js:
+  - "lts/*"
+
+cache: npm
+
+git:
+  depth: false
+
+before_script:
+  - npm install
+
+script:
+  - npm run check
+  - npm run test
+  - npm run build
