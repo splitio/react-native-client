@@ -16,13 +16,4 @@ script:
   - npm run test
   - npm run build
   - curl -u${ARTIFACTORY_USER}:${ARTIFACTORY_PASSWORD} https://splitio.jfrog.io/artifactory/api/npm/auth >> ~/.npmrc
-
-jobs:
-  include:
-    - stage: publish
-      script:
-        - npm publish --tag rc
-
-stages:
-  - name: publish
-    if: (branch = travis_config) AND NOT (type = pull_request)
+  - npm publish --tag rc
