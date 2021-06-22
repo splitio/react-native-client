@@ -16,4 +16,4 @@ script:
   - npm run test
   - npm run build
   # REMOVE WHEN PUBLISHING TO NPM REGISTRY
-  - if [[ $TRAVIS_BRANCH == "travis_config" && $TRAVIS_EVENT_TYPE = "pull_request" ]]; then echo "publishing" ; curl -u${ARTIFACTORY_USER}:${ARTIFACTORY_PASSWORD} https://splitio.jfrog.io/artifactory/api/npm/auth >> ~/.npmrc ; npm publish --tag rc ; fi
+  - if [[ $TRAVIS_BRANCH == "travis_config" && $TRAVIS_EVENT_TYPE != "pull_request" ]]; then echo "publishing" ; curl -u${ARTIFACTORY_USER}:${ARTIFACTORY_PASSWORD} https://splitio.jfrog.io/artifactory/api/npm/auth >> ~/.npmrc ; npm publish --tag rc ; else echo "no publishing" ; fi
