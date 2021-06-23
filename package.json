@@ -1,11 +1,11 @@
 {
   "name": "splitio-react-native-private",
-  "version": "0.0.1-beta.0",
+  "version": "0.0.1-beta.1",
   "description": "Split SDK for React Native",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "types": "types/index.d.ts",
-  "react-native": "src/index",
+  "react-native": "lib/module/index",
   "source": "src/index",
   "files": [
     "src",
