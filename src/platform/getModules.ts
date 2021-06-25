@@ -13,11 +13,11 @@ import type { ISettingsInternal } from '@splitsoftware/splitio-commons/src/utils
 import type { ISdkFactoryParams } from '@splitsoftware/splitio-commons/src/sdkFactory/types';
 
 const rnPlatform = {
-  // No `getFetch` provided. RN provides global fetch.
-
-  // @TODO provide `getEventSource` implementation
-
+  getFetch() {
+    return fetch;
+  },
   EventEmitter,
+  // @TODO provide `getEventSource` implementation
 };
 
 const syncManagerOnlineCSFactory = syncManagerOnlineFactory(
