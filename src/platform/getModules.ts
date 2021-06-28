@@ -13,6 +13,7 @@ import type { ISettingsInternal } from '@splitsoftware/splitio-commons/src/utils
 import type { ISdkFactoryParams } from '@splitsoftware/splitio-commons/src/sdkFactory/types';
 
 const rnPlatform = {
+  // Return global fetch which is always available in RN runtime
   getFetch() {
     return fetch;
   },
