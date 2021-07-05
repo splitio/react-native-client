@@ -12,6 +12,8 @@ import { shouldAddPt } from '@splitsoftware/splitio-commons/src/trackers/impress
 import { ISettingsInternal } from '@splitsoftware/splitio-commons/src/utils/settingsValidation/types';
 import { ISdkFactoryParams } from '@splitsoftware/splitio-commons/src/sdkFactory/types';
 
+import { RNSignalListener } from './RNSignalListener';
+
 const rnPlatform = {
   // Return global fetch which is always available in RN runtime
   getFetch() {
@@ -41,8 +43,8 @@ export function getModules(settings: ISettingsInternal): ISdkFactoryParams {
     sdkManagerFactory,
 
     sdkClientMethodFactory: sdkClientMethodCSFactory,
-    // @TODO provide RN signal listener
-    SignalListener: undefined,
+
+    SignalListener: settings.mode === 'localhost' ? undefined : (RNSignalListener as ISdkFactoryParams['SignalListener']),
     // @ts-ignore
     impressionListener: settings.impressionListener,
 
