@@ -12,13 +12,15 @@ import { shouldAddPt } from '@splitsoftware/splitio-commons/src/trackers/impress
 import { ISettingsInternal } from '@splitsoftware/splitio-commons/src/utils/settingsValidation/types';
 import { ISdkFactoryParams } from '@splitsoftware/splitio-commons/src/sdkFactory/types';
 
+import { getEventSource } from './getEventSource';
+
 const rnPlatform = {
   // Return global fetch which is always available in RN runtime
   getFetch() {
     return fetch;
   },
   EventEmitter,
-  // @TODO provide `getEventSource` implementation
+  getEventSource,
 };
 
 const syncManagerOnlineCSFactory = syncManagerOnlineFactory(pollingManagerCSFactory, pushManagerFactory);
