@@ -1,6 +1,4 @@
 import { ISignalListener } from '@splitsoftware/splitio-commons/src/listeners/types';
-import { ISplitApi } from '@splitsoftware/splitio-commons/src/services/types';
-import { IStorageSync } from '@splitsoftware/splitio-commons/src/storages/types';
 import { ISyncManager } from '@splitsoftware/splitio-commons/src/sync/types';
 import { ISettings } from '@splitsoftware/splitio-commons/src/types';
 import { AppState, AppStateStatus } from 'react-native';
@@ -9,30 +7,16 @@ type Transition = undefined | 'TO_FOREGROUND' | 'TO_BACKGROUND';
 const TO_FOREGROUND = 'TO_FOREGROUND';
 const TO_BACKGROUND = 'TO_BACKGROUND';
 
-const BACKGROUND_STOP_DELAY_MILLIS = 60000; // 1 minute
+// const BACKGROUND_STOP_DELAY_MILLIS = 60000; // 1 minute
 const FOREGROUND_MATCHER = /active/;
 
-export interface IBackgroundTimer {
-  setTimeout(callback: (...args: any[]) => void, timeout: number): number;
-  clearTimeout(timeoutId: number): void;
-}
-
 /**
- * In mobile, unlike browser, we cannot listen
+ * In ReactNative, we listen app state (foreground/background) to pause/resume synchronization.
  */
 export class RNSignalListener implements ISignalListener {
-  private _timeoutId: number | undefined;
   private _lastTransition: Transition | undefined;
 
-  constructor(
-    private syncManager: ISyncManager,
-    private settings: ISettings & { flushDataOnBackground?: boolean },
-    storage: IStorageSync,
-    serviceApi: ISplitApi,
-    private platform: {
-      backgroundTimer?: IBackgroundTimer;
-    } = {}
-  ) {}
+  constructor(private syncManager: ISyncManager, private settings: ISettings & { flushDataOnBackground?: boolean }) {}
 
   private _getTransition(nextAppState: AppStateStatus): Transition {
     // 'inactive' iOS state and 'active' state are considered foreground states.
@@ -55,27 +39,21 @@ export class RNSignalListener implements ISignalListener {
 
     switch (action) {
       case TO_FOREGROUND:
-        // This branch is called when app transition to foreground.
-        // Here, synchronization is started or resumed.
+        // This branch is called when app transition to foreground or it is launched,
+        // in which case calling pushManager.start has no effect (it has been already started).
+        // Here, synchronization is resumed.
 
-        if (this.platform.backgroundTimer && this._timeoutId) {
-          this.platform.backgroundTimer.clearTimeout(this._timeoutId);
-        }
-        this.syncManager.start();
+        if (this.syncManager.pushManager) this.syncManager.pushManager.start();
         break;
       case TO_BACKGROUND:
         // This branch is called when the app transition to background.
-        // Here, synchronization is stopped to reduce battery consumption, particularly because of streaming connections
-        // in Android: we need to close it. In iOS, connections are automatically closed/resumed by the OS.
-        // JS timers callbacks are not executed in the background and thus polling mode doesn't work.
+        // Here, pushManager is stopped to close streaming connections for Android.
+        // In iOS, connections are automatically closed/resumed by the OS.
+        // Polling mode is paused during background, since JS timers callbacks are executed only
+        // when the app is in the foreground. Therefore, stopping syncManager is not necessary.
         // Other features like Fetch, AsyncStorage, AppState and NetInfo listeners, can be used.
 
-        // If background timer is available, the syncManager is stopped with a delay.
-        if (this.platform.backgroundTimer) {
-          this._timeoutId = this.platform.backgroundTimer.setTimeout(this.syncManager.stop, BACKGROUND_STOP_DELAY_MILLIS);
-        } else {
-          this.syncManager.stop();
-        }
+        if (this.syncManager.pushManager) this.syncManager.pushManager.stop();
 
         // We cannot listen when the app is evicted by the OS or the user, but it always transitions to background before that.
         // So we should not flush events and impressions in the background, except that they cannot be stored in a persistent storage.
@@ -89,8 +67,8 @@ export class RNSignalListener implements ISignalListener {
    * Called when SplitFactory is initialized.
    */
   start() {
-    // Cannot start the syncManager without checking the app state, because the SDK
-    // might be initiated in the background and should not connect to streaming.
+    // Checking currentState in the rare case that the SDK is instantiated in the background, where streaming should not connect.
+    // The SDK should be instantiated when React Native JS context is initiated or the root componentDidMount method is called, where the app is in the foreground.
     this._handleAppStateChange(AppState.currentState);
     AppState.addEventListener('change', this._handleAppStateChange);
   }
