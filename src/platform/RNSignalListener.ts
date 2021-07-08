@@ -1,4 +1,5 @@
 import { ISignalListener } from '@splitsoftware/splitio-commons/src/listeners/types';
+import { CLEANUP_REGISTERING, CLEANUP_DEREGISTERING } from '@splitsoftware/splitio-commons/src/logger/constants';
 import { ISyncManager } from '@splitsoftware/splitio-commons/src/sync/types';
 import { ISettings } from '@splitsoftware/splitio-commons/src/types';
 import { AppState, AppStateStatus } from 'react-native';
@@ -9,6 +10,8 @@ const TO_BACKGROUND = 'TO_BACKGROUND';
 
 // const BACKGROUND_STOP_DELAY_MILLIS = 60000; // 1 minute
 const FOREGROUND_MATCHER = /active/;
+
+const EVENT_NAME = 'for AppState change events.';
 
 /**
  * In ReactNative, we listen app state (foreground/background) to pause/resume synchronization.
@@ -42,8 +45,9 @@ export class RNSignalListener implements ISignalListener {
         // This branch is called when app transition to foreground or it is launched,
         // in which case calling pushManager.start has no effect (it has been already started).
         // Here, synchronization is resumed.
-
         if (this.syncManager.pushManager) this.syncManager.pushManager.start();
+
+        this.settings.log.debug(`App transition to foreground ${this.syncManager.pushManager ? ': attempting to resume streaming' : ''}`);
         break;
       case TO_BACKGROUND:
         // This branch is called when the app transition to background.
@@ -52,12 +56,17 @@ export class RNSignalListener implements ISignalListener {
         // Polling mode is paused during background, since JS timers callbacks are executed only
         // when the app is in the foreground. Therefore, stopping syncManager is not necessary.
         // Other features like Fetch, AsyncStorage, AppState and NetInfo listeners, can be used.
-
         if (this.syncManager.pushManager) this.syncManager.pushManager.stop();
 
         // We cannot listen when the app is evicted by the OS or the user, but it always transitions to background before that.
         // So we should not flush events and impressions in the background, except that they cannot be stored in a persistent storage.
         if (this.settings.flushDataOnBackground) this.syncManager.flush();
+
+        this.settings.log.debug(
+          `App transition to background ${this.syncManager.pushManager ? ': pausing streaming' : ''}${
+            this.settings.flushDataOnBackground ? ', flushing events and impressions' : ''
+          }`
+        );
         break;
     }
   }
@@ -67,6 +76,7 @@ export class RNSignalListener implements ISignalListener {
    * Called when SplitFactory is initialized.
    */
   start() {
+    this.settings.log.debug(CLEANUP_REGISTERING, [EVENT_NAME]);
     // Checking currentState in the rare case that the SDK is instantiated in the background, where streaming should not connect.
     // The SDK should be instantiated when React Native JS context is initiated or the root componentDidMount method is called, where the app is in the foreground.
     this._handleAppStateChange(AppState.currentState);
@@ -78,6 +88,7 @@ export class RNSignalListener implements ISignalListener {
    * Called when client is destroyed.
    */
   stop() {
+    this.settings.log.debug(CLEANUP_DEREGISTERING, [EVENT_NAME]);
     AppState.removeEventListener('change', this._handleAppStateChange);
   }
 }
