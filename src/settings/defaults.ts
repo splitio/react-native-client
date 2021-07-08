@@ -1,4 +1,4 @@
-const packageVersion = '0.0.1-beta.2';
+const packageVersion = '0.0.1-beta.3';
 
 export const defaults = {
   startup: {
