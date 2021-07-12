@@ -1,3 +1,4 @@
+// @ts-nocheck
 'use strict';
 
 /**
@@ -8,11 +9,13 @@
  *
  * In case of "message", the `data` property contains the incoming data.
  */
-export class EventSourceEvent {
-  type: string;
+class EventSourceEvent {
+  // type: string;
 
-  constructor(type: any, eventInitDict: any) {
+  constructor(type, eventInitDict) {
     this.type = type.toString();
     Object.assign(this, eventInitDict);
   }
 }
+
+module.exports = EventSourceEvent;

@@ -1,6 +1,6 @@
 {
   "name": "splitio-react-native-private",
-  "version": "0.0.1-beta.3",
+  "version": "0.0.1-beta.4",
   "description": "Split SDK for React Native",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -13,6 +13,7 @@
     "types",
     "android",
     "ios",
+    "Split.podspec",
     "!android/build",
     "!ios/build",
     "!**/__tests__",

@@ -1,3 +1,4 @@
+// @ts-nocheck
 'use strict';
 
 // Package included by react-native
@@ -6,20 +7,20 @@ var EventTarget = require('event-target-shim');
 /**
  * Shared base for platform-specific EventSource implementations.
  */
-export class EventSourceBase extends EventTarget {
-  CONNECTING: number;
-  OPEN: number;
-  CLOSED: number;
+class EventSourceBase extends EventTarget {
+  // CONNECTING: number;
+  // OPEN: number;
+  // CLOSED: number;
 
-  onerror?: Function;
-  onmessage?: Function;
-  onopen?: Function;
+  // onerror?: Function;
+  // onmessage?: Function;
+  // onopen?: Function;
 
-  binaryType?: string;
-  readyState: number;
-  url?: string;
+  // binaryType?: string;
+  // readyState: number;
+  // url?: string;
 
-  constructor(url: string) {
+  constructor(url) {
     super();
     this.CONNECTING = 0;
     this.OPEN = 1;
@@ -27,11 +28,10 @@ export class EventSourceBase extends EventTarget {
 
     this.url = url;
     this.readyState = this.CONNECTING;
-    // @ts-ignore
     this.connectToSourceImpl(url);
   }
 
-  close(): void {
+  close() {
     if (this.readyState === this.CLOSED) {
       return;
     }
@@ -43,15 +43,15 @@ export class EventSourceBase extends EventTarget {
     this.closeConnectionImpl();
   }
 
-  closeConnectionImpl(): void {
+  closeConnectionImpl() {
     throw new Error('Subclass must define closeConnectionImpl method');
   }
 
-  connectToSourceImpl(): void {
+  connectToSourceImpl() {
     throw new Error('Subclass must define connectToSourceImpl method');
   }
 
-  cancelConnectionImpl(): void {
+  cancelConnectionImpl() {
     throw new Error('Subclass must define cancelConnectionImpl method');
   }
 }
@@ -59,3 +59,5 @@ export class EventSourceBase extends EventTarget {
 EventSourceBase.CONNECTING = 0;
 EventSourceBase.OPEN = 1;
 EventSourceBase.CLOSED = 3;
+
+module.exports = EventSourceBase;

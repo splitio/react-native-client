@@ -34,10 +34,10 @@ var EventSourceId = 0;
  * See https://developer.mozilla.org/en-US/docs/Web/API/EventSource
  */
 class EventSource extends EventSourceBase {
-  _sourceId: number;
-  _subs: any;
+  // _sourceId: number;
+  // _subs: any;
 
-  connectToSourceImpl(url: string): void {
+  connectToSourceImpl(url) {
     this._sourceId = EventSourceId++;
 
     RNEventSource.connect(url, this._sourceId);
@@ -45,24 +45,24 @@ class EventSource extends EventSourceBase {
     this._registerEvents(this._sourceId);
   }
 
-  closeConnectionImpl(): void {
+  closeConnectionImpl() {
     this._closeEventSource(this._sourceId);
   }
 
-  cancelConnectionImpl(): void {
+  cancelConnectionImpl() {
     this._closeEventSource(this._sourceId);
   }
 
-  _closeEventSource(id: number): void {
+  _closeEventSource(id) {
     RNEventSource.close(id);
   }
 
-  _unregisterEvents(): void {
+  _unregisterEvents() {
     this._subs.forEach((e) => e.remove());
     this._subs = [];
   }
 
-  _registerEvents(id: number): void {
+  _registerEvents(id) {
     this._subs = [
       DeviceEventEmitter.addListener('eventsourceEvent', (ev) => {
         if (ev.id !== id) {
