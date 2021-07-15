@@ -1,6 +1,6 @@
 {
   "name": "splitio-react-native-private",
-  "version": "0.0.1-beta.2",
+  "version": "0.0.1-beta.4",
   "description": "Split SDK for React Native",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -13,6 +13,7 @@
     "types",
     "android",
     "ios",
+    "Split.podspec",
     "!android/build",
     "!ios/build",
     "!**/__tests__",
@@ -51,7 +52,7 @@
     "registry": "https://splitio.jfrog.io/artifactory/api/npm/npm-split/"
   },
   "dependencies": {
-    "@splitsoftware/splitio-commons": "0.1.1-canary.7"
+    "@splitsoftware/splitio-commons": "0.1.1-canary.10"
   },
   "devDependencies": {
     "@react-native-community/eslint-config": "^2.0.0",
