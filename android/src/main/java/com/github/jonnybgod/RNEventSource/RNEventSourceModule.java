@@ -65,7 +65,7 @@ public class RNEventSourceModule extends ReactContextBaseJavaModule {
         public void run() {
           try {
             SseEventReader reader = source.getEventReader();
-     
+
             SseEventType type = null;
             while ((type = reader.next()) != SseEventType.EOS) {
               switch (type) {
@@ -90,7 +90,7 @@ public class RNEventSourceModule extends ReactContextBaseJavaModule {
                   break;
               }
             }
-            
+
             notifyEventSourceFailed(id, "Connection with the event source was closed.");
             close(id);
           }
@@ -115,7 +115,7 @@ public class RNEventSourceModule extends ReactContextBaseJavaModule {
   @ReactMethod
   public void close(int id) {
     SseEventSource source = mEventSourceConnections.get(id);
-    Thread thead = mEventReaderThreads.get(id);
+    Thread thread = mEventReaderThreads.get(id);
     if (source == null) {
       // EventSource is already closed
       // Don't do anything, mirror the behaviour on web
@@ -126,7 +126,7 @@ public class RNEventSourceModule extends ReactContextBaseJavaModule {
       return;
     }
     try {
-      thead.interrupt();
+      thread.interrupt();
       source.close();
       mEventSourceConnections.remove(id);
       mEventReaderThreads.remove(id);

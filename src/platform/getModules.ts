@@ -5,7 +5,6 @@ import pollingManagerCSFactory from '@splitsoftware/splitio-commons/src/sync/pol
 import { sdkManagerFactory } from '@splitsoftware/splitio-commons/src/sdkManager/index';
 import { sdkClientMethodCSFactory } from '@splitsoftware/splitio-commons/src/sdkClient/sdkClientMethodCS';
 import { impressionObserverCSFactory } from '@splitsoftware/splitio-commons/src/trackers/impressionObserver/impressionObserverCS';
-// import integrationsManagerFactory from '@splitsoftware/splitio-commons/src/integrations/pluggable';
 import EventEmitter from '@splitsoftware/splitio-commons/src/utils/MinEvents';
 
 import { shouldAddPt } from '@splitsoftware/splitio-commons/src/trackers/impressionObserver/utils';
@@ -47,8 +46,6 @@ export function getModules(settings: ISettingsInternal): ISdkFactoryParams {
     SignalListener: undefined,
     // @ts-ignore
     impressionListener: settings.impressionListener,
-
-    // integrationsManagerFactory: settings.integrations && settings.integrations.length > 0 ? integrationsManagerFactory.bind(null, settings.integrations) : undefined,
 
     impressionsObserverFactory: shouldAddPt(settings) ? impressionObserverCSFactory : undefined,
   };
