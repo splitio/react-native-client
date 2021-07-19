@@ -1,8 +1,12 @@
 /* eslint-disable no-undef */
-import { NativeModules } from 'react-native';
+import reactNative from 'react-native';
 
 let _RNEventSource: typeof EventSource | undefined;
-if (NativeModules.RNEventSource) _RNEventSource = require('./EventSource/EventSource');
+
+// Try-catch to avoid Jest error `Invariant Violation: __fbBatchedBridgeConfig is not set, cannot invoke native modules`
+try {
+  if (reactNative.NativeModules && reactNative.NativeModules.RNEventSource) _RNEventSource = require('./EventSource/EventSource');
+} catch (e) {}
 
 /**
  * Returns native implementation of EventSource. If not available (e.g., Expo or other runtime than Android and iOS),
