@@ -29,7 +29,7 @@ export class RNSignalListener implements ISignalListener {
     let transition: Transition =
       FOREGROUND_MATCHER.test(nextAppState) && this._lastTransition !== TO_FOREGROUND
         ? TO_FOREGROUND
-        : nextAppState === 'background' && this._lastTransition !== TO_FOREGROUND
+        : nextAppState === 'background' && this._lastTransition !== TO_BACKGROUND
         ? TO_BACKGROUND
         : undefined;
 
@@ -37,19 +37,26 @@ export class RNSignalListener implements ISignalListener {
     return transition;
   }
 
-  private _handleAppStateChange(nextAppState: AppStateStatus) {
+  private _handleAppStateChange = (nextAppState: AppStateStatus) => {
     const action = this._getTransition(nextAppState);
 
     switch (action) {
       case TO_FOREGROUND:
+        this.settings.log.debug(`App transition to foreground${this.syncManager.pushManager ? ': attempting to resume streaming' : ''}`);
+
         // This branch is called when app transition to foreground or it is launched,
         // in which case calling pushManager.start has no effect (it has been already started).
         // Here, synchronization is resumed.
         if (this.syncManager.pushManager) this.syncManager.pushManager.start();
 
-        this.settings.log.debug(`App transition to foreground ${this.syncManager.pushManager ? ': attempting to resume streaming' : ''}`);
         break;
       case TO_BACKGROUND:
+        this.settings.log.debug(
+          `App transition to background${this.syncManager.pushManager ? ': pausing streaming' : ''}${
+            this.settings.flushDataOnBackground ? ': flushing events and impressions' : ''
+          }`
+        );
+
         // This branch is called when the app transition to background.
         // Here, pushManager is stopped to close streaming connections for Android.
         // In iOS, connections are automatically closed/resumed by the OS.
@@ -62,14 +69,9 @@ export class RNSignalListener implements ISignalListener {
         // So we should not flush events and impressions in the background, except that they cannot be stored in a persistent storage.
         if (this.settings.flushDataOnBackground) this.syncManager.flush();
 
-        this.settings.log.debug(
-          `App transition to background ${this.syncManager.pushManager ? ': pausing streaming' : ''}${
-            this.settings.flushDataOnBackground ? ', flushing events and impressions' : ''
-          }`
-        );
         break;
     }
-  }
+  };
 
   /**
    * start method.
