@@ -1,26 +1,5 @@
-import { AppStateStatus } from 'react-native';
 import { RNSignalListener } from '../RNSignalListener';
-
-let changeListeners = new Set<(state: AppStateStatus) => void>();
-
-const AppStateMock = {
-  currentState: 'active',
-  addEventListener: jest.fn((type, listener) => {
-    if (type === 'change') {
-      changeListeners.add(listener);
-    }
-  }),
-  removeEventListener: jest.fn((type, listener) => {
-    if (type === 'change') {
-      changeListeners.delete(listener);
-    }
-  }),
-  _emitChangeEvent(event: AppStateStatus) {
-    changeListeners.forEach((listener) => {
-      listener(event);
-    });
-  },
-};
+import { AppStateMock } from './AppState.mock';
 
 jest.doMock('react-native/Libraries/AppState/AppState', () => AppStateMock);
 
@@ -35,9 +14,7 @@ const settingsMock = {
 
 describe('RNSignalListener', () => {
   beforeEach(() => {
-    changeListeners.clear();
-    AppStateMock.addEventListener.mockClear();
-    AppStateMock.removeEventListener.mockClear();
+    AppStateMock.mockClear();
     syncManagerMockWithPushManager.flush.mockClear();
     syncManagerMockWithPushManager.pushManager.stop.mockClear();
     syncManagerMockWithPushManager.pushManager.start.mockClear();

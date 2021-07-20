@@ -54,6 +54,7 @@ class EventSource extends EventSourceBase {
   }
 
   _closeEventSource(id) {
+    this.readyState = this.CLOSED;
     RNEventSource.close(id);
   }
 
