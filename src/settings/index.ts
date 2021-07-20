@@ -12,5 +12,8 @@ const params = {
 };
 
 export function settingsValidator(config: any) {
-  return settingsValidation(config, params);
+  const settings = settingsValidation(config, params);
+  // @ts-ignore. For internal use, flush data on background until a persistent storage is provided.
+  settings.flushDataOnBackground = true;
+  return settings;
 }

@@ -1,6 +1,6 @@
 {
   "name": "splitio-react-native-private",
-  "version": "0.0.1-beta.4",
+  "version": "0.0.1-beta.5",
   "description": "Split SDK for React Native",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -52,7 +52,7 @@
     "registry": "https://splitio.jfrog.io/artifactory/api/npm/npm-split/"
   },
   "dependencies": {
-    "@splitsoftware/splitio-commons": "0.1.1-canary.10"
+    "@splitsoftware/splitio-commons": "0.1.1-canary.11"
   },
   "devDependencies": {
     "@react-native-community/eslint-config": "^2.0.0",
@@ -79,8 +79,12 @@
   },
   "jest": {
     "preset": "react-native",
+    "testMatch": ["<rootDir>/src/**/__tests__/**/?(*.)+(spec|test).[jt]s"],
     "modulePathIgnorePatterns": [
       "<rootDir>/lib/"
+    ],
+    "transformIgnorePatterns": [
+      "<rootDir>/node_modules/(?!@splitsoftware)/"
     ]
   },
   "husky": {
@@ -98,14 +102,6 @@
       "import"
     ],
     "rules": {
-      "no-restricted-syntax": [
-        "error",
-        "ForOfStatement",
-        "ForInStatement"
-      ],
-      "no-throw-literal": "error",
-      "import/no-default-export": "error",
-      "import/no-self-import": "error",
       "prettier/prettier": [
         "error",
         {
@@ -117,11 +113,32 @@
           "useTabs": false
         }
       ]
-    }
+    },
+    "overrides": [
+      {
+        "files": [
+          "src/**/*.ts"
+        ],
+        "excludedFiles": [
+          "src/**/__tests__/**"
+        ],
+        "rules": {
+          "no-restricted-syntax": [
+            "error",
+            "ForOfStatement",
+            "ForInStatement"
+          ],
+          "no-throw-literal": "error",
+          "import/no-default-export": "error",
+          "import/no-self-import": "error"
+        }
+      }
+    ]
   },
   "eslintIgnore": [
     "node_modules/",
-    "lib/"
+    "lib/",
+    "example/"
   ],
   "prettier": {
     "quoteProps": "consistent",
