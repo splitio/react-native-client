@@ -72,9 +72,13 @@ typedef NS_ENUM(NSUInteger, TRVSEventSourceState) {
 #pragma mark - Public
 
 - (instancetype)initWithURL:(NSURL *)URL {
+  NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
+
+  // Ably keepalive comments (or heartbeat events if heartbeats=true) are sent every 60 secs aprox.
+  sessionConfig.timeoutIntervalForRequest = 70.0; // 70 secs
+
   return [self initWithURL:URL
-      sessionConfiguration:NSURLSessionConfiguration
-                               .defaultSessionConfiguration];
+      sessionConfiguration:sessionConfig];
 }
 
 - (instancetype)initWithURL:(NSURL *)URL
@@ -175,31 +179,31 @@ typedef NS_ENUM(NSUInteger, TRVSEventSourceState) {
 
     [self.buffer appendString:string];
     NSRange range = [self.buffer rangeOfString:@"\n\n"];
-    
+
     NSError *error;
     TRVSServerSentEvent *event;
     while (range.location != NSNotFound) @autoreleasepool {
         error = nil;
         event = [TRVSServerSentEvent eventWithFields:TRVSServerSentEventFieldsFromString([self.buffer substringToIndex:range.location], &error)];
         [self.buffer deleteCharactersInRange:NSMakeRange(0, range.location + 2)];
-        
+
         if (error)
             [self transitionToFailedWithError:error];
-        
+
         if (error || !event)
             return;
-        
+
         [[self.listenersKeyedByEvent objectForKey:event.event]
          enumerateKeysAndObjectsUsingBlock:
          ^(id _, TRVSEventSourceEventHandler eventHandler, BOOL *stop) {
              eventHandler(event, nil);
          }];
-        
+
         if ([self.delegate
              respondsToSelector:@selector(eventSource:didReceiveEvent:)]) {
             [self.delegate eventSource:self didReceiveEvent:event];
         }
-        
+
         range = [self.buffer rangeOfString:@"\n\n"];
     }
 }

@@ -35,7 +35,7 @@ import { SplitFactory, DebugLogger } from 'splitio-react-native-private';
 // Ignore Android JS timers warning. No need to worry about it: https://github.com/facebook/react-native/issues/12981#issuecomment-652745831
 LogBox.ignoreLogs(['Setting a timer']);
 
-const config = {
+const config: SplitIO.IReactNativeSettings = {
   core: {
     authorizationKey: 'CLINT-SIDE-API-KEY',
     key: 'main_user_key',
@@ -44,7 +44,8 @@ const config = {
     featuresRefreshRate: 30000,
     segmentsRefreshRate: 30000,
     impressionsRefreshRate: 30000,
-    eventsPushRate: 30000
+    eventsPushRate: 30000,
+    eventsQueueSize: 2
   },
   debug: DebugLogger(),
   streamingEnabled: true,

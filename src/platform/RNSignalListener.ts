@@ -42,7 +42,7 @@ export class RNSignalListener implements ISignalListener {
 
     switch (action) {
       case TO_FOREGROUND:
-        this.settings.log.debug(`App transition to foreground${this.syncManager.pushManager ? ': attempting to resume streaming' : ''}`);
+        this.settings.log.debug(`App transition to foreground${this.syncManager.pushManager ? '. Attempting to resume streaming' : ''}`);
 
         // This branch is called when app transition to foreground or it is launched,
         // in which case calling pushManager.start has no effect (it has been already started).
@@ -52,8 +52,8 @@ export class RNSignalListener implements ISignalListener {
         break;
       case TO_BACKGROUND:
         this.settings.log.debug(
-          `App transition to background${this.syncManager.pushManager ? ': pausing streaming' : ''}${
-            this.settings.flushDataOnBackground ? ': flushing events and impressions' : ''
+          `App transition to background${this.syncManager.pushManager ? '. Pausing streaming' : ''}${
+            this.settings.flushDataOnBackground ? '. Flushing events and impressions' : ''
           }`
         );
 
