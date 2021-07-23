@@ -8,6 +8,10 @@
   "react-native": "lib/module/index",
   "source": "src/index",
   "files": [
+    "README.md",
+    "CONTRIBUTORS-GUIDE.md",
+    "LICENSE",
+    "CHANGES.txt",
     "src",
     "lib",
     "types",

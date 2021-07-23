@@ -1,0 +1,2 @@
+0.0.1-beta.0 (July @TODO, 2021)
+ - Initial public release. Check the official documentation for details: @TODO
