@@ -35,9 +35,9 @@ import { SplitFactory, DebugLogger } from 'splitio-react-native-private';
 // Ignore Android JS timers warning. No need to worry about it: https://github.com/facebook/react-native/issues/12981#issuecomment-652745831
 LogBox.ignoreLogs(['Setting a timer']);
 
-const config = {
+const config: SplitIO.IReactNativeSettings = {
   core: {
-    authorizationKey: 'CLINT-SIDE-API-KEY',
+    authorizationKey: 'CLIENT-SIDE-API-KEY',
     key: 'main_user_key',
   },
   scheduler: {
