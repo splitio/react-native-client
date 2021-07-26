@@ -76,7 +76,7 @@ public class WebSocketDelegateImpl implements WebSocketDelegate {
     public static final int CLOSE_NO_STATUS = 1005;
     public static final int CLOSE_ABNORMAL = 1006;
 
-    private final static long SSE_CONNECT_TIMEOUT_MILLIS = 30000;
+    private final static int SSE_CONNECT_TIMEOUT_MILLIS = 30000;
     private final static int SSE_SOCKET_TIMEOUT_MILLIS = 70000;
 
     static enum ConnectionStatus {
