@@ -42,6 +42,10 @@ import org.kaazing.gateway.client.transport.ProgressEvent;
 import org.kaazing.gateway.client.transport.ReadyStateChangedEvent;
 
 public class HttpRequestDelegateImpl implements HttpRequestDelegate {
+
+    private final static int SSE_CONNECT_TIMEOUT_MILLIS = 30000;
+    private final static int SSE_SOCKET_TIMEOUT_MILLIS = 70000;
+
     private static final String CLASS_NAME = HttpRequestDelegateImpl.class.getName();
     private static final Logger LOG = Logger.getLogger(CLASS_NAME);
 
@@ -143,7 +147,11 @@ public class HttpRequestDelegateImpl implements HttpRequestDelegate {
         connection = (HttpURLConnection)url.openConnection();
         connection.setRequestMethod(method);
         connection.setInstanceFollowRedirects(false);
-        connection.setConnectTimeout((int) connectTimeout);
+
+        // Don't use `connectTimeout` param, which is 0 by default
+        connection.setConnectTimeout(SSE_CONNECT_TIMEOUT_MILLIS);
+        // Ably keepalive comments (or heartbeat events if heartbeats=true) are sent every 60 secs aprox.
+        connection.setReadTimeout(SSE_SOCKET_TIMEOUT_MILLIS);
 
         if (!origin.equalsIgnoreCase("null") && !origin.startsWith("privileged")) {
             URL originUrl = new URL(origin);

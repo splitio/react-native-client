@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2007-2014 Kaazing Corporation. All rights reserved.
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -8,9 +8,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -75,7 +75,10 @@ public class WebSocketDelegateImpl implements WebSocketDelegate {
     private static final String WEBSOCKET_GUID = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11";
     public static final int CLOSE_NO_STATUS = 1005;
     public static final int CLOSE_ABNORMAL = 1006;
-        
+
+    private final static int SSE_CONNECT_TIMEOUT_MILLIS = 30000;
+    private final static int SSE_SOCKET_TIMEOUT_MILLIS = 70000;
+
     static enum ConnectionStatus {
         START, STATUS_101_READ, CONNECTION_UPGRADE_READ, COMPLETED, ERRORED
     }
@@ -83,7 +86,7 @@ public class WebSocketDelegateImpl implements WebSocketDelegate {
     public static enum ReadyState {
         CONNECTING, OPEN, CLOSING, CLOSED;
     }
-    
+
     private static final byte[] HTTP_1_1_BYTES = "HTTP/1.1".getBytes();
     private static final byte[] COLON_BYTES = ":".getBytes();
     private static final byte[] SPACE_BYTES = " ".getBytes();
@@ -102,7 +105,7 @@ public class WebSocketDelegateImpl implements WebSocketDelegate {
     private static final String WEB_SOCKET_LOWERCASE = "websocket";
     private static final String HEADER_COOKIE = "Cookie";
     private static final Charset UTF8 = Charset.forName("UTF-8");
-    
+
     private BridgeSocket socket;
     private boolean stopReaderThread;
     private boolean connectionUpgraded = false;
@@ -116,30 +119,30 @@ public class WebSocketDelegateImpl implements WebSocketDelegate {
     private String authorize = null;
     private AtomicBoolean closed = new AtomicBoolean(false);
     String websocketKey;
-    
+
     private final long connectTimeout;
 
     //--------Idle Timeout-------------//
     private final AtomicInteger idleTimeout = new AtomicInteger();
     private final AtomicLong lastMessageTimestamp = new AtomicLong();
     private Timer idleTimer = null;
-    
+
     //WebSocket rfc6455 properties
-    private ReadyState readyState = ReadyState.CONNECTING; 
+    private ReadyState readyState = ReadyState.CONNECTING;
     public ReadyState getReadyState(){
         return readyState;
     }
-    
+
     int bufferedAmount;
     public int getBufferedAmount() {
         return bufferedAmount;
     }
-    
+
     private String secProtocol;
     public String getSecProtocol() {
         return secProtocol;
     }
-    
+
     private String extensions;
     public String getExtensions() {
         return extensions;
@@ -148,7 +151,7 @@ public class WebSocketDelegateImpl implements WebSocketDelegate {
     private boolean wasClean = false;
     private int code = CLOSE_ABNORMAL;
     private String reason = "";
-    
+
     HttpRequestDelegateFactory HTTP_REQUEST_DELEGATE_FACTORY = new HttpRequestDelegateFactory() {
         @Override
         public HttpRequestDelegate createHttpRequestDelegate() {
@@ -165,7 +168,7 @@ public class WebSocketDelegateImpl implements WebSocketDelegate {
 
     /**
      * WebSocket Java API for use in Java Web Start applications
-     * 
+     *
      * @param url
      *            WebSocket URL location
      * @param origin
@@ -203,27 +206,27 @@ public class WebSocketDelegateImpl implements WebSocketDelegate {
         this.connectTimeout = connectTimeout;
     }
 
-    
+
     //------------------------------Idle Timer Start/Stop/Handler---------------------//
-    
+
     private void startIdleTimer(long delayInMilliseconds) {
         LOG.fine("Starting idle timer");
         if (this.idleTimer != null) {
             idleTimer.cancel();
             idleTimer = null;
         }
-        
+
         idleTimer = new Timer("IdleTimer", true);
         idleTimer.schedule(new TimerTask() {
-            
+
             @Override
             public void run() {
                 idleTimerHandler();
             }
-            
+
         }, delayInMilliseconds);
     }
-    
+
     private void idleTimerHandler() {
         LOG.fine("Idle timer scheduled");
         long idleDuration = System.currentTimeMillis() - lastMessageTimestamp.get();
@@ -237,7 +240,7 @@ public class WebSocketDelegateImpl implements WebSocketDelegate {
             startIdleTimer(idleTimeout.get() - idleDuration);
         }
     }
-    
+
     private void stopIdleTimer() {
         LOG.fine("Stopping idle timer");
         if (idleTimer != null) {
@@ -245,7 +248,7 @@ public class WebSocketDelegateImpl implements WebSocketDelegate {
             idleTimer = null;
         }
     }
-    
+
     @Override
     public void setIdleTimeout(int milliSecond) {
         idleTimeout.set(milliSecond);
@@ -258,7 +261,7 @@ public class WebSocketDelegateImpl implements WebSocketDelegate {
             stopIdleTimer();
         }
     }
-    
+
     //-------------------------------------------------------------------------------//
 
     public void processOpen() {
@@ -283,19 +286,19 @@ public class WebSocketDelegateImpl implements WebSocketDelegate {
         final HttpRequestDelegate cookiesRequest = HTTP_REQUEST_DELEGATE_FACTORY.createHttpRequestDelegate();
 
         cookiesRequest.setListener(new HttpRequestDelegateListener() {
-            
+
             @Override
             public void opened(OpenEvent event) {
             }
-            
+
             @Override
             public void readyStateChanged(ReadyStateChangedEvent event) {
             }
-            
+
             @Override
             public void progressed(ProgressEvent progressEvent) {
             }
-            
+
             @Override
             public void loaded(LoadEvent event) {
                 switch (cookiesRequest.getStatusCode()) {
@@ -323,7 +326,7 @@ public class WebSocketDelegateImpl implements WebSocketDelegate {
                 case 307:
                     String location = cookiesRequest.getResponseHeader(HEADER_LOCATION);
                     LOG.finest("Redirect to " + location);
-                    
+
                     URI uri;
                     try {
                         uri = new URI(location);
@@ -379,11 +382,11 @@ public class WebSocketDelegateImpl implements WebSocketDelegate {
                     throw new IllegalStateException("Unsupported wrapped response with HTTP status code " + statusCode);
                 }
             }
-            
+
             @Override
             public void closed(CloseEvent event) {
             }
-            
+
             @Override
             public void errorOccurred(ErrorEvent event) {
                 WebSocketDelegateImpl.this.readyState = ReadyState.CLOSED;
@@ -472,9 +475,11 @@ public class WebSocketDelegateImpl implements WebSocketDelegate {
         try {
             LOG.fine("WebSocketDelegate.nativeConnect(): Connecting to "+host+":"+port);
             socket = BRIDGE_SOCKET_FACTORY.createSocket(secure);
-            socket.connect(new InetSocketAddress(host, port), connectTimeout);
+
+            // Not used in Android, but just in case we update the connect and socket timeouts, which are 0 by default.
+            socket.connect(new InetSocketAddress(host, port), SSE_CONNECT_TIMEOUT_MILLIS /* connectTimeout */);
             socket.setKeepAlive(true);
-            socket.setSoTimeout(0); // continuously read from the socket
+            socket.setSoTimeout(SSE_SOCKET_TIMEOUT_MILLIS);
         }
         catch (Exception e) {
             LOG.log(Level.FINE, "WebSocketDelegateImpl nativeConnect(): "+e.getMessage(), e);
@@ -512,7 +517,7 @@ public class WebSocketDelegateImpl implements WebSocketDelegate {
 
             if (requestedProtocols != null && requestedProtocols.length > 0) {
                 headerNames[headerIndex] = HEADER_PROTOCOL;
-                
+
                 String value;
                 if (requestedProtocols.length == 1) {
                     value = requestedProtocols[0];
@@ -526,7 +531,7 @@ public class WebSocketDelegateImpl implements WebSocketDelegate {
                         value += requestedProtocols[i];
                     }
                 }
-                
+
                 headerValues[headerIndex++] = value;
             }
 
@@ -561,10 +566,10 @@ public class WebSocketDelegateImpl implements WebSocketDelegate {
     }
 
     public byte[] encodeGetRequest(URI requestURI, String[] names, String[] values) {
-        
+
         // Any changes to this method should result in the getEncodeRequestSize method below
         // to get accurate length of the buffer that needs to be allocated.
-        
+
         LOG.entering(CLASS_NAME, "encodeGetRequest", new Object[] {requestURI, names, values});
         int requestSize = getEncodeRequestSize(requestURI, names, values);
         ByteBuffer buf = ByteBuffer.allocate(requestSize);
@@ -639,7 +644,7 @@ public class WebSocketDelegateImpl implements WebSocketDelegate {
     public void processDisconnect() throws IOException {
         processDisconnect((short) 0, null);
     }
-    
+
     public void processDisconnect(short code, String reason) throws IOException {
         LOG.entering(CLASS_NAME, "disconnect");
         //stopReaderThread = true;  --- rfc 6455 donot stop SockectReader, wait for CloseFrame
@@ -667,13 +672,13 @@ public class WebSocketDelegateImpl implements WebSocketDelegate {
                 }
                 data = ByteBuffer.allocate(2 + (reasonBuf == null ? 0 : reasonBuf.remaining()));
                 data.putShort(code);
-                
+
                 if (reasonBuf != null) {
-                    data.put(reasonBuf);   
+                    data.put(reasonBuf);
                 }
-                
+
                 data.flip();
-            }    
+            }
             this.send(WsFrameEncodingSupport.rfc6455Encode(new WsMessage(data, Kind.CLOSE), new Random().nextInt()));
         }
         else if (readyState == ReadyState.CONNECTING) {
@@ -681,21 +686,21 @@ public class WebSocketDelegateImpl implements WebSocketDelegate {
             stopReaderThread = true;
             handleClose(null);
         }
-        
-        // Do not close the underlying socket connection immediately. As per the RFC spec - 
-        // After both sending and receiving a Close message, an endpoint considers the WebSocket 
+
+        // Do not close the underlying socket connection immediately. As per the RFC spec -
+        // After both sending and receiving a Close message, an endpoint considers the WebSocket
         // connection closed and MUST close the underlying TCP connection.
-        // Schedule a timer to close the underlying Socket connection if the CLOSE frame is not 
+        // Schedule a timer to close the underlying Socket connection if the CLOSE frame is not
         // received from the Gateway within 5 seconds.
         Timer t = new Timer("SocketCloseTimer", true);
         t.schedule(new TimerTask() {
-			
+
 			@Override
 			public void run() {
 			    try {
     				if (WebSocketDelegateImpl.this.readyState != ReadyState.CLOSED) {
     				    stopIdleTimer();
-    					closeSocket();	
+    					closeSocket();
     				}
 			    }
 			    finally {
@@ -703,7 +708,7 @@ public class WebSocketDelegateImpl implements WebSocketDelegate {
 			    }
 			}
 		}, 5000);
-        
+
         //else do nothing for CLOSING and CLOSED
     }
 
@@ -722,14 +727,14 @@ public class WebSocketDelegateImpl implements WebSocketDelegate {
         send(frame);
         // send(data);
     }
-    
+
     @Override
     public void processSend(String data) {
         LOG.entering(CLASS_NAME, "processSend", data);
         ByteBuffer buf = null;
         try {
             buf = ByteBuffer.wrap(data.getBytes("UTF-8"));
-        } 
+        }
         catch (UnsupportedEncodingException e) {
             // this should not be reached
             String s = "The platform should have already been checked to see if UTF-8 encoding is supported";
@@ -740,7 +745,7 @@ public class WebSocketDelegateImpl implements WebSocketDelegate {
         send(frame);
         // send(data);
     }
-    
+
     private void send(ByteBuffer frame) {
         LOG.entering(CLASS_NAME, "send", frame);
         if (socket == null) {
@@ -770,21 +775,21 @@ public class WebSocketDelegateImpl implements WebSocketDelegate {
         LOG.exiting(CLASS_NAME, "getOrigin", originUri);
         return originUri;
     }
-    
+
     private void closeSocket() {
         try {
             LOG.log(Level.FINE, "Closing socket");
-            
+
             // Sleep for a tenth-of-second before closing the socket.
             Thread.sleep(100);
-            
+
             if ((socket != null) && (readyState != ReadyState.CLOSED)) {
                 socket.close();
             }
         }
         catch (IOException e) {
             LOG.log(Level.FINE, "While closing socket: "+e.getMessage(), e);
-        } 
+        }
         catch (InterruptedException e) {
             LOG.log(Level.FINE, "While closing socket: "+e.getMessage(), e);
         }
@@ -793,7 +798,7 @@ public class WebSocketDelegateImpl implements WebSocketDelegate {
             socket = null;
         }
     }
-    
+
     private void handleClose(Exception ex) {
         if (closed.compareAndSet(false, true)) {
             try {
@@ -821,14 +826,14 @@ public class WebSocketDelegateImpl implements WebSocketDelegate {
             }
         }
     }
-    
+
     private byte[] randomBytes(int size) {
         byte[] bytes = new byte[size];
         Random r = new Random();
         r.nextBytes(bytes);
         return bytes;
     }
-    
+
     private String base64Encode(byte[] bytes) {
         return Base64Util.encode(ByteBuffer.wrap(bytes));
 
@@ -904,7 +909,7 @@ public class WebSocketDelegateImpl implements WebSocketDelegate {
                         break;
                     }
                 } //end of while loop
-               
+
                 if (!connectionUpgraded && !stopReaderThread) {
                     throw new IllegalArgumentException("WebSocket Connection upgrade unsuccessful");
                 }
@@ -924,7 +929,7 @@ public class WebSocketDelegateImpl implements WebSocketDelegate {
                             //PING received, send PONG
                             ByteBuffer frame = WsFrameEncodingSupport.rfc6455Encode(new WsMessage(buffer, Kind.PONG), new Random().nextInt());
                             WebSocketDelegateImpl.this.send(frame);
-                            
+
                         }
                         else if (messageType == "CLOSE") {
                             WebSocketDelegateImpl.this.wasClean = true;
@@ -933,7 +938,7 @@ public class WebSocketDelegateImpl implements WebSocketDelegate {
                             }
                             else {
                                 WebSocketDelegateImpl.this.code = buffer.getShort();
-                            
+
                                 if (buffer.hasRemaining()) {
                                     WebSocketDelegateImpl.this.reason = UTF8.decode(buffer).toString();
                                 }
@@ -949,7 +954,7 @@ public class WebSocketDelegateImpl implements WebSocketDelegate {
                             if (WebSocketDelegateImpl.this.readyState == ReadyState.CONNECTING) {
                                 WebSocketDelegateImpl.this.readyState = ReadyState.CLOSING;
                             }
-                            
+
                         }
                         else {
                             //unknown type
@@ -966,7 +971,7 @@ public class WebSocketDelegateImpl implements WebSocketDelegate {
                             LOG.fine("SocketReader: Stopping reader thread; closing socket");
                             break;
                         }
-    
+
                         if (!frameProcessor.process(inputStream)) {
                             LOG.fine("SocketReader: end of stream");
                             break;
@@ -1011,7 +1016,7 @@ public class WebSocketDelegateImpl implements WebSocketDelegate {
 
         private void processLine(String line) throws Exception {
             LOG.entering(CLASS_NAME, "processLine", line);
-            
+
             switch (state) {
             case START:
                 if (line.equals(HTTP_101_MESSAGE)) {
@@ -1044,18 +1049,18 @@ public class WebSocketDelegateImpl implements WebSocketDelegate {
                 break;
             }
         }
-        
+
         /**
          * Compute the Sec-WebSocket-Accept key (RFC-6455)
-         * 
+         *
          * @param key
          * @return
-         * @throws NoSuchAlgorithmException 
+         * @throws NoSuchAlgorithmException
          * @throws Exception
          */
         public String AcceptHash(String key) throws NoSuchAlgorithmException {
             String input = key + WEBSOCKET_GUID;
-            
+
             MessageDigest sha1 = MessageDigest.getInstance("SHA-1");
 
             byte[] hash = sha1.digest(input.getBytes());;

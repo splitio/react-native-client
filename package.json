@@ -52,7 +52,7 @@
     "registry": "https://splitio.jfrog.io/artifactory/api/npm/npm-split/"
   },
   "dependencies": {
-    "@splitsoftware/splitio-commons": "0.1.1-canary.11"
+    "@splitsoftware/splitio-commons": "0.1.1-canary.12"
   },
   "devDependencies": {
     "@react-native-community/eslint-config": "^2.0.0",
@@ -79,7 +79,9 @@
   },
   "jest": {
     "preset": "react-native",
-    "testMatch": ["<rootDir>/src/**/__tests__/**/?(*.)+(spec|test).[jt]s"],
+    "testMatch": [
+      "<rootDir>/src/**/__tests__/**/?(*.)+(spec|test).[jt]s"
+    ],
     "modulePathIgnorePatterns": [
       "<rootDir>/lib/"
     ],

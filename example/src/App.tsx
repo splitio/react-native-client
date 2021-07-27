@@ -44,7 +44,8 @@ const config: SplitIO.IReactNativeSettings = {
     featuresRefreshRate: 30000,
     segmentsRefreshRate: 30000,
     impressionsRefreshRate: 30000,
-    eventsPushRate: 30000
+    eventsPushRate: 30000,
+    eventsQueueSize: 2
   },
   debug: DebugLogger(),
   streamingEnabled: true,
