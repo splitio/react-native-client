@@ -30,7 +30,7 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-import { SplitFactory, DebugLogger } from 'splitio-react-native-private';
+import { SplitFactory, DebugLogger } from '@splitsoftware/splitio-react-native';
 
 // Ignore Android JS timers warning. No need to worry about it: https://github.com/facebook/react-native/issues/12981#issuecomment-652745831
 LogBox.ignoreLogs(['Setting a timer']);
