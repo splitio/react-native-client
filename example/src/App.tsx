@@ -37,7 +37,7 @@ LogBox.ignoreLogs(['Setting a timer']);
 
 const config: SplitIO.IReactNativeSettings = {
   core: {
-    authorizationKey: 'CLINT-SIDE-API-KEY',
+    authorizationKey: 'CLIENT-SIDE-API-KEY',
     key: 'main_user_key',
   },
   scheduler: {
