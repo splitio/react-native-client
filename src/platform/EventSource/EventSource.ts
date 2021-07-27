@@ -85,7 +85,9 @@ class EventSource extends EventSourceBase {
         this.dispatchEvent(event);
       }),
       DeviceEventEmitter.addListener('eventsourceFailed', (ev) => {
-        if (ev.id !== id) {
+        // Don't handle error event if it corresponds to another connection instance or the instance has been closed.
+        // Last condition is necessary for Android implementation of EventSource, which emits an error when closing the connection explicitly.
+        if (ev.id !== id || this.readyState === this.CLOSED) {
           return;
         }
         var event = new EventSourceEvent('error');
