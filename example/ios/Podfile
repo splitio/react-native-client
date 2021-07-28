@@ -17,7 +17,7 @@ target 'example' do
     # Pods for testing
   end
 
-  pod 'Split', :path => '../..'
+  pod 'RNSplit', :path => '../..'
 
   # Enables Flipper.
   #

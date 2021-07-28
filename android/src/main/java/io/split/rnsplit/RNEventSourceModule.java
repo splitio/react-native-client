@@ -1,4 +1,4 @@
-package com.github.jonnybgod.RNEventSource;
+package io.split.rnsplit;
 
 import java.io.IOException;
 
