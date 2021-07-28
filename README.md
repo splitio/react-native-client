@@ -8,7 +8,7 @@ This SDK is designed to work with Split, the platform for controlled rollouts, w
 [![Twitter Follow](https://img.shields.io/twitter/follow/splitsoftware.svg?style=social&label=Follow&maxAge=1529000)](https://twitter.com/intent/follow?screen_name=splitsoftware)
 
 ## Compatibility
-The React Native SDK is a library for React Native applications. It is compatible with React Native 0.XX and XCode XX.
+The React Native SDK is a library for React Native applications. It is compatible with React Native 0.XX.
 
 The library was build with native modules to support streaming in Android and iOS, and therefore it requires linking the native dependency. For Expo applications, streaming is not supported by default but a polyfill can be used instead. Check our [public documentation](@TODO) for installation details.
 
