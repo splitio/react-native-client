@@ -1,4 +1,4 @@
-const packageVersion = '0.0.1-beta.5';
+const packageVersion = '0.0.1-canary.2';
 
 export const defaults = {
   startup: {

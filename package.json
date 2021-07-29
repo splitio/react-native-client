@@ -1,6 +1,6 @@
 {
-  "name": "splitio-react-native-private",
-  "version": "0.0.1-beta.5",
+  "name": "@splitsoftware/splitio-react-native",
+  "version": "0.0.1-canary.2",
   "description": "Split SDK for React Native",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -8,12 +8,16 @@
   "react-native": "lib/module/index",
   "source": "src/index",
   "files": [
+    "README.md",
+    "CONTRIBUTORS-GUIDE.md",
+    "LICENSE",
+    "CHANGES.txt",
     "src",
     "lib",
     "types",
     "android",
     "ios",
-    "Split.podspec",
+    "RNSplit.podspec",
     "!android/build",
     "!ios/build",
     "!**/__tests__",
@@ -48,9 +52,6 @@
     "url": "https://github.com/splitio/react-native-client/issues"
   },
   "homepage": "https://github.com/splitio/react-native-client#readme",
-  "publishConfig": {
-    "registry": "https://splitio.jfrog.io/artifactory/api/npm/npm-split/"
-  },
   "dependencies": {
     "@splitsoftware/splitio-commons": "0.1.1-canary.12"
   },

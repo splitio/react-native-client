@@ -2,8 +2,6 @@
 // Project: http://www.split.io/
 // Definitions by: Nico Zelaya <https://github.com/NicoZelaya/>
 
-/// <reference types="google.analytics" />
-
 export as namespace SplitIO;
 export = SplitIO;
 
@@ -117,7 +115,7 @@ interface ISharedSettings {
   /**
    * Boolean value to indicate whether the logger should be enabled or disabled by default, or a Logger object.
    * Passing a logger object is required to get descriptive log messages. Otherwise most logs will print with message codes.
-   * @see {@link https://help.split.io/hc/en-us/articles/360058730852#logging}
+   * @see {@link https://help.split.io/hc/en-us/articles/4406066357901#logging}
    *
    * @property {boolean | ILogger} debug
    * @default false
@@ -300,7 +298,7 @@ declare namespace SplitIO {
   /**
    * Split attributes should be on object with values of type string or number (dates should be sent as millis since epoch).
    * @typedef {Object.<number, string, boolean, string[], number[]>} Attributes
-   * @see {@link https://help.split.io/hc/en-us/articles/360058730852#attribute-syntax}
+   * @see {@link https://help.split.io/hc/en-us/articles/4406066357901#attribute-syntax}
    */
   type Attributes = {
     [attributeName: string]: string | number | boolean | Array<string | number>
@@ -308,7 +306,7 @@ declare namespace SplitIO {
   /**
    * Split properties should be an object with values of type string, number, boolean or null. Size limit of ~31kb.
    * @typedef {Object.<number, string, boolean, null>} Attributes
-   * @see {@link https://help.split.io/hc/en-us/articles/360058730852#track
+   * @see {@link https://help.split.io/hc/en-us/articles/4406066357901#track
    */
   type Properties = {
     [propertyName: string]: string | number | boolean | null
@@ -429,7 +427,7 @@ declare namespace SplitIO {
    * Impression listener interface. This is the interface that needs to be implemented
    * by the element you provide to the SDK as impression listener.
    * @interface IImpressionListener
-   * @see {@link https://help.split.io/hc/en-us/articles/360058730852#listener}
+   * @see {@link https://help.split.io/hc/en-us/articles/4406066357901#listener}
    */
   interface IImpressionListener {
     logImpression(data: SplitIO.ImpressionData): void
@@ -541,7 +539,7 @@ declare namespace SplitIO {
    * Settings interface for SDK instances created on React Native.
    * @interface IReactNativeSettings
    * @extends ISharedSettings
-   * @see {@link https://help.split.io/hc/en-us/articles/360058730852#configuration}
+   * @see {@link https://help.split.io/hc/en-us/articles/4406066357901#configuration}
    */
   interface IReactNativeSettings extends ISharedSettings {
     /**
@@ -645,6 +643,7 @@ declare namespace SplitIO {
     /**
      * Defines the factory function to instanciate the storage. If not provided, the default IN MEMORY storage is used.
      * @property {Object} storage
+     * @todo at the moment there are not storages to plug in React Native SDK.
      */
     storage?: StorageSyncFactory,
     /**
@@ -656,6 +655,7 @@ declare namespace SplitIO {
     /**
      * Defines an optional list of factory functions used to instantiate SDK integrations.
      * @property {Object} integrations
+     * @todo at the moment there are not integrations to plug in React Native SDK.
      */
     integrations?: IntegrationFactory[],
   }
