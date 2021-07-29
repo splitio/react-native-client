@@ -11,18 +11,7 @@
 		55C5EF221EA2A263005345B7 /* TRVSServerSentEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C5EF201EA2A263005345B7 /* TRVSServerSentEvent.m */; };
 		911488971B28A9A700A81437 /* RNEventSource.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 911488961B28A9A700A81437 /* RNEventSource.h */; };
 		911488991B28A9A700A81437 /* RNEventSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 911488981B28A9A700A81437 /* RNEventSource.m */; };
-		9114889F1B28A9A700A81437 /* libRNEventSource.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 911488931B28A9A700A81437 /* libRNEventSource.a */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		911488A01B28A9A700A81437 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9114888B1B28A9A700A81437 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 911488921B28A9A700A81437;
-			remoteInfo = RNEventSource;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		911488911B28A9A700A81437 /* CopyFiles */ = {
@@ -46,8 +35,6 @@
 		911488931B28A9A700A81437 /* libRNEventSource.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNEventSource.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		911488961B28A9A700A81437 /* RNEventSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNEventSource.h; sourceTree = "<group>"; };
 		911488981B28A9A700A81437 /* RNEventSource.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNEventSource.m; sourceTree = "<group>"; };
-		9114889E1B28A9A700A81437 /* RNEventSourceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RNEventSourceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		911488A31B28A9A700A81437 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,14 +42,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		9114889B1B28A9A700A81437 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				9114889F1B28A9A700A81437 /* libRNEventSource.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,7 +64,6 @@
 			isa = PBXGroup;
 			children = (
 				911488951B28A9A700A81437 /* RNEventSource */,
-				911488A21B28A9A700A81437 /* RNEventSourceTests */,
 				911488941B28A9A700A81437 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -94,7 +72,6 @@
 			isa = PBXGroup;
 			children = (
 				911488931B28A9A700A81437 /* libRNEventSource.a */,
-				9114889E1B28A9A700A81437 /* RNEventSourceTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -107,14 +84,6 @@
 				911488981B28A9A700A81437 /* RNEventSource.m */,
 			);
 			path = RNEventSource;
-			sourceTree = "<group>";
-		};
-		911488A21B28A9A700A81437 /* RNEventSourceTests */ = {
-			isa = PBXGroup;
-			children = (
-				911488A31B28A9A700A81437 /* Info.plist */,
-			);
-			path = RNEventSourceTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,24 +106,6 @@
 			productReference = 911488931B28A9A700A81437 /* libRNEventSource.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		9114889D1B28A9A700A81437 /* RNEventSourceTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 911488A91B28A9A700A81437 /* Build configuration list for PBXNativeTarget "RNEventSourceTests" */;
-			buildPhases = (
-				9114889A1B28A9A700A81437 /* Sources */,
-				9114889B1B28A9A700A81437 /* Frameworks */,
-				9114889C1B28A9A700A81437 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				911488A11B28A9A700A81437 /* PBXTargetDependency */,
-			);
-			name = RNEventSourceTests;
-			productName = RNEventSourceTests;
-			productReference = 9114889E1B28A9A700A81437 /* RNEventSourceTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -167,9 +118,6 @@
 					911488921B28A9A700A81437 = {
 						CreatedOnToolsVersion = 7.0;
 					};
-					9114889D1B28A9A700A81437 = {
-						CreatedOnToolsVersion = 7.0;
-					};
 				};
 			};
 			buildConfigurationList = 9114888E1B28A9A700A81437 /* Build configuration list for PBXProject "RNEventSource" */;
@@ -177,6 +125,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 9114888A1B28A9A700A81437;
@@ -185,20 +134,9 @@
 			projectRoot = "";
 			targets = (
 				911488921B28A9A700A81437 /* RNEventSource */,
-				9114889D1B28A9A700A81437 /* RNEventSourceTests */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXResourcesBuildPhase section */
-		9114889C1B28A9A700A81437 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		9114888F1B28A9A700A81437 /* Sources */ = {
@@ -211,22 +149,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9114889A1B28A9A700A81437 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		911488A11B28A9A700A81437 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 911488921B28A9A700A81437 /* RNEventSource */;
-			targetProxy = 911488A01B28A9A700A81437 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		911488A41B28A9A700A81437 /* Debug */ = {
@@ -333,28 +256,6 @@
 			};
 			name = Release;
 		};
-		911488AA1B28A9A700A81437 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = RNEventSourceTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = pw.RNEventSourceTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		911488AB1B28A9A700A81437 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = RNEventSourceTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = pw.RNEventSourceTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -372,15 +273,6 @@
 			buildConfigurations = (
 				911488A71B28A9A700A81437 /* Debug */,
 				911488A81B28A9A700A81437 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		911488A91B28A9A700A81437 /* Build configuration list for PBXNativeTarget "RNEventSourceTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				911488AA1B28A9A700A81437 /* Debug */,
-				911488AB1B28A9A700A81437 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -1,4 +1,4 @@
-package com.github.jonnybgod.RNEventSource;
+package io.split.rnsplit;
 
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -11,9 +11,9 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
 import com.facebook.react.bridge.JavaScriptModule;
 
-public class RNEventSourcePackage implements ReactPackage {
+public class RNSplitPackage implements ReactPackage {
 
-  public RNEventSourcePackage() {}
+  public RNSplitPackage() {}
 
   @Override
   public List<NativeModule> createNativeModules(
