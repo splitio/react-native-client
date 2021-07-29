@@ -643,7 +643,7 @@ declare namespace SplitIO {
     /**
      * Defines the factory function to instanciate the storage. If not provided, the default IN MEMORY storage is used.
      * @property {Object} storage
-     * @todo at the moment only IN MEMORY storage is available.
+     * @todo at the moment there are not storages to plug in React Native SDK.
      */
     storage?: StorageSyncFactory,
     /**
@@ -655,6 +655,7 @@ declare namespace SplitIO {
     /**
      * Defines an optional list of factory functions used to instantiate SDK integrations.
      * @property {Object} integrations
+     * @todo at the moment there are not integrations to plug in React Native SDK.
      */
     integrations?: IntegrationFactory[],
   }
