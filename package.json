@@ -1,6 +1,6 @@
 {
   "name": "@splitsoftware/splitio-react-native",
-  "version": "0.0.1-canary.2",
+  "version": "0.0.1",
   "description": "Split SDK for React Native",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
