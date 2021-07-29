@@ -8,7 +8,7 @@ This SDK is designed to work with Split, the platform for controlled rollouts, w
 [![Twitter Follow](https://img.shields.io/twitter/follow/splitsoftware.svg?style=social&label=Follow&maxAge=1529000)](https://twitter.com/intent/follow?screen_name=splitsoftware)
 
 ## Compatibility
-The React Native SDK is a library for React Native applications. The library was build with native modules to support streaming in Android and iOS, and therefore it requires linking the native dependency in order to use streaming. For Expo applications, streaming is not supported by default but a polyfill can be used instead. Check our [public documentation](@TODO) for installation details.
+The React Native SDK is a library for React Native applications. The library was build with native modules to support streaming in Android and iOS, and therefore it requires linking the native dependency in order to use streaming. For Expo applications, streaming is not supported by default but a polyfill can be used instead. Check our [public documentation](https://help.split.io/hc/en-us/articles/4406066357901) for installation details.
 
 ## Getting started
 Below is a simple App.jsx example that describes the instantiation and most basic usage of our SDK:
@@ -37,7 +37,7 @@ client.on(client.Event.SDK_READY, function() {
 });
 ```
 
-Please refer to [React Native SDK](https://help.split.io/hc/en-us/articles/@TODO) to learn about all the functionality provided by our SDK as well as specifics for configuration options available for tailoring it to your current application setup.
+Please refer to [React Native SDK](https://help.split.io/hc/en-us/articles/4406066357901) to learn about all the functionality provided by our SDK as well as specifics for configuration options available for tailoring it to your current application setup.
 
 ## Submitting issues
 The Split team monitors all issues submitted to this [issue tracker](https://github.com/splitio/react-native-client/issues). We encourage you to use this issue tracker to submit any bug reports, feedback, and feature enhancements. We'll do our best to respond in a timely manner.
@@ -64,7 +64,7 @@ Split has built and maintains SDKs for:
 * Javascript [Github](https://github.com/splitio/javascript-client) [Docs](https://help.split.io/hc/en-us/articles/360020448791-JavaScript-SDK)
 * Node [Github](https://github.com/splitio/javascript-client) [Docs](https://help.split.io/hc/en-us/articles/360020564931-Node-js-SDK)
 * Javascript for Browser [Github](https://github.com/splitio/javascript-browser-client) [Docs](https://help.split.io/hc/en-us/articles/360058730852-Browser-SDK)
-* Javascript for React Native [Github](https://github.com/splitio/react-native-client) [Docs](https://help.split.io/hc/en-us/articles/@TODO)
+* Javascript for React Native [Github](https://github.com/splitio/react-native-client) [Docs](https://help.split.io/hc/en-us/articles/4406066357901)
 * PHP [Github](https://github.com/splitio/php-client) [Docs](https://help.split.io/hc/en-us/articles/360020350372-PHP-SDK)
 * Python [Github](https://github.com/splitio/python-client) [Docs](https://help.split.io/hc/en-us/articles/360020359652-Python-SDK)
 * React [Github](https://github.com/splitio/react-client) [Docs](https://help.split.io/hc/en-us/articles/360038825091-React-SDK)
