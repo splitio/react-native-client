@@ -1,0 +1,2 @@
+0.0.1 (July 29, 2021)
+ - Initial public release. Check the official documentation for details: https://help.split.io/hc/en-us/articles/4406066357901
