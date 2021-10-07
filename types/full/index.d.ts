@@ -2,7 +2,7 @@
 // Project: http://www.split.io/
 // Definitions by: Nico Zelaya <https://github.com/NicoZelaya/>
 
-/// <reference path="./splitio.d.ts" />
+/// <reference path="../splitio.d.ts" />
 export = JsSdk;
 
 declare module JsSdk {
@@ -40,12 +40,4 @@ declare module JsSdk {
    * @see {@link https://help.split.io/hc/en-us/articles/4406066357901#logging}
    */
   export function ErrorLogger(): SplitIO.ILogger;
-
-  /**
-   * Required to enable localhost mode when importing the SDK from the slim entry point of the library.
-   * It uses the mocked features map defined in the 'features' config object.
-   *
-   * @see {@link https://help.split.io/hc/en-us/articles/4406066357901#localhost-mode}
-   */
-   export function LocalhostFromObject(): SplitIO.LocalhostFactory;
 }

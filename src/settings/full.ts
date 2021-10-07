@@ -3,15 +3,15 @@ import { defaults } from './defaults';
 import { validateStorageCS } from '@splitsoftware/splitio-commons/src/utils/settingsValidation/storage/storageCS';
 import { validatePluggableIntegrations } from '@splitsoftware/splitio-commons/src/utils/settingsValidation/integrations/pluggable';
 import { validateLogger } from '@splitsoftware/splitio-commons/src/utils/settingsValidation/logger/pluggableLogger';
-import { validateLocalhost } from '@splitsoftware/splitio-commons/src/utils/settingsValidation/localhost';
+import { LocalhostFromObject } from '@splitsoftware/splitio-commons/src/sync/syncManagerFromObject';
 
 const params = {
   defaults,
   storage: validateStorageCS,
   integrations: validatePluggableIntegrations,
   logger: validateLogger,
-  // Slim SplitFactory validates that the localhost module is passed in localhost mode
-  localhost: validateLocalhost,
+  // Full SplitFactory automatically passes the localhost module
+  localhost: () => LocalhostFromObject(),
 };
 
 export function settingsValidator(config: any) {

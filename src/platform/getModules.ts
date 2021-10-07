@@ -8,8 +8,8 @@ import { impressionObserverCSFactory } from '@splitsoftware/splitio-commons/src/
 import EventEmitter from '@splitsoftware/splitio-commons/src/utils/MinEvents';
 
 import { shouldAddPt } from '@splitsoftware/splitio-commons/src/trackers/impressionObserver/utils';
-import { ISettingsInternal } from '@splitsoftware/splitio-commons/src/utils/settingsValidation/types';
 import { ISdkFactoryParams } from '@splitsoftware/splitio-commons/src/sdkFactory/types';
+import { SplitIO, ISettings } from '@splitsoftware/splitio-commons/src/types';
 
 import { RNSignalListener } from './RNSignalListener';
 import { getEventSource } from './getEventSource';
@@ -28,7 +28,7 @@ const syncManagerOnlineCSFactory = syncManagerOnlineFactory(pollingManagerCSFact
 /**
  * Get minimal modules for RN client-side SDK in standalone mode and with online syncManager.
  */
-export function getModules(settings: ISettingsInternal): ISdkFactoryParams {
+export function getModules(settings: ISettings): ISdkFactoryParams {
   return {
     settings,
 
@@ -36,17 +36,17 @@ export function getModules(settings: ISettingsInternal): ISdkFactoryParams {
 
     storageFactory: settings.storage,
 
-    splitApiFactory,
+    splitApiFactory: settings.mode === 'localhost' ? undefined : splitApiFactory,
 
-    syncManagerFactory: syncManagerOnlineCSFactory,
+    syncManagerFactory: settings.mode === 'localhost' ? settings.sync.localhostMode : syncManagerOnlineCSFactory,
 
     sdkManagerFactory,
 
     sdkClientMethodFactory: sdkClientMethodCSFactory,
 
     SignalListener: settings.mode === 'localhost' ? undefined : (RNSignalListener as ISdkFactoryParams['SignalListener']),
-    // @ts-ignore
-    impressionListener: settings.impressionListener,
+
+    impressionListener: settings.impressionListener as SplitIO.IImpressionListener,
 
     impressionsObserverFactory: shouldAddPt(settings) ? impressionObserverCSFactory : undefined,
   };
