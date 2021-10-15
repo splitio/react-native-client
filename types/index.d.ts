@@ -7,8 +7,12 @@ export = JsSdk;
 
 declare module JsSdk {
   /**
-   * Split.io sdk factory function.
-   * The settings parameter should be an object that complies with the SplitIO.IReactNativeSettings.
+   * Slim version of the Split.io sdk factory function.
+   *
+   * Recommended to use for bundle size reduction in production, since it doesn't include localhost mode out-of-the-box
+   * @see {@link https://help.split.io/hc/en-us/articles/4406066357901#localhost-mode}.
+   *
+   * The settings parameter should be an object that complies with the SplitIO.IBrowserSettings.
    * For more information read the corresponding article: @see {@link https://help.split.io/hc/en-us/articles/4406066357901#configuration}
    */
   export function SplitFactory(settings: SplitIO.IReactNativeSettings): SplitIO.ISDK;
@@ -47,5 +51,5 @@ declare module JsSdk {
    *
    * @see {@link https://help.split.io/hc/en-us/articles/4406066357901#localhost-mode}
    */
-   export function LocalhostFromObject(): SplitIO.LocalhostFactory;
+  export function LocalhostFromObject(): SplitIO.LocalhostFactory;
 }

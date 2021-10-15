@@ -80,6 +80,7 @@ interface ISettings {
   readonly sync: {
     splitFilters: SplitIO.SplitFilter[],
     impressionsMode: SplitIO.ImpressionsMode,
+    localhostMode?: SplitIO.LocalhostFactory
   }
 }
 /**
@@ -181,16 +182,19 @@ interface ISharedSettings {
     impressionsMode?: SplitIO.ImpressionsMode,
     /**
      * Defines the factory function to instanciate the SDK in localhost mode.
+     *
      * NOTE: this is only required if using the slim entry point of the library to init the SDK in localhost mode.
+     *
      * For more information @see {@link https://help.split.io/hc/en-us/articles/4406066357901#localhost-mode}
      *
      * Example:
      * ```typescript
-     * config: {
+     * SplitFactory({
+     *   ...
      *   sync: {
      *     localhostMode: LocalhostFromObject()
      *   }
-     * }
+     * })
      * ```
      * @property {Object} localhostMode
      */
@@ -365,7 +369,7 @@ declare namespace SplitIO {
    * Localhost types.
    * @typedef {string} LocalhostType
    */
-  type LocalhostType = 'FROM_OBJECT' | 'FROM_FILE'
+  type LocalhostType = 'LocalhostFromObject'
   /**
    * Object with information about an impression. It contains the generated impression DTO as well as
    * complementary information around where and how it was generated in that way.
@@ -461,7 +465,7 @@ declare namespace SplitIO {
    * Input parameter details are not part of the public API.
    */
   type StorageSyncFactory = {
-    type: StorageType
+    readonly type: StorageType
     (params: {}): (StorageSync | undefined)
   }
   /**
@@ -469,7 +473,7 @@ declare namespace SplitIO {
    * Its interface details are not part of the public API.
    */
   type LocalhostFactory = {
-    type: LocalhostType
+    readonly type: LocalhostType
     (params: {}): {}
   }
   /**

@@ -3,7 +3,7 @@ import { defaults } from './defaults';
 import { validateStorageCS } from '@splitsoftware/splitio-commons/src/utils/settingsValidation/storage/storageCS';
 import { validatePluggableIntegrations } from '@splitsoftware/splitio-commons/src/utils/settingsValidation/integrations/pluggable';
 import { validateLogger } from '@splitsoftware/splitio-commons/src/utils/settingsValidation/logger/pluggableLogger';
-import { validateLocalhost } from '@splitsoftware/splitio-commons/src/utils/settingsValidation/localhost';
+import { validateLocalhost } from '@splitsoftware/splitio-commons/src/utils/settingsValidation/localhost/pluggable';
 
 const params = {
   defaults,

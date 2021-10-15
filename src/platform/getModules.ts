@@ -10,11 +10,12 @@ import EventEmitter from '@splitsoftware/splitio-commons/src/utils/MinEvents';
 import { shouldAddPt } from '@splitsoftware/splitio-commons/src/trackers/impressionObserver/utils';
 import { ISdkFactoryParams } from '@splitsoftware/splitio-commons/src/sdkFactory/types';
 import { SplitIO, ISettings } from '@splitsoftware/splitio-commons/src/types';
+import { LOCALHOST_MODE } from '@splitsoftware/splitio-commons/src/utils/constants';
 
 import { RNSignalListener } from './RNSignalListener';
 import { getEventSource } from './getEventSource';
 
-const rnPlatform = {
+const platform = {
   // Return global fetch which is always available in RN runtime
   getFetch() {
     return fetch;
@@ -25,29 +26,34 @@ const rnPlatform = {
 
 const syncManagerOnlineCSFactory = syncManagerOnlineFactory(pollingManagerCSFactory, pushManagerFactory);
 
-/**
- * Get minimal modules for RN client-side SDK in standalone mode and with online syncManager.
- */
 export function getModules(settings: ISettings): ISdkFactoryParams {
-  return {
+  const modules: ISdkFactoryParams = {
     settings,
 
-    platform: rnPlatform,
+    platform,
 
     storageFactory: settings.storage,
 
-    splitApiFactory: settings.mode === 'localhost' ? undefined : splitApiFactory,
+    splitApiFactory,
 
-    syncManagerFactory: settings.mode === 'localhost' ? settings.sync.localhostMode : syncManagerOnlineCSFactory,
+    syncManagerFactory: syncManagerOnlineCSFactory,
 
     sdkManagerFactory,
 
     sdkClientMethodFactory: sdkClientMethodCSFactory,
 
-    SignalListener: settings.mode === 'localhost' ? undefined : (RNSignalListener as ISdkFactoryParams['SignalListener']),
+    SignalListener: RNSignalListener as ISdkFactoryParams['SignalListener'],
 
     impressionListener: settings.impressionListener as SplitIO.IImpressionListener,
 
     impressionsObserverFactory: shouldAddPt(settings) ? impressionObserverCSFactory : undefined,
   };
+
+  if (settings.mode === LOCALHOST_MODE) {
+    modules.splitApiFactory = undefined;
+    modules.syncManagerFactory = settings.sync.localhostMode;
+    modules.SignalListener = undefined;
+  }
+
+  return modules;
 }

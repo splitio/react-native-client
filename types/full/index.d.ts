@@ -7,7 +7,10 @@ export = JsSdk;
 
 declare module JsSdk {
   /**
-   * Split.io sdk factory function.
+   * Full version of the Split.io sdk factory function.
+   *
+   * Unlike the slim version, it does include localhost mode out-of-the-box @see {@link https://help.split.io/hc/en-us/articles/4406066357901#localhost-mode}.
+   *
    * The settings parameter should be an object that complies with the SplitIO.IReactNativeSettings.
    * For more information read the corresponding article: @see {@link https://help.split.io/hc/en-us/articles/4406066357901#configuration}
    */
