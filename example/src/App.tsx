@@ -114,6 +114,7 @@ const App = () => {
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
+          <Text>SDK version: {factory.settings.version}</Text>
           <Text>SDK state: {sdkState}</Text>
 
           {/* <Text>User key:</Text>
