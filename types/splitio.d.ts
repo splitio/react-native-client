@@ -31,8 +31,13 @@ type EventConsts = {
   SDK_UPDATE: 'state::update'
 };
 /**
+ * Storage types.
+ * @typedef {string} StorageType
+ */
+type StorageType = 'MEMORY' | 'LOCALSTORAGE';
+/**
  * Settings interface. This is a representation of the settings the SDK expose, that's why
- * it's props are readonly.
+ * most of it's props are readonly. Only features should be rewritten when localhost mode is active.
  * @interface ISettings
  */
 interface ISettings {
@@ -46,9 +51,10 @@ interface ISettings {
     featuresRefreshRate: number,
     impressionsRefreshRate: number,
     segmentsRefreshRate: number,
+    offlineRefreshRate: number,
     eventsPushRate: number,
     eventsQueueSize: number,
-    pushRetryBackoffBase: number,
+    pushRetryBackoffBase: number
   },
   readonly startup: {
     readyTimeout: number,
@@ -66,10 +72,15 @@ interface ISettings {
   readonly integrations?: SplitIO.IntegrationFactory[],
   readonly debug: boolean | LogLevel | SplitIO.ILogger,
   readonly version: string,
+  /**
+   * Mocked features map.
+   */
+  features?: SplitIO.MockedFeaturesMap,
   readonly streamingEnabled: boolean,
   readonly sync: {
     splitFilters: SplitIO.SplitFilter[],
     impressionsMode: SplitIO.ImpressionsMode,
+    localhostMode?: SplitIO.LocalhostFactory
   }
 }
 /**
@@ -113,11 +124,17 @@ interface ILoggerAPI {
  */
 interface ISharedSettings {
   /**
-   * Boolean value to indicate whether the logger should be enabled or disabled by default, or a Logger object.
+   * Boolean value to indicate whether the logger should be enabled or disabled by default, or a log level string or a Logger object.
    * Passing a logger object is required to get descriptive log messages. Otherwise most logs will print with message codes.
    * @see {@link https://help.split.io/hc/en-us/articles/4406066357901#logging}
    *
-   * @property {boolean | ILogger} debug
+   * Examples:
+   * ```typescript
+   * config.debug = true
+   * config.debug = 'WARN'
+   * config.debug = ErrorLogger()
+   * ```
+   * @property {boolean | LogLevel | ILogger} debug
    * @default false
    */
   debug?: boolean | LogLevel | SplitIO.ILogger,
@@ -145,6 +162,7 @@ interface ISharedSettings {
      * This configuration is only meaningful when the SDK is working in "standalone" mode.
      *
      * At the moment, two types of split filters are supported: by name and by prefix.
+     *
      * Example:
      *  `splitFilter: [
      *    { type: 'byName', values: ['my_split_1', 'my_split_2'] }, // will fetch splits named 'my_split_1' and 'my_split_2'
@@ -162,6 +180,25 @@ interface ISharedSettings {
      * @default 'OPTIMIZED'
      */
     impressionsMode?: SplitIO.ImpressionsMode,
+    /**
+     * Defines the factory function to instanciate the SDK in localhost mode.
+     *
+     * NOTE: this is only required if using the slim entry point of the library to init the SDK in localhost mode.
+     *
+     * For more information @see {@link https://help.split.io/hc/en-us/articles/4406066357901#localhost-mode}
+     *
+     * Example:
+     * ```typescript
+     * SplitFactory({
+     *   ...
+     *   sync: {
+     *     localhostMode: LocalhostFromObject()
+     *   }
+     * })
+     * ```
+     * @property {Object} localhostMode
+     */
+    localhostMode?: SplitIO.LocalhostFactory
   }
 }
 /**
@@ -329,6 +366,11 @@ declare namespace SplitIO {
     [featureName: string]: string | TreatmentWithConfig
   };
   /**
+   * Localhost types.
+   * @typedef {string} LocalhostType
+   */
+  type LocalhostType = 'LocalhostFromObject'
+  /**
    * Object with information about an impression. It contains the generated impression DTO as well as
    * complementary information around where and how it was generated in that way.
    * @typedef {Object} ImpressionData
@@ -422,7 +464,18 @@ declare namespace SplitIO {
    * By returning undefined, the SDK will use the default IN MEMORY storage.
    * Input parameter details are not part of the public API.
    */
-  type StorageSyncFactory = (params: {}) => (StorageSync | undefined)
+  type StorageSyncFactory = {
+    readonly type: StorageType
+    (params: {}): (StorageSync | undefined)
+  }
+  /**
+   * Localhost mode factory.
+   * Its interface details are not part of the public API.
+   */
+  type LocalhostFactory = {
+    readonly type: LocalhostType
+    (params: {}): {}
+  }
   /**
    * Impression listener interface. This is the interface that needs to be implemented
    * by the element you provide to the SDK as impression listener.
@@ -611,6 +664,13 @@ declare namespace SplitIO {
        */
       eventsQueueSize?: number,
       /**
+       * For mocking/testing only. The SDK will refresh the features mocked data when mode is set to "localhost" by defining the key.
+       * For more information @see {@link https://help.split.io/hc/en-us/articles/4406066357901#localhost-mode}
+       * @property {number} offlineRefreshRate
+       * @default 15
+       */
+      offlineRefreshRate?: number,
+      /**
        * When using streaming mode, seconds to wait before re attempting to connect for push notifications.
        * Next attempts follow intervals in power of two: base seconds, base x 2 seconds, base x 4 seconds, ...
        * @property {number} pushRetryBackoffBase
@@ -640,6 +700,11 @@ declare namespace SplitIO {
        */
       labelsEnabled?: boolean
     },
+    /**
+     * Mocked features map. For testing purposses only. For using this you should specify "localhost" as authorizationKey on core settings.
+     * @see {@link https://help.split.io/hc/en-us/articles/4406066357901#localhost-mode}
+     */
+    features?: MockedFeaturesMap,
     /**
      * Defines the factory function to instanciate the storage. If not provided, the default IN MEMORY storage is used.
      * @property {Object} storage

@@ -1,0 +1,7 @@
+{
+  "main": "../lib/commonjs/full/index.js",
+  "module": "../lib/module/full/index.js",
+  "types": "../types/full/index.d.ts",
+  "react-native": "../lib/module/full/index.js",
+  "sideEffects": false
+}
