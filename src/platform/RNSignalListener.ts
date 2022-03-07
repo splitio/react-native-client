@@ -44,9 +44,11 @@ export class RNSignalListener implements ISignalListener {
       case TO_FOREGROUND:
         this.settings.log.debug(`App transition to foreground${this.syncManager.pushManager ? '. Attempting to resume streaming' : ''}`);
 
-        // This branch is called when app transition to foreground or it is launched,
-        // in which case calling pushManager.start has no effect (it has been already started).
-        // Here, synchronization is resumed.
+        // This branch is called when (1) app is launched, or (2) app transitions to foreground.
+        // In 1, calling pushManager.start has no effect, since it has already been started.
+        // In 2, PushManager is resumed in case it was paused and the SDK is running in push mode.
+        // If running in polling mode, either pushManager is not defined (e.g., streamingEnabled is false)
+        // or calling pushManager.start has no effect because it was disabled (PUSH_NONRETRYABLE_ERROR).
         if (this.syncManager.pushManager) this.syncManager.pushManager.start();
 
         break;
@@ -58,15 +60,16 @@ export class RNSignalListener implements ISignalListener {
         );
 
         // This branch is called when the app transition to background.
-        // Here, pushManager is stopped to close streaming connections for Android.
-        // In iOS, connections are automatically closed/resumed by the OS.
-        // Polling mode is paused during background, since JS timers callbacks are executed only
-        // when the app is in the foreground. Therefore, stopping syncManager is not necessary.
-        // Other features like Fetch, AsyncStorage, AppState and NetInfo listeners, can be used.
+        // Here, PushManager is paused in case the SDK is running in push mode, to close streaming connection for Android.
+        // In iOS it is not strictly required, since connections are automatically closed/resumed by the OS.
+        // The remaining SyncManager components (PollingManager and Submitter) don't need to be stopped, even if running in
+        // polling mode, because sync tasks are "delayed" during background, since JS timers callbacks are executed only
+        // when the app is in foreground (https://github.com/facebook/react-native/issues/12981#issuecomment-652745831).
+        // Other features like Fetch, AsyncStorage, AppState and NetInfo listeners, can be used in background.
         if (this.syncManager.pushManager) this.syncManager.pushManager.stop();
 
         // We cannot listen when the app is evicted by the OS or the user, but it always transitions to background before that.
-        // So we should not flush events and impressions in the background, except that they cannot be stored in a persistent storage.
+        // So we should not flush events and impressions in background, except that they cannot be stored in a persistent storage.
         if (this.settings.flushDataOnBackground) this.syncManager.flush();
 
         break;
@@ -79,7 +82,7 @@ export class RNSignalListener implements ISignalListener {
    */
   start() {
     this.settings.log.debug(CLEANUP_REGISTERING, [EVENT_NAME]);
-    // Checking currentState in the rare case that the SDK is instantiated in the background, where streaming should not connect.
+    // Checking currentState in the rare case that the SDK is instantiated in background, where streaming should not connect.
     // The SDK should be instantiated when React Native JS context is initiated or the root componentDidMount method is called, where the app is in the foreground.
     this._handleAppStateChange(AppState.currentState);
     AppState.addEventListener('change', this._handleAppStateChange);

@@ -1,6 +1,6 @@
 # Split JavaScript SDK for React Native
 
-[![npm version](https://badge.fury.io/js/%40splitsoftware%2Fsplitio-react-native.svg)](https://badge.fury.io/js/%40splitsoftware%2Fsplitio) [![Build Status](https://travis-ci.com/splitio/react-native-client.svg?branch=main)](https://travis-ci.com/splitio/react-native-client)
+[![npm version](https://badge.fury.io/js/%40splitsoftware%2Fsplitio-react-native.svg)](https://badge.fury.io/js/%40splitsoftware%2Fsplitio) [![Build Status](https://github.com/splitio/react-native-client/actions/workflows/ci.yml/badge.svg)](https://github.com/splitio/react-native-client/actions/workflows/ci.yml)
 
 ## Overview
 This SDK is designed to work with Split, the platform for controlled rollouts, which serves features to your users via a Split feature flag to manage your complete customer experience.
@@ -62,8 +62,8 @@ Split has built and maintains SDKs for:
 * iOS [Github](https://github.com/splitio/ios-client) [Docs](https://help.split.io/hc/en-us/articles/360020401491-iOS-SDK)
 * Java [Github](https://github.com/splitio/java-client) [Docs](https://help.split.io/hc/en-us/articles/360020405151-Java-SDK)
 * Javascript [Github](https://github.com/splitio/javascript-client) [Docs](https://help.split.io/hc/en-us/articles/360020448791-JavaScript-SDK)
-* Node [Github](https://github.com/splitio/javascript-client) [Docs](https://help.split.io/hc/en-us/articles/360020564931-Node-js-SDK)
 * Javascript for Browser [Github](https://github.com/splitio/javascript-browser-client) [Docs](https://help.split.io/hc/en-us/articles/360058730852-Browser-SDK)
+* Node [Github](https://github.com/splitio/javascript-client) [Docs](https://help.split.io/hc/en-us/articles/360020564931-Node-js-SDK)
 * PHP [Github](https://github.com/splitio/php-client) [Docs](https://help.split.io/hc/en-us/articles/360020350372-PHP-SDK)
 * Python [Github](https://github.com/splitio/python-client) [Docs](https://help.split.io/hc/en-us/articles/360020359652-Python-SDK)
 * React [Github](https://github.com/splitio/react-client) [Docs](https://help.split.io/hc/en-us/articles/360038825091-React-SDK)
