@@ -5,6 +5,7 @@ import { validateStorageCS } from '@splitsoftware/splitio-commons/src/utils/sett
 import { validatePluggableIntegrations } from '@splitsoftware/splitio-commons/src/utils/settingsValidation/integrations/pluggable';
 import { validateLogger } from '@splitsoftware/splitio-commons/src/utils/settingsValidation/logger/pluggableLogger';
 import { validateLocalhostWithDefault } from '@splitsoftware/splitio-commons/src/utils/settingsValidation/localhost/builtin';
+import { validateConsent } from '@splitsoftware/splitio-commons/src/utils/settingsValidation/consent';
 
 const params = {
   defaults,
@@ -14,6 +15,7 @@ const params = {
   logger: validateLogger,
   // Full SplitFactory returns a default instance, except a valid one is provided
   localhost: validateLocalhostWithDefault,
+  consent: validateConsent,
 };
 
 export function settingsValidator(config: any) {
