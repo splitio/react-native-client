@@ -9,12 +9,12 @@ import { validateConsent } from '@splitsoftware/splitio-commons/src/utils/settin
 
 const params = {
   defaults,
+  acceptKey: true, // Client with bound key
   runtime: validateRuntime,
   storage: validateStorageCS,
   integrations: validatePluggableIntegrations,
   logger: validateLogger,
-  // Slim SplitFactory validates that the localhost module is passed in localhost mode
-  localhost: validateLocalhost,
+  localhost: validateLocalhost, // Slim SplitFactory validates that the localhost module is passed in localhost mode
   consent: validateConsent,
 };
 
