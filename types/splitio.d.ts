@@ -1,4 +1,4 @@
-// Type definitions for React Native Split Software SDK v1.0.0
+// Type definitions for React Native Split Software SDK
 // Project: http://www.split.io/
 // Definitions by: Nico Zelaya <https://github.com/NicoZelaya/>
 
@@ -9,11 +9,11 @@ export = SplitIO;
  * EventEmitter interface based on a subset of the NodeJS.EventEmitter methods.
  */
 interface IEventEmitter {
-  addListener(event: string, listener: (...args: any[]) => void): this;
+  addListener(event: string, listener: (...args: any[]) => void): this
   on(event: string, listener: (...args: any[]) => void): this
   once(event: string, listener: (...args: any[]) => void): this
-  removeListener(event: string, listener: (...args: any[]) => void): this;
-  off(event: string, listener: (...args: any[]) => void): this;
+  removeListener(event: string, listener: (...args: any[]) => void): this
+  off(event: string, listener: (...args: any[]) => void): this
   removeAllListeners(event?: string): this
   emit(event: string, ...args: any[]): boolean
 }
@@ -495,7 +495,10 @@ declare namespace SplitIO {
    * By returning an integration, the SDK will queue events and impressions into it.
    * Input parameter details are not part of the public API.
    */
-  type IntegrationFactory = (params: {}) => (Integration | void)
+  type IntegrationFactory = {
+    readonly type: string
+    (params: {}): (Integration | void)
+  }
   /**
    * A pair of user key and it's trafficType, required for tracking valid Split events.
    * @typedef {Object} Identity
@@ -732,13 +735,13 @@ declare namespace SplitIO {
    */
   export interface ISDK extends IBasicSDK {
     /**
-     * Returns the default client instance of the SDK, associated with the key and optional traffic type from settings.
+     * Returns the default client instance of the SDK, associated with the key provided on settings.
      * @function client
      * @returns {IClient} The client instance.
      */
     client(): IClient,
     /**
-     * Returns a shared client of the SDK, associated with the given key and optional traffic type.
+     * Returns a shared client of the SDK, associated with the given key.
      * @function client
      * @param {SplitKey} key The key for the new client instance.
      * @returns {IClient} The client instance.
@@ -759,35 +762,35 @@ declare namespace SplitIO {
    */
   interface IClientSS extends IBasicClient {
     /**
-     * Returns a Treatment value, which will be (or eventually be) the treatment string for the given feature.
+     * Returns a Treatment value, which is the treatment string for the given feature.
      * @function getTreatment
      * @param {string} key - The string key representing the consumer.
      * @param {string} splitName - The string that represents the split we wan't to get the treatment.
      * @param {Attributes=} attributes - An object of type Attributes defining the attributes for the given key.
-     * @returns {Treatment} The treatment or treatment promise which will resolve to the treatment string.
+     * @returns {Treatment} The treatment string.
      */
     getTreatment(key: SplitKey, splitName: string, attributes?: Attributes): Treatment,
     /**
-     * Returns a TreatmentWithConfig value (a map of treatment and config), which will be (or eventually be) the map with treatment and config for the given feature.
+     * Returns a TreatmentWithConfig value, which is an object with both treatment and config string for the given feature.
      * @function getTreatmentWithConfig
      * @param {string} key - The string key representing the consumer.
      * @param {string} splitName - The string that represents the split we wan't to get the treatment.
      * @param {Attributes=} attributes - An object of type Attributes defining the attributes for the given key.
-     * @returns {TreatmentWithConfig} The TreatmentWithConfig or TreatmentWithConfig promise which will resolve to the map containing
-     *                                the treatment and the configuration stringified JSON (or null if there was no config for that treatment).
+     * @returns {TreatmentWithConfig} The TreatmentWithConfig, the object containing the treatment string and the
+     *                                configuration stringified JSON (or null if there was no config for that treatment).
      */
     getTreatmentWithConfig(key: SplitKey, splitName: string, attributes?: Attributes): TreatmentWithConfig,
     /**
-     * Returns a Treatments value, whick will be (or eventually be) an object with the treatments for the given features.
+     * Returns a Treatments value, which is an object map with the treatments for the given features.
      * @function getTreatments
      * @param {string} key - The string key representing the consumer.
      * @param {Array<string>} splitNames - An array of the split names we wan't to get the treatments.
      * @param {Attributes=} attributes - An object of type Attributes defining the attributes for the given key.
-     * @returns {Treatments} The treatments or treatments promise which will resolve to the treatments object.
+     * @returns {Treatments} The treatments object map.
      */
     getTreatments(key: SplitKey, splitNames: string[], attributes?: Attributes): Treatments,
     /**
-     * Returns a TreatmentsWithConfig value, whick will be an object with the TreatmentWithConfig (a map with both treatment and config string) for the given features.
+     * Returns a TreatmentsWithConfig value, which is an object map with the TreatmentWithConfig (an object with both treatment and config string) for the given features.
      * @function getTreatmentsWithConfig
      * @param {string} key - The string key representing the consumer.
      * @param {Array<string>} splitNames - An array of the split names we wan't to get the treatments.
@@ -803,7 +806,7 @@ declare namespace SplitIO {
      * @param {string} eventType - The event type corresponding to this event.
      * @param {number=} value - The value of this event.
      * @param {Properties=} properties - The properties of this event. Values can be string, number, boolean or null.
-     * @returns {boolean} Whether the event was added to the queue succesfully or not.
+     * @returns {boolean} Whether the event was added to the queue successfully or not.
      */
     track(key: SplitIO.SplitKey, trafficType: string, eventType: string, value?: number, properties?: Properties): boolean,
   }
@@ -825,7 +828,7 @@ declare namespace SplitIO {
      */
     getTreatment(key: SplitKey, splitName: string, attributes?: Attributes): AsyncTreatment,
     /**
-     * Returns a TreatmentWithConfig value, which will be (or eventually be) a map with both treatment and config string for the given feature.
+     * Returns a TreatmentWithConfig value, which will be (or eventually be) an object with both treatment and config string for the given feature.
      * For usage on NodeJS as we don't have only one key.
      * NOTE: Treatment will be a promise only in async storages, like REDIS.
      * @function getTreatmentWithConfig
@@ -836,17 +839,17 @@ declare namespace SplitIO {
      */
     getTreatmentWithConfig(key: SplitKey, splitName: string, attributes?: Attributes): AsyncTreatmentWithConfig,
     /**
-     * Returns a Treatments value, whick will be (or eventually be) an object with the treatments for the given features.
+     * Returns a Treatments value, which will be (or eventually be) an object map with the treatments for the given features.
      * For usage on NodeJS as we don't have only one key.
      * @function getTreatments
      * @param {string} key - The string key representing the consumer.
      * @param {Array<string>} splitNames - An array of the split names we wan't to get the treatments.
      * @param {Attributes=} attributes - An object of type Attributes defining the attributes for the given key.
-     * @returns {AsyncTreatments} Treatments promise which will resolve to the treatments object.
+     * @returns {AsyncTreatments} Treatments promise which will resolve to the treatments object map.
      */
     getTreatments(key: SplitKey, splitNames: string[], attributes?: Attributes): AsyncTreatments,
     /**
-     * Returns a Treatments value, whick will be (or eventually be) an object with all the maps of treatment and config string for the given features.
+     * Returns a TreatmentsWithConfig value, which will be (or eventually be) an object map with the TreatmentWithConfig (an object with both treatment and config string) for the given features.
      * For usage on NodeJS as we don't have only one key.
      * @function getTreatmentsWithConfig
      * @param {string} key - The string key representing the consumer.
@@ -863,7 +866,7 @@ declare namespace SplitIO {
      * @param {string} eventType - The event type corresponding to this event.
      * @param {number=} value - The value of this event.
      * @param {Properties=} properties - The properties of this event. Values can be string, number, boolean or null.
-     * @returns {Promise<boolean>} A promise that resolves to a boolean indicating if the event was added to the queue succesfully or not.
+     * @returns {Promise<boolean>} A promise that resolves to a boolean indicating if the event was added to the queue successfully or not.
      */
     track(key: SplitIO.SplitKey, trafficType: string, eventType: string, value?: number, properties?: Properties): Promise<boolean>
   }
@@ -874,31 +877,31 @@ declare namespace SplitIO {
    */
   interface IClient extends IBasicClient {
     /**
-     * Returns a Treatment value, which will be the treatment string for the given feature.
+     * Returns a Treatment value, which is the treatment string for the given feature.
      * @function getTreatment
      * @param {string} splitName - The string that represents the split we wan't to get the treatment.
      * @param {Attributes=} attributes - An object of type Attributes defining the attributes for the given key.
-     * @returns {Treatment} The treatment result.
+     * @returns {Treatment} The treatment string.
      */
     getTreatment(splitName: string, attributes?: Attributes): Treatment,
     /**
-     * Returns a TreatmentWithConfig value, which will be a map of treatment and the config for that treatment.
-     * @function getTreatment
+     * Returns a TreatmentWithConfig value, which is an object with both treatment and config string for the given feature.
+     * @function getTreatmentWithConfig
      * @param {string} splitName - The string that represents the split we wan't to get the treatment.
      * @param {Attributes=} attributes - An object of type Attributes defining the attributes for the given key.
-     * @returns {TreatmentWithConfig} The treatment or treatment promise which will resolve to the treatment string.
+     * @returns {TreatmentWithConfig} The map containing the treatment and the configuration stringified JSON (or null if there was no config for that treatment).
      */
     getTreatmentWithConfig(splitName: string, attributes?: Attributes): TreatmentWithConfig,
     /**
-     * Returns a Treatments value, whick will be (or eventually be) an object with the treatments for the given features.
+     * Returns a Treatments value, which is an object map with the treatments for the given features.
      * @function getTreatments
      * @param {Array<string>} splitNames - An array of the split names we wan't to get the treatments.
      * @param {Attributes=} attributes - An object of type Attributes defining the attributes for the given key.
-     * @returns {Treatments} The treatments or treatments promise which will resolve to the treatments object.
+     * @returns {Treatments} The treatments object map.
      */
     getTreatments(splitNames: string[], attributes?: Attributes): Treatments,
     /**
-     * Returns a TreatmentsWithConfig value, whick will be an object with the TreatmentWithConfig (a map with both treatment and config string) for the given features.
+     * Returns a TreatmentsWithConfig value, which is an object map with the TreatmentWithConfig (an object with both treatment and config string) for the given features.
      * @function getTreatmentsWithConfig
      * @param {Array<string>} splitNames - An array of the split names we wan't to get the treatments.
      * @param {Attributes=} attributes - An object of type Attributes defining the attributes for the given key.
@@ -912,7 +915,7 @@ declare namespace SplitIO {
      * @param {string} eventType - The event type corresponding to this event.
      * @param {number=} value - The value of this event.
      * @param {Properties=} properties - The properties of this event. Values can be string, number, boolean or null.
-     * @returns {boolean} Whether the event was added to the queue succesfully or not.
+     * @returns {boolean} Whether the event was added to the queue successfully or not.
      */
     track(trafficType: string, eventType: string, value?: number, properties?: Properties): boolean,
   }
@@ -927,20 +930,20 @@ declare namespace SplitIO {
      * @function names
      * @returns {SplitNames} The lists of Split names.
      */
-    names(): SplitNames;
+    names(): SplitNames,
     /**
      * Get the array of splits data in SplitView format.
      * @function splits
      * @returns {SplitViews} The list of SplitIO.SplitView.
      */
-    splits(): SplitViews;
+    splits(): SplitViews,
     /**
      * Get the data of a split in SplitView format.
      * @function split
      * @param {string} splitName The name of the split we wan't to get info of.
      * @returns {SplitView} The SplitIO.SplitView of the given split.
      */
-    split(splitName: string): SplitView;
+    split(splitName: string): SplitView,
   }
   /**
    * Representation of a manager instance with asynchronous storage of the SDK.
@@ -953,19 +956,19 @@ declare namespace SplitIO {
      * @function names
      * @returns {SplitNamesAsync} A promise that will resolve to the array of Splitio.SplitNames.
      */
-    names(): SplitNamesAsync;
+    names(): SplitNamesAsync,
     /**
      * Get the array of splits data in SplitView format.
      * @function splits
      * @returns {SplitViewsAsync} A promise that will resolve to the SplitIO.SplitView list.
      */
-    splits(): SplitViewsAsync;
+    splits(): SplitViewsAsync,
     /**
      * Get the data of a split in SplitView format.
      * @function split
      * @param {string} splitName The name of the split we wan't to get info of.
      * @returns {SplitViewAsync} A promise that will resolve to the SplitIO.SplitView value.
      */
-    split(splitName: string): SplitViewAsync;
+    split(splitName: string): SplitViewAsync,
   }
 }
