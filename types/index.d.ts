@@ -12,7 +12,7 @@ declare module JsSdk {
    * Recommended to use for bundle size reduction in production, since it doesn't include localhost mode out-of-the-box
    * @see {@link https://help.split.io/hc/en-us/articles/4406066357901#localhost-mode}.
    *
-   * The settings parameter should be an object that complies with the SplitIO.IBrowserSettings.
+   * The settings parameter should be an object that complies with the SplitIO.IReactNativeSettings.
    * For more information read the corresponding article: @see {@link https://help.split.io/hc/en-us/articles/4406066357901#configuration}
    */
   export function SplitFactory(settings: SplitIO.IReactNativeSettings): SplitIO.ISDK;

@@ -728,7 +728,7 @@ declare namespace SplitIO {
      */
     features?: MockedFeaturesMap,
     /**
-     * Defines the factory function to instanciate the storage. If not provided, the default IN MEMORY storage is used.
+     * Defines the factory function to instantiate the storage. If not provided, the default IN MEMORY storage is used.
      * @property {Object} storage
      * @todo at the moment there are not storages to plug in React Native SDK.
      */
