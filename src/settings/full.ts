@@ -14,6 +14,7 @@ const params = {
   logger: validateLogger,
   // Full SplitFactory returns a default instance, except a valid one is provided
   localhost: validateLocalhostWithDefault,
+  consent: () => undefined, // @TODO replace to support user consent
 };
 
 export function settingsValidator(config: any) {

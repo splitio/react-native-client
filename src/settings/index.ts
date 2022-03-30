@@ -14,6 +14,7 @@ const params = {
   logger: validateLogger,
   // Slim SplitFactory validates that the localhost module is passed in localhost mode
   localhost: validateLocalhost,
+  consent: () => undefined, // @TODO replace to support user consent
 };
 
 export function settingsValidator(config: any) {

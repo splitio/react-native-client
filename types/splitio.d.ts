@@ -181,7 +181,7 @@ interface ISharedSettings {
      */
     impressionsMode?: SplitIO.ImpressionsMode,
     /**
-     * Defines the factory function to instanciate the SDK in localhost mode.
+     * Defines the factory function to instantiate the SDK in localhost mode.
      *
      * NOTE: this is only required if using the slim entry point of the library to init the SDK in localhost mode.
      *
@@ -706,7 +706,7 @@ declare namespace SplitIO {
      */
     features?: MockedFeaturesMap,
     /**
-     * Defines the factory function to instanciate the storage. If not provided, the default IN MEMORY storage is used.
+     * Defines the factory function to instantiate the storage. If not provided, the default IN MEMORY storage is used.
      * @property {Object} storage
      * @todo at the moment there are not storages to plug in React Native SDK.
      */

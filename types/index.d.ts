@@ -1,4 +1,4 @@
-// Declaration file for React Native Split Software SDK v1.0.0
+// Declaration file for React Native Split Software SDK
 // Project: http://www.split.io/
 // Definitions by: Nico Zelaya <https://github.com/NicoZelaya/>
 
