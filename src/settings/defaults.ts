@@ -1,4 +1,7 @@
-const packageVersion = '0.1.0';
+import { ConsentStatus } from '@splitsoftware/splitio-commons/src/types';
+import { CONSENT_GRANTED } from '@splitsoftware/splitio-commons/src/utils/constants';
+
+const packageVersion = '0.2.0';
 
 export const defaults = {
   startup: {
@@ -11,6 +14,9 @@ export const defaults = {
     // Amount of time we will wait before the first push of events.
     eventsFirstPushWindow: 10,
   },
+
+  // Consent is considered granted by default
+  userConsent: CONSENT_GRANTED as ConsentStatus,
 
   // Instance version.
   version: `reactnative-${packageVersion}`,

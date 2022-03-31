@@ -1,3 +1,10 @@
+0.2.0 (March 31, 2022)
+ - Added support for user consent, a way to control if the SDK tracks impressions and events or not, based on users granting or rejecting consent for it.
+ - Added support to SDK clients to optionally bind attributes, keeping these loaded within the SDK along with the user ID, for easier usage when requesting flag.
+ - Added `scheduler.impressionsQueueSize` property to SDK configuration (See https://help.split.io/hc/en-us/articles/4406066357901-React-Native-SDK#configuration).
+ - Updated some NPM dependencies for vulnerability fixes.
+ - Bugfixing - Fixed validation of SDK configuration, to parse core.key into a string and log a warning when passing a number (Related to issue https://github.com/splitio/react-native-client/issues/19).
+
 0.1.0 (October 20, 2021)
  - Added localhost mode support (Read more in our docs here: https://help.split.io/hc/en-us/articles/4406066357901-React-Native-SDK#localhost-mode).
  - Updated @splitsoftware/splitio-commons dependency to version 1.0.0, which includes:
