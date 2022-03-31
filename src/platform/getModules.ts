@@ -1,16 +1,17 @@
 import { splitApiFactory } from '@splitsoftware/splitio-commons/src/services/splitApi';
 import { syncManagerOnlineFactory } from '@splitsoftware/splitio-commons/src/sync/syncManagerOnline';
-import pushManagerFactory from '@splitsoftware/splitio-commons/src/sync/streaming/pushManager';
-import pollingManagerCSFactory from '@splitsoftware/splitio-commons/src/sync/polling/pollingManagerCS';
+import { pushManagerFactory } from '@splitsoftware/splitio-commons/src/sync/streaming/pushManager';
+import { pollingManagerCSFactory } from '@splitsoftware/splitio-commons/src/sync/polling/pollingManagerCS';
 import { sdkManagerFactory } from '@splitsoftware/splitio-commons/src/sdkManager/index';
 import { sdkClientMethodCSFactory } from '@splitsoftware/splitio-commons/src/sdkClient/sdkClientMethodCS';
 import { impressionObserverCSFactory } from '@splitsoftware/splitio-commons/src/trackers/impressionObserver/impressionObserverCS';
-import EventEmitter from '@splitsoftware/splitio-commons/src/utils/MinEvents';
+import { EventEmitter } from '@splitsoftware/splitio-commons/src/utils/MinEvents';
 
 import { shouldAddPt } from '@splitsoftware/splitio-commons/src/trackers/impressionObserver/utils';
 import { ISdkFactoryParams } from '@splitsoftware/splitio-commons/src/sdkFactory/types';
-import { SplitIO, ISettings } from '@splitsoftware/splitio-commons/src/types';
+import { ISettings } from '@splitsoftware/splitio-commons/src/types';
 import { LOCALHOST_MODE } from '@splitsoftware/splitio-commons/src/utils/constants';
+import { userConsentProps } from '@splitsoftware/splitio-commons/src/sdkFactory/userConsentProps';
 
 import { RNSignalListener } from './RNSignalListener';
 import { getEventSource } from './getEventSource';
@@ -44,9 +45,9 @@ export function getModules(settings: ISettings): ISdkFactoryParams {
 
     SignalListener: RNSignalListener as ISdkFactoryParams['SignalListener'],
 
-    impressionListener: settings.impressionListener as SplitIO.IImpressionListener,
-
     impressionsObserverFactory: shouldAddPt(settings) ? impressionObserverCSFactory : undefined,
+
+    extraProps: userConsentProps,
   };
 
   if (settings.mode === LOCALHOST_MODE) {
