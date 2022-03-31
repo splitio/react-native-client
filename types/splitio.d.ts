@@ -50,6 +50,7 @@ interface ISettings {
   readonly scheduler: {
     featuresRefreshRate: number,
     impressionsRefreshRate: number,
+    impressionsQueueSize: number,
     segmentsRefreshRate: number,
     offlineRefreshRate: number,
     eventsPushRate: number,
@@ -81,7 +82,8 @@ interface ISettings {
     splitFilters: SplitIO.SplitFilter[],
     impressionsMode: SplitIO.ImpressionsMode,
     localhostMode?: SplitIO.LocalhostFactory
-  }
+  },
+  readonly userConsent: SplitIO.ConsentStatus
 }
 /**
  * Log levels.
@@ -334,12 +336,17 @@ declare namespace SplitIO {
   type Event = 'init::timeout' | 'init::ready' | 'init::cache-ready' | 'state::update';
   /**
    * Split attributes should be on object with values of type string or number (dates should be sent as millis since epoch).
-   * @typedef {Object.<number, string, boolean, string[], number[]>} Attributes
+   * @typedef {Object.<AttributeType>} Attributes
    * @see {@link https://help.split.io/hc/en-us/articles/4406066357901#attribute-syntax}
    */
   type Attributes = {
-    [attributeName: string]: string | number | boolean | Array<string | number>
+    [attributeName: string]: AttributeType
   };
+  /**
+   * Type of an attribute value
+   * @typedef {string | number | boolean | Array<string | number>} AttributeType
+   */
+  type AttributeType = string | number | boolean | Array<string | number>;
   /**
    * Split properties should be an object with values of type string, number, boolean or null. Size limit of ~31kb.
    * @typedef {Object.<number, string, boolean, null>} Attributes
@@ -584,6 +591,11 @@ declare namespace SplitIO {
   */
   type ImpressionsMode = 'OPTIMIZED' | 'DEBUG';
   /**
+   * User consent status.
+   * @typedef {string} ConsentStatus
+   */
+  type ConsentStatus = 'GRANTED' | 'DECLINED' | 'UNKNOWN';
+  /**
    * Logger
    * Its interface details are not part of the public API. It shouldn't be used directly.
    * @interface ILogger
@@ -647,6 +659,13 @@ declare namespace SplitIO {
        * @default 60
        */
       impressionsRefreshRate?: number,
+      /**
+       * The maximum number of impression items we want to queue. If we queue more values, it will trigger a flush and reset the timer.
+       * If you use a 0 here, the queue will have no maximum size.
+       * @property {number} impressionsQueueSize
+       * @default 30000
+       */
+      impressionsQueueSize?: number,
       /**
        * The SDK polls Split servers for changes to segment definitions. This parameter controls this polling period in seconds.
        * @property {number} segmentsRefreshRate
@@ -726,6 +745,17 @@ declare namespace SplitIO {
      * @todo at the moment there are not integrations to plug in React Native SDK.
      */
     integrations?: IntegrationFactory[],
+    /**
+     * User consent status. Possible values are `'GRANTED'`, which is the default, `'DECLINED'` or `'UNKNOWN'`.
+     * - `'GRANTED'`: the user has granted consent for tracking events and impressions. The SDK will send them to Split cloud.
+     * - `'DECLINED'`: the user has declined consent for tracking events and impressions. The SDK will not send them to Split cloud.
+     * - `'UNKNOWN'`: the user has neither granted nor declined consent for tracking events and impressions. The SDK will track them in its internal storage, and eventually send
+     * them or not if the consent status is updated to 'GRANTED' or 'DECLINED' respectively. The status can be updated at any time with the `setUserConsent` factory method.
+     *
+     * @typedef {string} userConsent
+     * @default 'GRANTED'
+     */
+    userConsent?: ConsentStatus
   }
   /**
    * This represents the interface for the SDK instance with synchronous storage and client-side API,
@@ -752,7 +782,26 @@ declare namespace SplitIO {
      * @function manager
      * @returns {IManager} The manager instance.
      */
-    manager(): IManager
+    manager(): IManager,
+    /**
+     * Set or update the user consent status. Possible values are `true` and `false`, which represent user consent `'GRANTED'` and `'DECLINED'` respectively.
+     * - `true ('GRANTED')`: the user has granted consent for tracking events and impressions. The SDK will send them to Split cloud.
+     * - `false ('DECLINED')`: the user has declined consent for tracking events and impressions. The SDK will not send them to Split cloud.
+     *
+     * NOTE: calling this method updates the user consent at a factory level, affecting all clients of the same factory.
+     *
+     * @function setUserConsent
+     * @param {boolean} userConsent The user consent status, true for 'GRANTED' and false for 'DECLINED'.
+     * @returns {boolean} Whether the provided param is a valid value (i.e., a boolean value) or not.
+     */
+    setUserConsent(userConsent: boolean): boolean;
+    /**
+     * Get the user consent status.
+     *
+     * @function getUserConsent
+     * @returns {ConsentStatus} The user consent status.
+     */
+    getUserConsent(): SplitIO.ConsentStatus;
   }
 
   /**
@@ -918,6 +967,47 @@ declare namespace SplitIO {
      * @returns {boolean} Whether the event was added to the queue successfully or not.
      */
     track(trafficType: string, eventType: string, value?: number, properties?: Properties): boolean,
+    /**
+     * Add an attribute to client's in memory attributes storage.
+     *
+     * @param {string} attributeName Attribute name
+     * @param {AttributeType} attributeValue Attribute value
+     * @returns {boolean} true if the attribute was stored and false otherwise
+     */
+    setAttribute(attributeName: string, attributeValue: AttributeType): boolean,
+    /**
+     * Returns the attribute with the given key.
+     *
+     * @param {string} attributeName Attribute name
+     * @returns {AttributeType} Attribute with the given key
+     */
+    getAttribute(attributeName: string): AttributeType,
+    /**
+     * Removes from client's in memory attributes storage the attribute with the given key.
+     *
+     * @param {string} attributeName
+     * @returns {boolean} true if attribute was removed and false otherwise
+     */
+    removeAttribute(attributeName: string): boolean,
+    /**
+     * Add to client's in memory attributes storage the attributes in 'attributes'.
+     *
+     * @param {Attributes} attributes Object with attributes to store
+     * @returns true if attributes were stored an false otherwise
+     */
+    setAttributes(attributes: Attributes): boolean,
+    /**
+     * Return all the attributes stored in client's in memory attributes storage.
+     *
+     * @returns {Attributes} returns all the stored attributes
+     */
+    getAttributes(): Attributes,
+    /**
+     * Remove all the stored attributes in the client's in memory attribute storage.
+     *
+     * @returns {boolean} true if all attribute were removed and false otherwise
+     */
+    clearAttributes(): boolean,
   }
   /**
    * Representation of a manager instance with synchronous storage of the SDK.
