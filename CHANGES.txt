@@ -1,5 +1,7 @@
+0.3.0 (April 7, 2022)
+ - Added user consent feature to allow delaying or disabling the data tracking from SDK until user consent is explicitly granted or declined. Read more in our docs.
+
 0.2.0 (March 31, 2022)
- - Added support for user consent, a way to control if the SDK tracks impressions and events or not, based on users granting or rejecting consent for it.
  - Added support to SDK clients to optionally bind attributes, keeping these loaded within the SDK along with the user ID, for easier usage when requesting flag.
  - Added `scheduler.impressionsQueueSize` property to SDK configuration (See https://help.split.io/hc/en-us/articles/4406066357901-React-Native-SDK#configuration).
  - Updated some NPM dependencies for vulnerability fixes.

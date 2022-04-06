@@ -11,7 +11,7 @@ import { shouldAddPt } from '@splitsoftware/splitio-commons/src/trackers/impress
 import { ISdkFactoryParams } from '@splitsoftware/splitio-commons/src/sdkFactory/types';
 import { ISettings } from '@splitsoftware/splitio-commons/src/types';
 import { LOCALHOST_MODE } from '@splitsoftware/splitio-commons/src/utils/constants';
-import { userConsentProps } from '@splitsoftware/splitio-commons/src/sdkFactory/userConsentProps';
+import { createUserConsentAPI } from '@splitsoftware/splitio-commons/src/consent/sdkUserConsent';
 
 import { RNSignalListener } from './RNSignalListener';
 import { getEventSource } from './getEventSource';
@@ -47,7 +47,11 @@ export function getModules(settings: ISettings): ISdkFactoryParams {
 
     impressionsObserverFactory: shouldAddPt(settings) ? impressionObserverCSFactory : undefined,
 
-    extraProps: userConsentProps,
+    extraProps: (params) => {
+      return {
+        UserConsent: createUserConsentAPI(params),
+      };
+    },
   };
 
   if (settings.mode === LOCALHOST_MODE) {
