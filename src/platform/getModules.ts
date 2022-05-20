@@ -12,6 +12,7 @@ import { ISdkFactoryParams } from '@splitsoftware/splitio-commons/src/sdkFactory
 import { ISettings } from '@splitsoftware/splitio-commons/src/types';
 import { LOCALHOST_MODE } from '@splitsoftware/splitio-commons/src/utils/constants';
 import { createUserConsentAPI } from '@splitsoftware/splitio-commons/src/consent/sdkUserConsent';
+import { now } from '@splitsoftware/splitio-commons/src/utils/timeTracker/now/browser';
 
 import { RNSignalListener } from './RNSignalListener';
 import { getEventSource } from './getEventSource';
@@ -23,6 +24,7 @@ const platform = {
   },
   EventEmitter,
   getEventSource,
+  now,
 };
 
 const syncManagerOnlineCSFactory = syncManagerOnlineFactory(pollingManagerCSFactory, pushManagerFactory);

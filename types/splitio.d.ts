@@ -51,6 +51,7 @@ interface ISettings {
     featuresRefreshRate: number,
     impressionsRefreshRate: number,
     impressionsQueueSize: number,
+    telemetryRefreshRate: number,
     segmentsRefreshRate: number,
     offlineRefreshRate: number,
     eventsPushRate: number,
@@ -68,7 +69,8 @@ interface ISettings {
     events: string,
     sdk: string,
     auth: string,
-    streaming: string
+    streaming: string,
+    telemetry: string
   },
   readonly integrations?: SplitIO.IntegrationFactory[],
   readonly debug: boolean | LogLevel | SplitIO.ILogger,
@@ -593,7 +595,13 @@ declare namespace SplitIO {
      * @property {string} streaming
      * @default 'https://streaming.split.io'
      */
-    streaming?: string
+    streaming?: string,
+    /**
+     * String property to override the base URL where the SDK will post telemetry data.
+     * @property {string} telemetry
+     * @default 'https://telemetry.split.io/api'
+     */
+    telemetry?: string
   };
 
   /**
@@ -697,6 +705,12 @@ declare namespace SplitIO {
        * @default 30000
        */
       impressionsQueueSize?: number,
+      /**
+       * The SDK sends diagnostic metrics to Split servers. This parameters controls this metric flush period in seconds.
+       * @property {number} telemetryRefreshRate
+       * @default 3600
+       */
+      telemetryRefreshRate?: number,
       /**
        * The SDK polls Split servers for changes to segment definitions. This parameter controls this polling period in seconds.
        * @property {number} segmentsRefreshRate
