@@ -83,7 +83,8 @@ interface ISettings {
   readonly sync: {
     splitFilters: SplitIO.SplitFilter[],
     impressionsMode: SplitIO.ImpressionsMode,
-    localhostMode?: SplitIO.LocalhostFactory
+    enabled: boolean,
+    localhostMode?: SplitIO.LocalhostFactory,
   },
   readonly userConsent: SplitIO.ConsentStatus
 }
@@ -233,7 +234,12 @@ interface ISharedSettings {
      * ```
      * @property {Object} localhostMode
      */
-    localhostMode?: SplitIO.LocalhostFactory
+    localhostMode?: SplitIO.LocalhostFactory,
+    /**
+     * Enables synchronization of rollout plan or segment updates while the SDK instance is running. Does not affect initialization fetches.
+     * @property {boolean} enabled
+     */
+    enabled?: boolean
   }
 }
 /**
