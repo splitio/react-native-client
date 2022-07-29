@@ -236,8 +236,13 @@ interface ISharedSettings {
      */
     localhostMode?: SplitIO.LocalhostFactory,
     /**
-     * Enables synchronization of rollout plan or segment updates while the SDK instance is running. Does not affect initialization fetches.
+     * Controls the SDK continuous synchronization flags.
+     *
+     * When `true` a running SDK will process rollout plan updates performed on the UI (default).
+     * When false it'll just fetch all data upon init.
+     *
      * @property {boolean} enabled
+     * @default true
      */
     enabled?: boolean
   }
