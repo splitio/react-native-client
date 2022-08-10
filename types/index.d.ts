@@ -3,9 +3,8 @@
 // Definitions by: Nico Zelaya <https://github.com/NicoZelaya/>
 
 /// <reference path="./splitio.d.ts" />
-export = JsSdk;
 
-declare module JsSdk {
+declare module '@splitsoftware/splitio-react-native' {
   /**
    * Slim version of the Split.io sdk factory function.
    *
