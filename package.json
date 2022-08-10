@@ -27,6 +27,7 @@
   ],
   "scripts": {
     "test": "jest",
+    "test-ts-decls": "tsc --build ts-tests",
     "check": "npm run check:lint && npm run check:types && npm run check:version",
     "check:lint": "eslint \"**/*.{js,ts,tsx}\"",
     "check:types": "tsc --noEmit",
