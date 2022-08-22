@@ -43,14 +43,12 @@ const fullReactNativeConfig: SplitIO.IReactNativeSettings = {
   features: {
     feature1: 'treatment',
   },
-  // @TODO should not let to define a storage
   impressionListener: {
     logImpression: (data: SplitIO.ImpressionData) => {
       console.log(data);
     },
   },
   debug: DebugLogger(),
-  // @TODO shold fail
   integrations: [],
   streamingEnabled: true,
   sync: {
