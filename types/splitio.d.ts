@@ -14,7 +14,7 @@ declare namespace SplitIO {
   /**
    * Settings interface for SDK instances created on React Native.
    * @interface IReactNativeSettings
-   * @see {@link https://help.split.io/hc/en-us/articles/4406066357901#configuration}
+   * @see {@link https://help.split.io/hc/en-us/articles/4406066357901-React-Native-SDK#configuration}
    */
   interface IReactNativeSettings extends IClientSideSharedSettings, IPluggableSettings {
     sync?: IClientSideSharedSettings['sync'] & {
@@ -23,7 +23,7 @@ declare namespace SplitIO {
        *
        * NOTE: this is only required if using the slim entry point of the library to init the SDK in localhost mode.
        *
-       * For more information @see {@link https://help.split.io/hc/en-us/articles/4406066357901#localhost-mode}.
+       * For more information @see {@link https://help.split.io/hc/en-us/articles/4406066357901-React-Native-SDK#localhost-mode}.
        *
        * Example:
        * ```typescript
@@ -40,17 +40,16 @@ declare namespace SplitIO {
     },
     /**
      * Defines the factory function to instantiate the storage. If not provided, the default IN MEMORY storage is used.
-     *
-     * Example:
-     * ```typescript
-     * SplitFactory({
-     *   ...
-     *   storage: InLocalStorage()
-     * })
-     * ```
      * @property {Object} storage
+     * @TODO at the moment there are not storages to plug in React Native SDK.
      */
-    storage?: SplitIO.StorageSyncFactory,
+    storage?: StorageSyncFactory,
+    /**
+     * Defines an optional list of factory functions used to instantiate SDK integrations.
+     * @property {Object} integrations
+     * @TODO at the moment there are not integrations to plug in React Native SDK.
+     */
+    integrations?: IntegrationFactory[],
   }
 
   /**
