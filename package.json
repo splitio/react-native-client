@@ -32,6 +32,7 @@
     "check:types": "tsc --noEmit",
     "check:version": "./scripts/check_version.sh",
     "build": "bob build && ./scripts/build_replace_imports.sh",
+    "all": "npm run check && npm run build && npm run test",
     "publish:rc": "npm run check && npm run build && npm publish --tag rc",
     "publish:stable": "npm run check && npm run build && npm publish"
   },
@@ -54,7 +55,7 @@
   },
   "homepage": "https://github.com/splitio/react-native-client#readme",
   "dependencies": {
-    "@splitsoftware/splitio-commons": "1.6.0"
+    "@splitsoftware/splitio-commons": "1.7.0"
   },
   "devDependencies": {
     "@react-native-community/eslint-config": "^2.0.0",

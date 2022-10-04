@@ -7,7 +7,6 @@ import { sdkClientMethodCSFactory } from '@splitsoftware/splitio-commons/src/sdk
 import { impressionObserverCSFactory } from '@splitsoftware/splitio-commons/src/trackers/impressionObserver/impressionObserverCS';
 import { EventEmitter } from '@splitsoftware/splitio-commons/src/utils/MinEvents';
 
-import { shouldAddPt } from '@splitsoftware/splitio-commons/src/trackers/impressionObserver/utils';
 import { ISdkFactoryParams } from '@splitsoftware/splitio-commons/src/sdkFactory/types';
 import { ISettings } from '@splitsoftware/splitio-commons/src/types';
 import { LOCALHOST_MODE } from '@splitsoftware/splitio-commons/src/utils/constants';
@@ -47,7 +46,7 @@ export function getModules(settings: ISettings): ISdkFactoryParams {
 
     SignalListener: RNSignalListener as ISdkFactoryParams['SignalListener'],
 
-    impressionsObserverFactory: shouldAddPt(settings) ? impressionObserverCSFactory : undefined,
+    impressionsObserverFactory: impressionObserverCSFactory,
 
     extraProps: (params) => {
       return {
