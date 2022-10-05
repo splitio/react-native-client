@@ -18,7 +18,7 @@ const params = {
   consent: validateConsent,
 };
 
-export function settingsValidator(config: any) {
+export function settingsFactory(config: any) {
   const settings = settingsValidation(config, params);
   // @ts-ignore. For internal use, flush data on background until a persistent storage is provided.
   settings.flushDataOnBackground = true;
