@@ -99,4 +99,3 @@ export class RNSignalListener implements ISignalListener {
     this._appStateSubscription?.remove();
   }
 }
-
