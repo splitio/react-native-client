@@ -1,4 +1,4 @@
-0.6.1 (December 1, 2022)
+0.6.1 (December 2, 2022)
 - Updated some dependencies for vulnerability fixes.
 - Bugfixing - Fixed uncaught error when calling the client `destroy` method in react-native@0.70, caused by the usage of a deprecated method removed in react-native@0.70 (https://github.com/facebook/react-native/commit/2596b2f6954362d2cd34a1be870810ab90cbb916) (Related to issue https://github.com/splitio/react-native-client/issues/38).
 
