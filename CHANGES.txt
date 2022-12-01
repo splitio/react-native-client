@@ -1,3 +1,7 @@
+0.6.1 (December 1, 2022)
+- Updated some dependencies for vulnerability fixes.
+- Bugfixing - Fixed uncaught error when calling the client `destroy` method in react-native@0.70, cause by the use of a depracated method removed in react-native@0.70 (https://github.com/facebook/react-native/commit/2596b2f6954362d2cd34a1be870810ab90cbb916) (Related to issue https://github.com/splitio/react-native-client/issues/38).
+
 0.6.0 (October 5, 2022)
 - Added a new impressions mode for the SDK called NONE, to be used in factory when there is no desire to capture impressions on an SDK factory to feed Split's analytics engine. Running NONE mode, the SDK will only capture unique keys evaluated for a particular feature flag instead of full blown impressions.
 - Updated default value of `scheduler.featuresRefreshRate` config parameter from 30 seconds to 60 seconds.
