@@ -19,6 +19,9 @@ export const AppStateMock = {
     if (type === 'change') {
       AppStateMock._changeListeners.add(listener);
     }
+    return {
+      remove: jest.fn(),
+    };
   }),
   removeEventListener: jest.fn((type, listener) => {
     if (type === 'change') {
