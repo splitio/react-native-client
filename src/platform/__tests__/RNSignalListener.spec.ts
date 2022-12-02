@@ -61,8 +61,8 @@ describe('RNSignalListener', () => {
     expect(syncManagerMockWithPushManager.pushManager.start).toBeCalledTimes(3);
 
     // Stopping RNSignalListener
-    signalListener.stop();
-    expect(AppStateMock.removeEventListener).toBeCalledTimes(1);
+    signalListener.stop(); // @ts-ignore access private property
+    expect(signalListener._appStateSubscription.remove).toBeCalledTimes(1);
     expect(syncManagerMockWithPushManager.flush).toBeCalledTimes(2);
     expect(syncManagerMockWithPushManager.pushManager.stop).toBeCalledTimes(2);
     expect(syncManagerMockWithPushManager.pushManager.start).toBeCalledTimes(3);
