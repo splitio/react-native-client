@@ -37,7 +37,7 @@ jobs:
         run: npm run build
 
       - name: SonarQube Scan (Push)
-        if: github.event_name == 'push'
+        if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/development' || github.ref == 'refs/heads/master') }}
         uses: SonarSource/sonarcloud-github-action@v1.8
         env:
           SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
