@@ -504,7 +504,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   boost: a7c83b31436843459a1961bfd74b96033dc77234
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
-  DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
+  DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   FBLazyVector: affa4ba1bfdaac110a789192f4d452b053a86624
   FBReactNativeSpec: fe8b5f1429cfe83a8d72dc8ed61dc7704cac8745
   Flipper: 26fc4b7382499f1281eb8cb921e5c3ad6de91fe0
@@ -517,7 +517,7 @@ SPEC CHECKSUMS:
   Flipper-RSocket: d9d9ade67cbecf6ac10730304bf5607266dd2541
   FlipperKit: cbdee19bdd4e7f05472a66ce290f1b729ba3cb86
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
-  glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
+  glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   RCT-Folly: 0080d0a6ebf2577475bda044aa59e2ca1f909cda
@@ -526,7 +526,7 @@ SPEC CHECKSUMS:
   React: f0254ccddeeef1defe66c6b1bb9133a4f040792b
   React-bridging: e46911666b7ec19538a620a221d6396cd293d687
   React-callinvoker: 66b62e2c34546546b2f21ab0b7670346410a2b53
-  React-Codegen: 18570466a8b05d565f7543f07795bd31d14c34cc
+  React-Codegen: b6999435966df3bdf82afa3f319ba0d6f9a8532a
   React-Core: dabbc9d1fe0a11d884e6ee1599789cf8eb1058a5
   React-CoreModules: 5b6b7668f156f73a56420df9ec68ca2ec8f2e818
   React-cxxreact: c7ca2baee46db22a30fce9e639277add3c3f6ad1
@@ -553,4 +553,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 03fd00aea2e7e502046d2b76f7ee7f4dd87450fd
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.12.0
