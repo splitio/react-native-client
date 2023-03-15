@@ -288,9 +288,11 @@ interface IStatusInterface extends IEventEmitter {
  */
 interface IBasicClient extends IStatusInterface {
   /**
-   * Destroy the client instance.
+   * Destroys the client instance.
+   * This method will flush any pending impressions and events, and stop the synchronization of feature flag definitions with the backend.
+   *
    * @function destroy
-   * @returns {Promise<void>}
+   * @returns {Promise<void>} A promise that will be resolved once the client is destroyed.
    */
   destroy(): Promise<void>
 }

@@ -1,3 +1,7 @@
+0.6.2 (March 15, 2023)
+ - Updated @splitsoftware/splitio-commons package to version 1.8.1 that includes minor improvements.
+ - Updated some transitive dependencies for vulnerability fixes.
+
 0.6.1 (December 2, 2022)
 - Updated some dependencies for vulnerability fixes.
 - Bugfixing - Fixed uncaught error when calling the client `destroy` method in react-native@0.70, caused by the usage of a deprecated method removed in react-native@0.70 (https://github.com/facebook/react-native/commit/2596b2f6954362d2cd34a1be870810ab90cbb916) (Related to issue https://github.com/splitio/react-native-client/issues/38).
@@ -5,6 +9,7 @@
 0.6.0 (October 5, 2022)
 - Added a new impressions mode for the SDK called NONE, to be used in factory when there is no desire to capture impressions on an SDK factory to feed Split's analytics engine. Running NONE mode, the SDK will only capture unique keys evaluated for a particular feature flag instead of full blown impressions.
 - Updated default value of `scheduler.featuresRefreshRate` config parameter from 30 seconds to 60 seconds.
+- Updated the synchronization flow to be more reliable in the event of an edge case generating delay in cache purge propagation, keeping the SDK cache properly synced.
 - Updated @splitsoftware/splitio-commons package to version 1.7.1, that improves the performance of split evaluations, among other improvements.
 
 0.5.0 (July 6, 2022)
