@@ -3,7 +3,7 @@
 [![npm version](https://badge.fury.io/js/%40splitsoftware%2Fsplitio-react-native.svg)](https://badge.fury.io/js/%40splitsoftware%2Fsplitio) [![Build Status](https://github.com/splitio/react-native-client/actions/workflows/ci.yml/badge.svg)](https://github.com/splitio/react-native-client/actions/workflows/ci.yml)
 
 ## Overview
-This SDK is designed to work with Split, the platform for controlled rollouts, which serves features to your users via a Split feature flag to manage your complete customer experience.
+This SDK is designed to work with Split, the platform for controlled rollouts, which serves features to your users via feature flags to manage your complete customer experience.
 
 [![Twitter Follow](https://img.shields.io/twitter/follow/splitsoftware.svg?style=social&label=Follow&maxAge=1529000)](https://twitter.com/intent/follow?screen_name=splitsoftware)
 
@@ -19,14 +19,14 @@ import { SplitFactory } from '@splitsoftware/splitio-react-native';
 // Instantiate the SDK
 var factory = SplitFactory({
   core: {
-    authorizationKey: 'YOUR_SDK_API_KEY',
+    authorizationKey: 'YOUR_SDK_KEY',
     key: 'CUSTOMER_ID'
   }
 });
 
 // Set a callback to listen for the SDK_READY event, to make sure the SDK is properly loaded before asking for a treatment
 client.on(client.Event.SDK_READY, function() {
-  var treatment = client.getTreatment('SPLIT_NAME');
+  var treatment = client.getTreatment('FEATURE_FLAG_NAME');
   if (treatment == 'on') {
     // insert code here for on treatment
   } else if (treatment == 'off') {
@@ -61,8 +61,8 @@ Split has built and maintains SDKs for:
 * GO [Github](https://github.com/splitio/go-client) [Docs](https://help.split.io/hc/en-us/articles/360020093652-Go-SDK)
 * iOS [Github](https://github.com/splitio/ios-client) [Docs](https://help.split.io/hc/en-us/articles/360020401491-iOS-SDK)
 * Java [Github](https://github.com/splitio/java-client) [Docs](https://help.split.io/hc/en-us/articles/360020405151-Java-SDK)
-* Javascript [Github](https://github.com/splitio/javascript-client) [Docs](https://help.split.io/hc/en-us/articles/360020448791-JavaScript-SDK)
-* Javascript for Browser [Github](https://github.com/splitio/javascript-browser-client) [Docs](https://help.split.io/hc/en-us/articles/360058730852-Browser-SDK)
+* JavaScript [Github](https://github.com/splitio/javascript-client) [Docs](https://help.split.io/hc/en-us/articles/360020448791-JavaScript-SDK)
+* JavaScript for Browser [Github](https://github.com/splitio/javascript-browser-client) [Docs](https://help.split.io/hc/en-us/articles/360058730852-Browser-SDK)
 * Node [Github](https://github.com/splitio/javascript-client) [Docs](https://help.split.io/hc/en-us/articles/360020564931-Node-js-SDK)
 * PHP [Github](https://github.com/splitio/php-client) [Docs](https://help.split.io/hc/en-us/articles/360020350372-PHP-SDK)
 * Python [Github](https://github.com/splitio/python-client) [Docs](https://help.split.io/hc/en-us/articles/360020359652-Python-SDK)
