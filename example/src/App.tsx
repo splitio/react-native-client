@@ -98,7 +98,7 @@ const App = () => {
   if (!isReady && !hasTimedout) client.once(client.Event.SDK_READY_TIMED_OUT, () => { setSdkState('SDK has timedout') });
 
   // const [userKey, setUserKey] = useState<string>();
-  const [splitName, setSplitName] = useState<string>();
+  const [featureFlagName, setFeatureFlagName] = useState<string>();
   const [treatment, setTreatment] = useState<string>();
   const [eventType, setEventType] = useState<string>();
   const [trackResult, setTrackResult] = useState<boolean>();
@@ -124,16 +124,16 @@ const App = () => {
             underlineColorAndroid='#0000ff'
             autoCapitalize='none'
           /> */}
-          <Text>Split name:</Text>
+          <Text>Feature flag name:</Text>
           <TextInput
-            onChangeText={(etSplitName) => setSplitName(etSplitName)}
-            value={splitName}
+            onChangeText={(etFeatureFlagName) => setFeatureFlagName(etFeatureFlagName)}
+            value={featureFlagName}
             underlineColorAndroid='#0000ff'
             autoCapitalize='none'
           />
           <Button
             title='Get Treatment'
-            onPress={() => { setTreatment(client.getTreatment(splitName as string)) }}
+            onPress={() => { setTreatment(client.getTreatment(featureFlagName as string)) }}
           />
           <Text>Treatment: {treatment}</Text>
 
