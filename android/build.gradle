@@ -5,6 +5,7 @@ def safeExtGet(name, fallback) {
 apply plugin: "com.android.library"
 
 android {
+    namespace = "io.split.rnsplit"
     compileSdkVersion safeExtGet("compileSdkVersion", 28)
 
     defaultConfig {
