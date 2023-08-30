@@ -1,6 +1,8 @@
 0.7.0 (August 31, 2023)
  - Updated @splitsoftware/splitio-commons package to version 1.9.0 that includes a minor improvement:
     - Updated streaming architecture implementation to apply feature flag updates from the notification received which is now enhanced, improving efficiency and reliability of the whole update system.
+ - Updated some transitive dependencies for vulnerability fixes.
+ - Updated Android build.gradle config for compatibility with upcoming React Native v0.73 while keeping backward compatibility (Related to https://github.com/splitio/react-native-client/pull/54).
 
 0.6.3 (May 15, 2023)
  - Updated @splitsoftware/splitio-commons package to version 1.8.2 that includes updated terminology on codebase to be more aligned with current standard without causing a breaking change. The core change is the term split for feature flag on things like logs and IntelliSense comments.
