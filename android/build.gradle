@@ -4,8 +4,22 @@ def safeExtGet(name, fallback) {
 
 apply plugin: "com.android.library"
 
+def isAGPVersionGreaterThan(version) {
+    try {
+        def agpVersion = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION.tokenize('.')[0].toInteger()
+        return agpVersion > version
+    } catch (Exception e) {
+        return false
+    }
+}
+
 android {
-    namespace = "io.split.rnsplit"
+    // From https://github.com/react-native-community/discussions-and-proposals/issues/671
+    // to keep backwards compatibility with RN < 0.71 & AGP < 8
+    if (isAGPVersionGreaterThan(7)) {
+        namespace "io.split.rnsplit"
+    }
+
     compileSdkVersion safeExtGet("compileSdkVersion", 28)
 
     defaultConfig {
