@@ -3,6 +3,8 @@ on:
   pull_request:
     branches:
       - main
+  pull_request_target:
+    branches:
       - development
   push:
     branches:
@@ -56,7 +58,7 @@ jobs:
             -Dsonar.links.scm="https://github.com/splitio/${{ github.event.repository.name }}"
 
       - name: SonarQube Scan (Pull Request)
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
         uses: SonarSource/sonarcloud-github-action@v1.8
         env:
           SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
