@@ -3,8 +3,6 @@ on:
   pull_request:
     branches:
       - main
-  pull_request_target:
-    branches:
       - development
   push:
     branches:
@@ -27,7 +25,7 @@ jobs:
           cache: 'npm'
 
       - name: npm CI
-        run: npm ci --legacy-peer-deps
+        run: npm ci
 
       - name: npm Check
         run: npm run check
