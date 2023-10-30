@@ -1,6 +1,7 @@
 0.7.1 (October XX, 2023)
  - Added `defaultTreatment` property to the `SplitView` object returned by the `split` and `splits` methods of the SDK manager (Related to issue https://github.com/splitio/javascript-commons/issues/225).
  - Updated @splitsoftware/splitio-commons package to version 1.10.0 that includes vulnerability fixes, and adds the `defaultTreatment` property to the `SplitView` object.
+ - Updated react-native dependency to version 0.72.6 for vulnerability fixes and validation.
 
 0.7.0 (August 31, 2023)
  - Updated @splitsoftware/splitio-commons package to version 1.9.0 that includes a minor improvement:
