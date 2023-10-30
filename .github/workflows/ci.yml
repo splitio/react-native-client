@@ -27,7 +27,7 @@ jobs:
           cache: 'npm'
 
       - name: npm CI
-        run: npm ci
+        run: npm ci --legacy-peer-deps
 
       - name: npm Check
         run: npm run check
