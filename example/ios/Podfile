@@ -19,13 +19,14 @@ target 'example' do
 
   pod 'RNSplit', :path => '../..'
 
+  # Disable Flipper due to issue with RCT-Folly pod https://stackoverflow.com/a/66453392/5824309
+
   # Enables Flipper.
   #
   # Note that if you have use_frameworks! enabled, Flipper will not work and
   # you should disable the next line.
-  use_flipper!()
-
-  post_install do |installer|
-    react_native_post_install(installer)
-  end
+  # use_flipper!()
+  # post_install do |installer|
+  #   react_native_post_install(installer)
+  # end
 end
