@@ -1,4 +1,5 @@
-0.7.1 (October XX, 2023)
+0.7.1 (November XX, 2023)
+ - Added flag sets support. @TODO
  - Added support for MacOS and TvOS platforms (Related to issue https://github.com/splitio/react-native-client/issues/63).
  - Added `defaultTreatment` property to the `SplitView` object returned by the `split` and `splits` methods of the SDK manager (Related to issue https://github.com/splitio/javascript-commons/issues/225).
  - Updated @splitsoftware/splitio-commons package to version 1.10.0 that includes vulnerability fixes, and adds the `defaultTreatment` property to the `SplitView` object.
