@@ -483,6 +483,11 @@ declare namespace SplitIO {
       [treatmentName: string]: string
     },
     /**
+     * List of sets of the feature flag.
+     * @property {string[]} sets
+     */
+    sets: string[],
+    /**
      * The default treatment of the feature flag.
      * @property {string} defaultTreatment
      */
