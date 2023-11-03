@@ -1,4 +1,4 @@
-0.8.0 (November XX, 2023)
+0.8.0 (November 3, 2023)
 - Added support for Flag Sets on the SDK, which enables grouping feature flags and interacting with the group rather than individually (more details in our documentation):
   - Added new variations of the get treatment methods to support evaluating flags in given flag set/s.
     - getTreatmentsByFlagSet and getTreatmentsByFlagSets
@@ -7,7 +7,7 @@
   - Updated the SDK manager methods to expose flag sets on flag views.
  - Added `defaultTreatment` property to the `SplitView` object returned by the `split` and `splits` methods of the SDK manager (Related to issue https://github.com/splitio/javascript-commons/issues/225).
  - Added support for MacOS and TvOS platforms (Related to issue https://github.com/splitio/react-native-client/issues/63).
- - Updated @splitsoftware/splitio-commons package to version 1.10.0 that includes vulnerability fixes, and adds the `defaultTreatment` property to the `SplitView` object.
+ - Updated @splitsoftware/splitio-commons package to version 1.11.0 that includes vulnerability fixes, support for Flag Sets, and adds the `defaultTreatment` property to the `SplitView` object.
  - Updated react-native dependency to version 0.72.6 for vulnerability fixes and validation.
 
 0.7.0 (August 31, 2023)
