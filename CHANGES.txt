@@ -1,10 +1,14 @@
+0.8.1 (March 4, 2023)
+ - Updated @splitsoftware/splitio-commons package to version 1.13.1 and some transitive dependencies for vulnerability fixes.
+ - Updated evaluation flow to log a warning when using flag sets that don't contain cached feature flags.
+
 0.8.0 (November 3, 2023)
-- Added support for Flag Sets on the SDK, which enables grouping feature flags and interacting with the group rather than individually (more details in our documentation):
-  - Added new variations of the get treatment methods to support evaluating flags in given flag set/s.
-    - getTreatmentsByFlagSet and getTreatmentsByFlagSets
-    - getTreatmentWithConfigByFlagSets and getTreatmentsWithConfigByFlagSets
-  - Added a new optional Split Filter configuration option. This allows the SDK and Split services to only synchronize the flags in the specified flag sets, avoiding unused or unwanted flags from being synced on the SDK instance, bringing all the benefits from a reduced payload.
-  - Updated the SDK manager methods to expose flag sets on flag views.
+ - Added support for Flag Sets on the SDK, which enables grouping feature flags and interacting with the group rather than individually (more details in our documentation):
+   - Added new variations of the get treatment methods to support evaluating flags in given flag set/s.
+     - getTreatmentsByFlagSet and getTreatmentsByFlagSets
+     - getTreatmentWithConfigByFlagSets and getTreatmentsWithConfigByFlagSets
+   - Added a new optional Split Filter configuration option. This allows the SDK and Split services to only synchronize the flags in the specified flag sets, avoiding unused or unwanted flags from being synced on the SDK instance, bringing all the benefits from a reduced payload.
+   - Added `sets` property to the `SplitView` object returned by the `split` and `splits` methods of the SDK manager to expose flag sets on flag views.
  - Added `defaultTreatment` property to the `SplitView` object returned by the `split` and `splits` methods of the SDK manager (Related to issue https://github.com/splitio/javascript-commons/issues/225).
  - Added support for MacOS and TvOS platforms (Related to issue https://github.com/splitio/react-native-client/issues/63).
  - Updated @splitsoftware/splitio-commons package to version 1.11.0 that includes vulnerability fixes, support for Flag Sets, and adds the `defaultTreatment` property to the `SplitView` object.
@@ -12,7 +16,7 @@
 
 0.7.0 (August 31, 2023)
  - Updated @splitsoftware/splitio-commons package to version 1.9.0 that includes a minor improvement:
-    - Updated streaming architecture implementation to apply feature flag updates from the notification received which is now enhanced, improving efficiency and reliability of the whole update system.
+   - Updated streaming architecture implementation to apply feature flag updates from the notification received which is now enhanced, improving efficiency and reliability of the whole update system.
  - Updated some transitive dependencies for vulnerability fixes.
  - Updated Android build.gradle config for compatibility with upcoming React Native v0.73 while keeping backward compatibility (Related to https://github.com/splitio/react-native-client/pull/54).
 
@@ -58,12 +62,12 @@
 0.1.0 (October 20, 2021)
  - Added localhost mode support (Read more in our docs here: https://help.split.io/hc/en-us/articles/4406066357901-React-Native-SDK#localhost-mode).
  - Updated @splitsoftware/splitio-commons dependency to version 1.0.0, which includes:
-      - Updated localhost mode to emit SDK_READY_FROM_CACHE event in Browser when using localStorage (Related to issue https://github.com/splitio/react-client/issues/34).
-      - Updated streaming logic to use the newest version of our streaming service, including:
-            - Integration with Auth service V2, connecting to the new channels and applying the received connection delay.
-            - Implemented handling of the new MySegmentsV2 notification types (SegmentRemoval, KeyList, Bounded and Unbounded)
-            - New control notification for environment scoped streaming reset.
-      - Fix of some log messages typos, among other improvements.
+   - Updated localhost mode to emit SDK_READY_FROM_CACHE event in Browser when using localStorage (Related to issue https://github.com/splitio/react-client/issues/34).
+   - Updated streaming logic to use the newest version of our streaming service, including:
+     - Integration with Auth service V2, connecting to the new channels and applying the received connection delay.
+     - Implemented handling of the new MySegmentsV2 notification types (SegmentRemoval, KeyList, Bounded and Unbounded)
+     - New control notification for environment scoped streaming reset.
+   - Fix of some log messages typos, among other improvements.
  - Updated some NPM dependencies for vulnerability fixes.
 
 0.0.1 (July 29, 2021)
