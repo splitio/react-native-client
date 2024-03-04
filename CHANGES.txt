@@ -1,3 +1,7 @@
+0.8.1 (March 4, 2023)
+ - Updated @splitsoftware/splitio-commons package to version 1.13.1 and some transitive dependencies for vulnerability fixes.
+ - Updated evaluation flow to log a warning when using flag sets that don't contain cached feature flags.
+
 0.8.0 (November 3, 2023)
  - Added support for Flag Sets on the SDK, which enables grouping feature flags and interacting with the group rather than individually (more details in our documentation):
    - Added new variations of the get treatment methods to support evaluating flags in given flag set/s.
