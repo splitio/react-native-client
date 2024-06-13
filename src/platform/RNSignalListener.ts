@@ -3,6 +3,7 @@ import { CLEANUP_REGISTERING, CLEANUP_DEREGISTERING } from '@splitsoftware/split
 import { ISyncManager } from '@splitsoftware/splitio-commons/src/sync/types';
 import { ISettings } from '@splitsoftware/splitio-commons/src/types';
 import { AppState, AppStateStatus } from 'react-native';
+import type { NativeEventSubscription } from 'react-native';
 
 type Transition = undefined | 'TO_FOREGROUND' | 'TO_BACKGROUND';
 const TO_FOREGROUND = 'TO_FOREGROUND';
@@ -18,6 +19,7 @@ const EVENT_NAME = 'for AppState change events.';
  */
 export class RNSignalListener implements ISignalListener {
   private _lastTransition: Transition | undefined;
+  private _appStateSubscription: NativeEventSubscription | undefined;
 
   constructor(private syncManager: ISyncManager, private settings: ISettings & { flushDataOnBackground?: boolean }) {}
 
@@ -85,7 +87,7 @@ export class RNSignalListener implements ISignalListener {
     // Checking currentState in the rare case that the SDK is instantiated in background, where streaming should not connect.
     // The SDK should be instantiated when React Native JS context is initiated or the root componentDidMount method is called, where the app is in the foreground.
     this._handleAppStateChange(AppState.currentState);
-    AppState.addEventListener('change', this._handleAppStateChange);
+    this._appStateSubscription = AppState.addEventListener('change', this._handleAppStateChange);
   }
 
   /**
@@ -94,6 +96,6 @@ export class RNSignalListener implements ISignalListener {
    */
   stop() {
     this.settings.log.debug(CLEANUP_DEREGISTERING, [EVENT_NAME]);
-    AppState.removeEventListener('change', this._handleAppStateChange);
+    this._appStateSubscription?.remove();
   }
 }
