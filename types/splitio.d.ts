@@ -53,6 +53,7 @@ interface ISettings {
     impressionsQueueSize: number,
     telemetryRefreshRate: number,
     segmentsRefreshRate: number,
+    largeSegmentsRefreshRate: number,
     offlineRefreshRate: number,
     eventsPushRate: number,
     eventsQueueSize: number,
@@ -62,7 +63,8 @@ interface ISettings {
     readyTimeout: number,
     requestTimeoutBeforeReady: number,
     retriesOnFailureBeforeReady: number,
-    eventsFirstPushWindow: number
+    eventsFirstPushWindow: number,
+    waitForLargeSegments: boolean
   },
   readonly storage?: SplitIO.StorageSyncFactory,
   readonly urls: {
@@ -84,6 +86,8 @@ interface ISettings {
     splitFilters: SplitIO.SplitFilter[],
     impressionsMode: SplitIO.ImpressionsMode,
     enabled: boolean,
+    largeSegmentsEnabled: boolean,
+    flagSpecVersion: string,
     localhostMode?: SplitIO.LocalhostFactory,
   },
   readonly userConsent: SplitIO.ConsentStatus
@@ -704,6 +708,13 @@ declare namespace SplitIO {
        * @default 10
        */
       eventsFirstPushWindow?: number,
+      /**
+       * Whether the SDK should wait for large segments to be ready before emitting SDK_READY event.
+       * It only applies if largeSegmentsEnabled is true.
+       * @property {boolean} waitForLargeSegments
+       * @default true
+       */
+      waitForLargeSegments?: boolean
     },
     /**
      * SDK scheduler settings.
@@ -741,6 +752,13 @@ declare namespace SplitIO {
        * @default 60
        */
       segmentsRefreshRate?: number,
+      /**
+       * The SDK polls Split servers for changes to large segment definitions. This parameter controls this polling period in seconds.
+       * It only applies if largeSegmentsEnabled is true.
+       * @property {number} largeSegmentsRefreshRate
+       * @default 60
+       */
+      largeSegmentsRefreshRate?: number,
       /**
        * The SDK posts the queued events data in bulks. This parameter controls the posting rate in seconds.
        * @property {number} eventsPushRate
@@ -824,7 +842,15 @@ declare namespace SplitIO {
      * @typedef {string} userConsent
      * @default 'GRANTED'
      */
-    userConsent?: ConsentStatus
+    userConsent?: ConsentStatus,
+    sync?: ISharedSettings['sync'] & {
+      /**
+       * Enables synchronization of large segments.
+       * @property {boolean} largeSegmentsEnabled
+       * @default false
+       */
+      largeSegmentsEnabled?: boolean
+    }
   }
   /**
    * This represents the interface for the SDK instance with synchronous storage and client-side API,
