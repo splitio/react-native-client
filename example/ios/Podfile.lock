@@ -387,7 +387,7 @@ PODS:
     - React-jsi (= 0.72.15)
     - React-logger (= 0.72.15)
     - React-perflogger (= 0.72.15)
-  - RNSplit (0.9.0):
+  - RNSplit (0.9.1-rc.0):
     - React
   - SocketRocket (0.6.1)
   - Yoga (1.14.0)
@@ -558,7 +558,7 @@ SPEC CHECKSUMS:
   React-runtimescheduler: b360635f6f804ec42fa875500620882a6b97d2f5
   React-utils: 8eb3c12fd4a4da6df3824f7d9a961d73a6ed6e5d
   ReactCommon: 317bddf4a70fca9e542343e942a504285282971c
-  RNSplit: bce2e9e0cf2a8c22a806ceffb433e99ac88c712d
+  RNSplit: b930d9d20062b143cf6a21b67fee0b40bdb81707
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: 6f5ab94cd8b1ecd04b6e973d0bc583ede2a598cc
 
