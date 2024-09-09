@@ -1,3 +1,8 @@
+0.10.0 (September XX, 2024)
+ - Updated @splitsoftware/splitio-commons package to version 1.17.0 that includes minor updates:
+    - Added `sync.requestOptions.getHeaderOverrides` configuration option to enhance SDK HTTP request Headers for Authorization Frameworks.
+    - Updated some transitive dependencies for vulnerability fixes.
+
 0.9.1 (August 8, 2024)
  - Updated react-native dependency to version 0.72.15 and @splitsoftware/splitio-commons package to version 1.16.0 for vulnerability and bug fixes.
  - Bugfixing - Restored some input validation error logs that were removed in version 0.8.0. The logs inform the user when the `getTreatment(s)` methods are called with an invalid value as feature flag name or flag set name.
