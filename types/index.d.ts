@@ -7,7 +7,7 @@ export = JsSdk;
 
 declare module JsSdk {
   /**
-   * Slim version of the Split.io sdk factory function.
+   * Slim version of the Split.io SDK factory function.
    *
    * Recommended to use for bundle size reduction in production, since it doesn't include localhost mode out-of-the-box
    * @see {@link https://help.split.io/hc/en-us/articles/4406066357901#localhost-mode}.

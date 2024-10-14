@@ -223,7 +223,7 @@ interface ISharedSettings {
      *
      * NOTE: this is only required if using the slim entry point of the library to init the SDK in localhost mode.
      *
-     * For more information @see {@link https://help.split.io/hc/en-us/articles/4406066357901#localhost-mode}
+     * For more information see {@link https://help.split.io/hc/en-us/articles/4406066357901#localhost-mode}
      *
      * Example:
      * ```typescript
@@ -292,9 +292,8 @@ interface IStatusInterface extends IEventEmitter {
    */
   Event: EventConsts,
   /**
-   * Returns a promise that resolves once the SDK has finished loading (SDK_READY event emitted) or rejected if the SDK has timedout (SDK_READY_TIMED_OUT event emitted).
-   * As it's meant to provide similar flexibility to the event approach, given that the SDK might be eventually ready after a timeout event, calling the `ready` method after the
-   * SDK had timed out will return a new promise that should eventually resolve if the SDK gets ready.
+   * Returns a promise that resolves once the SDK has finished loading (`SDK_READY` event emitted) or rejected if the SDK has timedout (`SDK_READY_TIMED_OUT` event emitted).
+   * As it's meant to provide similar flexibility to the event approach, given that the SDK might be eventually ready after a timeout event, the `ready` method will return a resolved promise once the SDK is ready.
    *
    * Caveats: the method was designed to avoid an unhandled Promise rejection if the rejection case is not handled, so that `onRejected` handler is optional when using promises.
    * However, when using async/await syntax, the rejection should be explicitly propagated like in the following example:
@@ -352,8 +351,7 @@ interface IBasicSDK {
 /****** Exposed namespace ******/
 /**
  * Types and interfaces for @splitsoftware/splitio-react-native package for usage when integrating React Native SDK on typescript apps.
- * For the SDK package information
- * @see {@link https://www.npmjs.com/package/@splitsoftware/splitio-react-native}
+ * For the SDK package information see {@link https://www.npmjs.com/package/@splitsoftware/splitio-react-native}
  */
 declare namespace SplitIO {
   /**
@@ -797,7 +795,7 @@ declare namespace SplitIO {
       eventsQueueSize?: number,
       /**
        * For mocking/testing only. The SDK will refresh the features mocked data when mode is set to "localhost" by defining the key.
-       * For more information @see {@link https://help.split.io/hc/en-us/articles/4406066357901#localhost-mode}
+       * For more information see {@link https://help.split.io/hc/en-us/articles/4406066357901#localhost-mode}
        * @property {number} offlineRefreshRate
        * @default 15
        */
@@ -816,12 +814,14 @@ declare namespace SplitIO {
      */
     core: {
       /**
-       * Your SDK key. More information: @see {@link https://help.split.io/hc/en-us/articles/360019916211-API-keys}
+       * Your SDK key.
+       * @see {@link https://help.split.io/hc/en-us/articles/360019916211-API-keys}
        * @property {string} authorizationKey
        */
       authorizationKey: string,
       /**
-       * Customer identifier. Whatever this means to you. @see {@link https://help.split.io/hc/en-us/articles/360019916311-Traffic-type}
+       * Customer identifier. Whatever this means to you.
+       * @see {@link https://help.split.io/hc/en-us/articles/360019916311-Traffic-type}
        * @property {SplitKey} key
        */
       key: SplitKey,
@@ -833,7 +833,7 @@ declare namespace SplitIO {
       labelsEnabled?: boolean
     },
     /**
-     * Mocked features map. For testing purposses only. For using this you should specify "localhost" as authorizationKey on core settings.
+     * Mocked features map. For testing purposes only. For using this you should specify "localhost" as authorizationKey on core settings.
      * @see {@link https://help.split.io/hc/en-us/articles/4406066357901#localhost-mode}
      */
     features?: MockedFeaturesMap,
