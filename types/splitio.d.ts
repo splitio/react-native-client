@@ -85,7 +85,6 @@ interface ISettings {
     impressionsMode: SplitIO.ImpressionsMode,
     enabled: boolean,
     flagSpecVersion: string,
-    localhostMode?: SplitIO.LocalhostFactory,
     requestOptions?: {
       getHeaderOverrides?: (context: { headers: Record<string, string> }) => Record<string, string>
     },
@@ -218,25 +217,6 @@ interface ISharedSettings {
      * @default 'OPTIMIZED'
      */
     impressionsMode?: SplitIO.ImpressionsMode,
-    /**
-     * Defines the factory function to instantiate the SDK in localhost mode.
-     *
-     * NOTE: this is only required if using the slim entry point of the library to init the SDK in localhost mode.
-     *
-     * For more information see {@link https://help.split.io/hc/en-us/articles/4406066357901#localhost-mode}
-     *
-     * Example:
-     * ```typescript
-     * SplitFactory({
-     *   ...
-     *   sync: {
-     *     localhostMode: LocalhostFromObject()
-     *   }
-     * })
-     * ```
-     * @property {Object} localhostMode
-     */
-    localhostMode?: SplitIO.LocalhostFactory,
     /**
      * Controls the SDK continuous synchronization flags.
      *
@@ -456,11 +436,6 @@ declare namespace SplitIO {
     [featureName: string]: string | TreatmentWithConfig
   };
   /**
-   * Localhost types.
-   * @typedef {string} LocalhostType
-   */
-  type LocalhostType = 'LocalhostFromObject'
-  /**
    * Object with information about an impression. It contains the generated impression DTO as well as
    * complementary information around where and how it was generated in that way.
    * @typedef {Object} ImpressionData
@@ -567,14 +542,6 @@ declare namespace SplitIO {
   type StorageSyncFactory = {
     readonly type: StorageType
     (params: {}): (StorageSync | undefined)
-  }
-  /**
-   * Localhost mode factory.
-   * Its interface details are not part of the public API.
-   */
-  type LocalhostFactory = {
-    readonly type: LocalhostType
-    (params: {}): {}
   }
   /**
    * Impression listener interface. This is the interface that needs to be implemented

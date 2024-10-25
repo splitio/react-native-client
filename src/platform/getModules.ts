@@ -6,12 +6,12 @@ import { sdkManagerFactory } from '@splitsoftware/splitio-commons/src/sdkManager
 import { sdkClientMethodCSFactory } from '@splitsoftware/splitio-commons/src/sdkClient/sdkClientMethodCS';
 import { impressionObserverCSFactory } from '@splitsoftware/splitio-commons/src/trackers/impressionObserver/impressionObserverCS';
 import { EventEmitter } from '@splitsoftware/splitio-commons/src/utils/MinEvents';
-
 import { ISdkFactoryParams } from '@splitsoftware/splitio-commons/src/sdkFactory/types';
 import { ISettings } from '@splitsoftware/splitio-commons/src/types';
 import { LOCALHOST_MODE } from '@splitsoftware/splitio-commons/src/utils/constants';
 import { createUserConsentAPI } from '@splitsoftware/splitio-commons/src/consent/sdkUserConsent';
 import { now } from '@splitsoftware/splitio-commons/src/utils/timeTracker/now/browser';
+import { localhostFromObjectFactory } from '@splitsoftware/splitio-commons/src/sync/offline/LocalhostFromObject';
 
 import { RNSignalListener } from './RNSignalListener';
 import { getEventSource } from './getEventSource';
@@ -57,7 +57,7 @@ export function getModules(settings: ISettings): ISdkFactoryParams {
 
   if (settings.mode === LOCALHOST_MODE) {
     modules.splitApiFactory = undefined;
-    modules.syncManagerFactory = settings.sync.localhostMode;
+    modules.syncManagerFactory = localhostFromObjectFactory;
     modules.SignalListener = undefined;
   }
 

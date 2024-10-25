@@ -7,10 +7,7 @@ export = JsSdk;
 
 declare module JsSdk {
   /**
-   * Slim version of the Split.io SDK factory function.
-   *
-   * Recommended to use for bundle size reduction in production, since it doesn't include localhost mode out-of-the-box
-   * @see {@link https://help.split.io/hc/en-us/articles/4406066357901#localhost-mode}.
+   * Split.io SDK factory function.
    *
    * The settings parameter should be an object that complies with the SplitIO.IReactNativeSettings.
    * For more information read the corresponding article: @see {@link https://help.split.io/hc/en-us/articles/4406066357901#configuration}
@@ -44,12 +41,4 @@ declare module JsSdk {
    * @see {@link https://help.split.io/hc/en-us/articles/4406066357901#logging}
    */
   export function ErrorLogger(): SplitIO.ILogger;
-
-  /**
-   * Required to enable localhost mode when importing the SDK from the slim entry point of the library.
-   * It uses the mocked features map defined in the 'features' config object.
-   *
-   * @see {@link https://help.split.io/hc/en-us/articles/4406066357901#localhost-mode}
-   */
-  export function LocalhostFromObject(): SplitIO.LocalhostFactory;
 }
