@@ -14,17 +14,14 @@
 
 import { SplitFactory, DebugLogger, InfoLogger, WarnLogger, ErrorLogger } from '../types/index';
 
-let impressionData: SplitIO.ImpressionData;
-let reactNativeSettings: SplitIO.IClientSideSettings;
-
-reactNativeSettings = {
+let reactNativeSettings: SplitIO.IReactNativeSettings = {
   core: {
     authorizationKey: 'another-key',
     key: 'customer-key',
   },
 };
 
-reactNativeSettings = {
+let fullReactNativeSettings: SplitIO.IReactNativeSettings = {
   core: {
     authorizationKey: 'asd',
     key: 'asd',
@@ -62,7 +59,7 @@ reactNativeSettings = {
   storage: undefined,
   impressionListener: {
     logImpression: (data: SplitIO.ImpressionData) => {
-      impressionData = data;
+      let impressionData: SplitIO.ImpressionData = data;
     },
   },
   debug: true,

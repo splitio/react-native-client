@@ -7,12 +7,12 @@ import SplitIO from '@splitsoftware/splitio-commons/types/splitio';
 /**
  * SplitFactory for React Native.
  *
- * @param config           Configuration object used to instantiate the SDK
- * @param __updateModules  Optional function that lets redefine internal SDK modules. Use with
+ * @param config - Configuration object used to instantiate the SDK
+ * @param __updateModules - Optional function that lets redefine internal SDK modules. Use with
  * caution since, unlike `config`, this param is not validated neither considered part of the public API.
  * @throws Will throw an error if the provided config is invalid.
  */
-export function SplitFactory(config: SplitIO.IClientSideSettings, __updateModules?: (modules: ISdkFactoryParams) => void) {
+export function SplitFactory(config: SplitIO.IReactNativeSettings, __updateModules?: (modules: ISdkFactoryParams) => void) {
   const settings = settingsFactory(config);
   const modules = getModules(settings);
   if (__updateModules) __updateModules(modules);
