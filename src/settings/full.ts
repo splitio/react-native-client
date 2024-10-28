@@ -4,7 +4,6 @@ import { validateRuntime } from '@splitsoftware/splitio-commons/src/utils/settin
 import { validateStorageCS } from '@splitsoftware/splitio-commons/src/utils/settingsValidation/storage/storageCS';
 import { validatePluggableIntegrations } from '@splitsoftware/splitio-commons/src/utils/settingsValidation/integrations/pluggable';
 import { validateLogger } from '@splitsoftware/splitio-commons/src/utils/settingsValidation/logger/pluggableLogger';
-import { validateLocalhostWithDefault } from '@splitsoftware/splitio-commons/src/utils/settingsValidation/localhost/builtin';
 import { validateConsent } from '@splitsoftware/splitio-commons/src/utils/settingsValidation/consent';
 
 const params = {
@@ -14,7 +13,6 @@ const params = {
   storage: validateStorageCS,
   integrations: validatePluggableIntegrations,
   logger: validateLogger,
-  localhost: validateLocalhostWithDefault, // Full SplitFactory provides a default localhost module, except a valid one is provided
   consent: validateConsent,
 };
 
