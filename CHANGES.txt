@@ -4,7 +4,6 @@
  - Updated @splitsoftware/splitio-commons package to version 2.0.0 that includes major updates and updated some transitive dependencies for vulnerability fixes.
  - BREAKING CHANGES:
     - Removed the `LocalhostFromObject` export from the default import (`import { LocalhostFromObject } from '@splitsoftware/splitio-react-native'`). It is no longer necessary to manually import and configure it in the `sync.localhostMode` option to enable localhost mode.
-    - Removed the "full" import (`import { SplitFactory } from '@splitsoftware/splitio-react-native/full'`), since with the removal of `LocalhostFromObject` from the default import there is no difference between them.
 
 0.10.0 (September 13, 2024)
  - Updated @splitsoftware/splitio-commons package to version 1.17.0 that includes minor updates:
