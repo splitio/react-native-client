@@ -3,6 +3,7 @@
  - Added `factory.destroy()` method, which invokes the `destroy` method of all clients created by the factory.
  - Updated @splitsoftware/splitio-commons package to version 2.0.0 that includes major updates and updated some transitive dependencies for vulnerability fixes.
  - BREAKING CHANGES:
+    - Renamed some TypeScript definitions in the SplitIO namespace to avoid conflicts with other Split packages: `SplitIO.ISDK` to `SplitIO.IBrowserSDK`, and `SplitIO.IClient` to `SplitIO.IBrowserClient`.
     - Removed the `LocalhostFromObject` export from the default import (`import { LocalhostFromObject } from '@splitsoftware/splitio-react-native'`). It is no longer necessary to manually import and configure it in the `sync.localhostMode` option to enable localhost mode.
 
 0.10.0 (September 13, 2024)

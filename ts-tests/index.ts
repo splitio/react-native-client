@@ -102,4 +102,4 @@ reactNativeSettings.debug = InfoLogger();
 reactNativeSettings.debug = WarnLogger();
 reactNativeSettings.debug = ErrorLogger();
 
-const SDK: SplitIO.ISDK = SplitFactory(reactNativeSettings);
+const SDK: SplitIO.IBrowserSDK = SplitFactory(reactNativeSettings);

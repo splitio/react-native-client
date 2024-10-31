@@ -8,12 +8,12 @@ export = JsSdk;
 
 declare module JsSdk {
   /**
-   * Full version of the Split.io SDK factory function.
+   * Split.io SDK factory function.
    *
    * The settings parameter should be an object that complies with the SplitIO.IReactNativeSettings.
    * For more information read the corresponding article: @see {@link https://help.split.io/hc/en-us/articles/4406066357901#configuration}
    */
-  export function SplitFactory(settings: SplitIO.IReactNativeSettings): SplitIO.ISDK;
+  export function SplitFactory(settings: SplitIO.IReactNativeSettings): SplitIO.IBrowserSDK;
 
   /**
    * Creates a logger instance that enables descriptive log messages with DEBUG log level when passed in the factory settings.

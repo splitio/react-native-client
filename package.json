@@ -61,7 +61,7 @@
   },
   "homepage": "https://github.com/splitio/react-native-client#readme",
   "dependencies": {
-    "@splitsoftware/splitio-commons": "2.0.0-rc.5"
+    "@splitsoftware/splitio-commons": "2.0.0-rc.6"
   },
   "devDependencies": {
     "@react-native-community/eslint-config": "^2.0.0",
