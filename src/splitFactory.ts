@@ -5,8 +5,7 @@ import type { ISdkFactoryParams } from '@splitsoftware/splitio-commons/src/sdkFa
 import { IReactNativeSettings } from '../types/splitio';
 
 /**
- * Slim SplitFactory for React Native.
- * Doesn't include localhost mode out-of-the-box.
+ * SplitFactory for React Native.
  *
  * @param config           Configuration object used to instantiate the SDK
  * @param __updateModules  Optional function that lets redefine internal SDK modules. Use with

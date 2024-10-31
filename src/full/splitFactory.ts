@@ -6,7 +6,6 @@ import { IReactNativeSettings } from '../../types/splitio';
 
 /**
  * SplitFactory for React Native.
- * Includes localhost mode.
  *
  * @param config           Configuration object used to instantiate the SDK
  * @param __updateModules  Optional function that lets redefine internal SDK modules. Use with
