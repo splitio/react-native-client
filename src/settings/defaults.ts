@@ -1,7 +1,7 @@
-import { ConsentStatus } from '@splitsoftware/splitio-commons/src/types';
+import type SplitIO from '@splitsoftware/splitio-commons/types/splitio';
 import { CONSENT_GRANTED } from '@splitsoftware/splitio-commons/src/utils/constants';
 
-const packageVersion = '1.0.0-rc.0';
+const packageVersion = '1.0.0';
 
 export const defaults = {
   startup: {
@@ -16,7 +16,7 @@ export const defaults = {
   },
 
   // Consent is considered granted by default
-  userConsent: CONSENT_GRANTED as ConsentStatus,
+  userConsent: CONSENT_GRANTED as SplitIO.ConsentStatus,
 
   // Instance version.
   version: `reactnative-${packageVersion}`,
