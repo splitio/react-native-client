@@ -1,6 +1,6 @@
 {
   "name": "@splitsoftware/splitio-react-native",
-  "version": "0.10.0",
+  "version": "1.0.0",
   "description": "Split SDK for React Native",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
@@ -37,7 +37,8 @@
     "check:version": "./scripts/check_version.sh",
     "build": "bob build && ./scripts/build_replace_imports.sh",
     "test": "jest",
-    "all": "npm run check && npm run build && npm run test",
+    "test-ts-decls": "tsc --build ts-tests",
+    "all": "npm run check && npm run build && npm run test-ts-decls && npm run test",
     "publish:rc": "npm run check && npm run build && npm publish --tag rc",
     "publish:stable": "npm run check && npm run build && npm publish"
   },
@@ -60,7 +61,7 @@
   },
   "homepage": "https://github.com/splitio/react-native-client#readme",
   "dependencies": {
-    "@splitsoftware/splitio-commons": "1.17.0"
+    "@splitsoftware/splitio-commons": "2.0.0"
   },
   "devDependencies": {
     "@react-native-community/eslint-config": "^2.0.0",
