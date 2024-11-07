@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 // Type definitions for React Native Split Software SDK
 
 import '@splitsoftware/splitio-commons';
