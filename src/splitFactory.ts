@@ -1,8 +1,8 @@
+import type SplitIO from '@splitsoftware/splitio-commons/types/splitio';
+import type { ISdkFactoryParams } from '@splitsoftware/splitio-commons/src/sdkFactory/types';
 import { settingsFactory } from './settings';
 import { getModules } from './platform/getModules';
 import { sdkFactory } from '@splitsoftware/splitio-commons/src/sdkFactory/index';
-import type { ISdkFactoryParams } from '@splitsoftware/splitio-commons/src/sdkFactory/types';
-import type SplitIO from '@splitsoftware/splitio-commons/types/splitio';
 
 /**
  * SplitFactory for React Native.

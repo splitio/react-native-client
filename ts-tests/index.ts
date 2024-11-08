@@ -6,13 +6,16 @@
  * that you will need to comply to publish packages on @types organization on NPM (DefinitelyTyped).
  * We import the declarations through the NPM package name (using the development branch of the repo)
  * to test in the same way in which customers will be using it on development.
- *
- * The step of compiling this file is part of the continous integration systems in place.
- *
- * @author Nico Zelaya <nicolas.zelaya@split.io>
  */
 
+import type * as SplitTypes from '../types/splitio';
+
 import { SplitFactory, DebugLogger, InfoLogger, WarnLogger, ErrorLogger } from '../types/index';
+
+// Validate that the SplitIO namespace is available and matches the types when imported explicitly
+let ambientType: SplitIO.ISDK;
+let importedType: SplitTypes.ISDK;
+ambientType = importedType;
 
 let reactNativeSettings: SplitIO.IReactNativeSettings = {
   core: {

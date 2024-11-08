@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import reactNative from 'react-native';
 
 let _RNEventSource: typeof EventSource | undefined;
