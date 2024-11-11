@@ -30,7 +30,7 @@ const factory: SplitIO.IBrowserSDK = SplitFactory(config);
 
 In order to simplify the SDK API, the `LocalhostFromObject` export was removed from the default import (`import { LocalhostFromObject } from '@splitsoftware/splitio-react-native'`), and it is no longer necessary to manually pass it to the `sync.localhostMode` configuration option to enable localhost mode.
 
-If you were using the `LocalhostFromObject` export, simple remove it from your code. For example, replace:
+If you were using the `LocalhostFromObject` export, you should remove it from your code. For example, replace:
 
 ```js
 import { SplitFactory, LocalhostFromObject } from '@splitsoftware/splitio-react-native';
