@@ -67,4 +67,4 @@ const factory = SplitFactory({
 
 ## Dropped support for Split Proxy below version 5.9.0. The SDK now requires Split Proxy 5.9.0 or above
 
-If using the Split Proxy with the SDK, make sure to update it to version 5.9.0 or above. This is required due to the introduction of Large Segments matchers in the SDK on client-side, which uses a new HTTP endpoint to retrieve the segments data and is only supported by Split Proxy 5.9.0.
+If using the Split Proxy with the SDK, make sure to update it to version 5.9.0 or above. This is required due to the introduction of Large Segments matchers in the React Native SDK, which uses a new HTTP endpoint to retrieve the segments data and is only supported by Split Proxy 5.9.0.
