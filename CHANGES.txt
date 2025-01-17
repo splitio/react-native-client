@@ -1,3 +1,7 @@
+1.1.0 (January 17, 2025)
+ - Added support for the new impressions tracking toggle available on feature flags, both respecting the setting and including the new field being returned on `SplitView` type objects. Read more in our docs.
+ - Updated @splitsoftware/splitio-commons package to version 2.1.0.
+
 1.0.1 (November 11, 2024)
  - Bugfixing - Revert removal of TypeScript `SplitIO` namespace at `/types/splitio.d.ts` to allow explicit imports of types from the React Native SDK package. E.g., `import type { IReactNativeSettings } from '@splitsoftware/splitio-react-native/types/splitio';`.
 

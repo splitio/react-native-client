@@ -1,5 +1,5 @@
 // Declaration file for React Native Split Software SDK
-// Project: http://www.split.io/
+// Project: https://www.split.io/
 // Definitions by: Nico Zelaya <https://github.com/NicoZelaya/>
 
 /// <reference path="./splitio.d.ts" />
