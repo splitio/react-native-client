@@ -1,9 +1,15 @@
+1.2.0 (June XX, 2025)
+ - Added support for rule-based segments. These segments determine membership at runtime by evaluating their configured rules against the user attributes provided to the SDK.
+ - Added support for feature flag prerequisites. This allows customers to define dependency conditions between flags, which are evaluated before any allowlists or targeting rules.
+ - Added a new optional argument to the client `getTreatment` methods to allow passing additional evaluation options, such as a map of properties to append to the generated impressions sent to Split backend. Read more in our docs.
+ - Updated @splitsoftware/splitio-commons package to version 2.4.0.
+
 1.1.0 (January 17, 2025)
  - Added support for the new impressions tracking toggle available on feature flags, both respecting the setting and including the new field being returned on `SplitView` type objects. Read more in our docs.
  - Updated @splitsoftware/splitio-commons package to version 2.1.0.
 
 1.0.1 (November 11, 2024)
- - Bugfixing - Revert removal of TypeScript `SplitIO` namespace at `/types/splitio.d.ts` to allow explicit imports of types from the React Native SDK package. E.g., `import type { IReactNativeSettings } from '@splitsoftware/splitio-react-native/types/splitio';`.
+ - Bugfix - Revert removal of TypeScript `SplitIO` namespace at `/types/splitio.d.ts` to allow explicit imports of types from the React Native SDK package. E.g., `import type { IReactNativeSettings } from '@splitsoftware/splitio-react-native/types/splitio';`.
 
 1.0.0 (November 1, 2024)
  - Added support for targeting rules based on large segments.
@@ -23,8 +29,8 @@
 
 0.9.1 (August 8, 2024)
  - Updated react-native dependency to version 0.72.15 and @splitsoftware/splitio-commons package to version 1.16.0 for vulnerability and bug fixes.
- - Bugfixing - Restored some input validation error logs that were removed in version 0.8.0. The logs inform the user when the `getTreatment(s)` methods are called with an invalid value as feature flag name or flag set name.
- - Bugfixing - Fixed localhost mode to emit SDK_UPDATE when mocked feature flags are updated in the `features` object map of the config object (Related to issue https://github.com/splitio/javascript-browser-client/issues/119).
+ - Bugfix - Restored some input validation error logs that were removed in version 0.8.0. The logs inform the user when the `getTreatment(s)` methods are called with an invalid value as feature flag name or flag set name.
+ - Bugfix - Fixed localhost mode to emit SDK_UPDATE when mocked feature flags are updated in the `features` object map of the config object (Related to issue https://github.com/splitio/javascript-browser-client/issues/119).
 
 0.9.0 (May 6, 2024)
  - Updated @splitsoftware/splitio-commons package to version 1.14.0 that includes minor updates:
@@ -82,7 +88,7 @@
 0.4.0 (May 24, 2022)
  - Added `scheduler.telemetryRefreshRate` property to SDK configuration.
  - Updated SDK telemetry storage, metrics and updater to be more effective and send less often.
- - Bugfixing - Updated default values for `scheduler.impressionsRefreshRate` config parameter: 300s for OPTIMIZED impression mode and 60s for DEBUG impression mode (previously it was 60s for both).
+ - Bugfix - Updated default values for `scheduler.impressionsRefreshRate` config parameter: 300s for OPTIMIZED impression mode and 60s for DEBUG impression mode (previously it was 60s for both).
 
 0.3.0 (April 7, 2022)
  - Added user consent feature to allow delaying or disabling the data tracking from SDK until user consent is explicitly granted or declined. Read more in our docs.
@@ -91,7 +97,7 @@
  - Added support to SDK clients to optionally bind attributes, keeping these loaded within the SDK along with the user ID, for easier usage when requesting flag.
  - Added `scheduler.impressionsQueueSize` property to SDK configuration (See https://help.split.io/hc/en-us/articles/4406066357901-React-Native-SDK#configuration).
  - Updated some NPM dependencies for vulnerability fixes.
- - Bugfixing - Fixed validation of SDK configuration, to parse core.key into a string and log a warning when passing a number (Related to issue https://github.com/splitio/react-native-client/issues/19).
+ - Bugfix - Fixed validation of SDK configuration, to parse core.key into a string and log a warning when passing a number (Related to issue https://github.com/splitio/react-native-client/issues/19).
 
 0.1.0 (October 20, 2021)
  - Added localhost mode support (Read more in our docs here: https://help.split.io/hc/en-us/articles/4406066357901-React-Native-SDK#localhost-mode).
