@@ -1,8 +1,8 @@
-1.2.0 (June XX, 2025)
+1.2.0 (June 25, 2025)
  - Added support for rule-based segments. These segments determine membership at runtime by evaluating their configured rules against the user attributes provided to the SDK.
  - Added support for feature flag prerequisites. This allows customers to define dependency conditions between flags, which are evaluated before any allowlists or targeting rules.
  - Added a new optional argument to the client `getTreatment` methods to allow passing additional evaluation options, such as a map of properties to append to the generated impressions sent to Split backend. Read more in our docs.
- - Updated @splitsoftware/splitio-commons package to version 2.4.0.
+ - Updated @splitsoftware/splitio-commons package to version 2.4.1.
 
 1.1.0 (January 17, 2025)
  - Added support for the new impressions tracking toggle available on feature flags, both respecting the setting and including the new field being returned on `SplitView` type objects. Read more in our docs.
