@@ -20,6 +20,7 @@ const EVENT_NAME = 'for AppState change events.';
 export class RNSignalListener implements ISignalListener {
   private _lastTransition: Transition | undefined;
   private _appStateSubscription: NativeEventSubscription | undefined;
+  private _lastBgTimestamp: number | undefined;
 
   constructor(private syncManager: ISyncManager, private settings: ISettings & { flushDataOnBackground?: boolean }) {}
 
@@ -39,6 +40,10 @@ export class RNSignalListener implements ISignalListener {
     return transition;
   }
 
+  private _mustSyncAll() {
+    return this.settings.sync.enabled && this._lastBgTimestamp && this._lastBgTimestamp < Date.now() - this.settings.scheduler.featuresRefreshRate;
+  }
+
   private _handleAppStateChange = (nextAppState: AppStateStatus) => {
     const action = this._getTransition(nextAppState);
 
@@ -51,10 +56,17 @@ export class RNSignalListener implements ISignalListener {
         // In 2, PushManager is resumed in case it was paused and the SDK is running in push mode.
         // If running in polling mode, either pushManager is not defined (e.g., streamingEnabled is false)
         // or calling pushManager.start has no effect because it was disabled (PUSH_NONRETRYABLE_ERROR).
-        if (this.syncManager.pushManager) this.syncManager.pushManager.start();
+        if (this.syncManager.pushManager) {
+          this.syncManager.pushManager.start();
+
+          // Sync all if singleSync is disabled and background time exceeds features refresh rate
+          // For streaming, this compensates the re-connection delay, and for polling, it compensates the suspension of scheduled tasks during background.
+          if (this._mustSyncAll()) this.syncManager.pollingManager!.syncAll();
+        }
 
         break;
       case TO_BACKGROUND:
+        this._lastBgTimestamp = Date.now();
         this.settings.log.debug(
           `App transition to background${this.syncManager.pushManager ? '. Pausing streaming' : ''}${
             this.settings.flushDataOnBackground ? '. Flushing events and impressions' : ''
@@ -65,7 +77,7 @@ export class RNSignalListener implements ISignalListener {
         // Here, PushManager is paused in case the SDK is running in push mode, to close streaming connection for Android.
         // In iOS it is not strictly required, since connections are automatically closed/resumed by the OS.
         // The remaining SyncManager components (PollingManager and Submitter) don't need to be stopped, even if running in
-        // polling mode, because sync tasks are "delayed" during background, since JS timers callbacks are executed only
+        // polling mode, because sync tasks are suspended during background, since JS timers callbacks are executed only
         // when the app is in foreground (https://github.com/facebook/react-native/issues/12981#issuecomment-652745831).
         // Other features like Fetch, AsyncStorage, AppState and NetInfo listeners, can be used in background.
         if (this.syncManager.pushManager) this.syncManager.pushManager.stop();
