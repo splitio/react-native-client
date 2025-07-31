@@ -16,6 +16,13 @@ declare module JsSdk {
   export function SplitFactory(settings: SplitIO.IReactNativeSettings): SplitIO.IBrowserSDK;
 
   /**
+   * Persistent storage. By default, it uses the browser's LocalStorage API.
+   *
+   * @see {@link https://help.split.io/hc/en-us/articles/4406066357901#configuring-localstorage-cache-for-the-sdk}
+   */
+  export function InLocalStorage(options?: SplitIO.InLocalStorageOptions): SplitIO.StorageSyncFactory;
+
+  /**
    * Creates a logger instance that enables descriptive log messages with DEBUG log level when passed in the factory settings.
    *
    * @see {@link https://help.split.io/hc/en-us/articles/4406066357901#logging}
