@@ -1,5 +1,5 @@
-1.2.1 (July XX, 2025)
- - Updated the application state listener to synchronize feature flag definitions when the app returns to foreground after exceeding the SDK's features refresh rate.
+1.2.1 (September 22, 2025)
+ - Updated the application state listener to sync feature flag definitions when the app returns to the foreground and has exceeded the SDK’s feature refresh interval.
 
 1.2.0 (June 25, 2025)
  - Added support for rule-based segments. These segments determine membership at runtime by evaluating their configured rules against the user attributes provided to the SDK.
