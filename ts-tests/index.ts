@@ -10,7 +10,7 @@
 
 import type * as SplitTypes from '../types/splitio';
 
-import { SplitFactory, DebugLogger, InfoLogger, WarnLogger, ErrorLogger } from '../types/index';
+import { SplitFactory, DebugLogger, InfoLogger, WarnLogger, ErrorLogger, InLocalStorage } from '../types/index';
 
 // Validate that the SplitIO namespace is available and matches the types when imported explicitly
 let ambientType: SplitIO.ISDK;
@@ -59,7 +59,23 @@ let fullReactNativeSettings: SplitIO.IReactNativeSettings = {
     feature2: { treatment: 'treatment2', config: "{ 'prop': 'value'}" },
     feature3: { treatment: 'treatment3', config: null },
   },
-  storage: undefined,
+  initialRolloutPlan: {} as SplitIO.RolloutPlan,
+  storage: InLocalStorage({
+    prefix: 'splitio',
+    clearOnInit: true,
+    expirationDays: 1,
+    wrapper: {
+      getItem(key: string) {
+        return Promise.resolve('value');
+      },
+      setItem(key: string, value: string) {
+        return Promise.resolve();
+      },
+      removeItem(key: string) {
+        return Promise.resolve();
+      },
+    } as SplitIO.StorageWrapper,
+  }),
   impressionListener: {
     logImpression: (data: SplitIO.ImpressionData) => {
       let impressionData: SplitIO.ImpressionData = data;
