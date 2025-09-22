@@ -16,7 +16,21 @@ declare module JsSdk {
   export function SplitFactory(settings: SplitIO.IReactNativeSettings): SplitIO.IBrowserSDK;
 
   /**
-   * Persistent storage. By default, it uses the browser's LocalStorage API.
+   * Persistent storage. By default, it uses the Web LocalStorage API if available.
+   * Consider providing a custom storage wrapper, like [AsyncStorage](https://github.com/react-native-async-storage/async-storage), for Android and iOS targets.
+   *
+   * Example:
+   * ```
+   * import AsyncStorage from '@react-native-async-storage/async-storage';
+   * import { SplitFactory, InLocalStorage } from '@splitsoftware/splitio-react-native';
+   *
+   * const SDK_CONFIG = {
+   *   ...
+   *   storage: InLocalStorage({
+   *     wrapper: AsyncStorage,
+   *   }),
+   * }
+   * ```
    *
    * @see {@link https://developer.harness.io/docs/feature-management-experimentation/sdks-and-infrastructure/client-side-sdks/react-native-sdk/#configuring-persistent-cache-for-the-sdk}
    */
