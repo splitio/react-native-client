@@ -1,5 +1,5 @@
 1.4.0 (October 6, 2025)
- - Added an EventSource polyfill to fall back when native EventSource modules and the global EventSource object are unavailable, providing out-of-the-box support for streaming on more platforms and in Expo projects.
+ - Added an EventSource polyfill to fall back when native EventSource modules and the global EventSource object are unavailable, providing out-of-the-box streaming support on more platforms and in Expo projects.
 
 1.3.0 (September 22, 2025)
  - Added the `InLocalStorage` export to the `@splitsoftware/splitio-react-native` package. This export can be used to configure the SDK to use `AsyncStorage` or another storage implementation to persist the SDK rollout plan data across app restarts and speed up the initialization.

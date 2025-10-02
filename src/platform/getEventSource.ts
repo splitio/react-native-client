@@ -18,6 +18,8 @@ try {
  * due to Flipper network interceptor (https://github.com/NepeinAV/rn-eventsource-reborn#eventsource-dont-works-on-android-in-debug-mode).
  * In RN 0.74 (https://reactnative.dev/blog/2024/04/22/release-0.74#removal-of-flipper-react-native-plugin) and Expo 51 (https://github.com/expo/expo/issues/27526#issuecomment-2113893318),
  * Flipper was removed from new app templates and replaced by the new React Native DevTools, so the Android-debug interception that broke SSE disappears.
+ *
+ * @TODO breaking change: drop support for RN < 0.74 and remove native EventSource modules
  */
 export function getEventSource(): typeof EventSource | undefined {
   return _RNEventSource || (typeof EventSource === 'function' ? EventSource : EventSourceXHR);

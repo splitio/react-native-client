@@ -1,7 +1,7 @@
 import type SplitIO from '@splitsoftware/splitio-commons/types/splitio';
 import { CONSENT_GRANTED } from '@splitsoftware/splitio-commons/src/utils/constants';
 
-const packageVersion = '1.3.1-rc.0';
+const packageVersion = '1.4.0';
 
 export const defaults = {
   startup: {
