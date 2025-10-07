@@ -1,6 +1,7 @@
 // No mocking RNEventSource native module.
 
 import { getEventSource } from '../getEventSource';
+import { EventSourceXHR } from '../EventSourceXHR/EventSourceXHR';
 
 test('Returns global EventSource if native module RNEventSource is not available', () => {
   const mockEventSource = jest.fn();
@@ -12,6 +13,6 @@ test('Returns global EventSource if native module RNEventSource is not available
   global.EventSource = original;
 });
 
-test('Returns undefined if global EventSource and native module RNEventSource are not available', () => {
-  expect(getEventSource()).toBe(undefined);
+test('Returns EventSourceXHR polyfill if global EventSource and native module RNEventSource are not available', () => {
+  expect(getEventSource()).toBe(EventSourceXHR);
 });
