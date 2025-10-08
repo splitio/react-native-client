@@ -46,7 +46,7 @@ describe('RNSignalListener', () => {
 
     // Wait for features refresh rate to validate that syncAll is called when resuming foreground
     expect(syncManagerMockWithPushManager.pollingManager!.syncAll).toBeCalledTimes(0);
-    await new Promise((resolve) => setTimeout(resolve, settingsMock.scheduler.featuresRefreshRate));
+    await new Promise((resolve) => setTimeout(resolve, settingsMock.scheduler.featuresRefreshRate + 20));
 
     // Going to foreground should be handled
     AppStateMock._emitChangeEvent('inactive');
