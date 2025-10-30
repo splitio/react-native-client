@@ -1,6 +1,6 @@
 {
   "name": "@splitsoftware/splitio-react-native",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "description": "Split SDK for React Native",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
@@ -61,7 +61,7 @@
   },
   "homepage": "https://github.com/splitio/react-native-client#readme",
   "dependencies": {
-    "@splitsoftware/splitio-commons": "2.7.1"
+    "@splitsoftware/splitio-commons": "2.8.0"
   },
   "devDependencies": {
     "@react-native-community/eslint-config": "^3.2.0",
