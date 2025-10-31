@@ -109,6 +109,13 @@ let fullReactNativeSettings: SplitIO.IReactNativeSettings = {
   },
   userConsent: 'GRANTED',
   mode: 'standalone',
+  fallbackTreatments: {
+    global: { treatment: 'global-treatment', config: '{"global": true}' },
+    byFlag: {
+      my_flag: { treatment: 'flag-treatment', config: '{"flag": true}' },
+      my_other_flag: 'other-flag-treatment',
+    },
+  },
 };
 
 reactNativeSettings.userConsent = 'DECLINED';
