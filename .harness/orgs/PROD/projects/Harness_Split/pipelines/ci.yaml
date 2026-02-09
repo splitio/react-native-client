@@ -1,0 +1,70 @@
+pipeline:
+  name: react-native-client
+  identifier: reactnativeclient
+  projectIdentifier: Harness_Split
+  orgIdentifier: PROD
+  tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: fmegithubharnessgitops
+        repoName: react-native-client
+        build: <+input>
+  stages:
+    - stage:
+        name: Check-Test-Build
+        identifier: CheckTestBuild
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: true
+          caching:
+            enabled: true
+            override: true
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Cloud
+            spec:
+              size: small
+              imageSpec:
+                imageName: ubuntu-latest
+          execution:
+            steps:
+              - step:
+                  type: Action
+                  name: Set up Node.js
+                  identifier: Set_up_Nodejs
+                  spec:
+                    uses: dcodeIO/setup-node-nvm@master
+                    with:
+                      node-version: lts/*
+              - step:
+                  type: Run
+                  name: npm ci
+                  identifier: npm_ci
+                  spec:
+                    shell: Sh
+                    command: npm ci
+              - step:
+                  type: Run
+                  name: npm run check
+                  identifier: npm_run_check
+                  spec:
+                    shell: Sh
+                    command: npm run check
+              - step:
+                  type: Run
+                  name: npm run test
+                  identifier: npm_run_test
+                  spec:
+                    shell: Sh
+                    command: npm run test -- --coverage
+              - step:
+                  type: Run
+                  name: npm run build
+                  identifier: npm_run_build
+                  spec:
+                    shell: Sh
+                    command: npm run build
