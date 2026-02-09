@@ -1,0 +1,14 @@
+inputSet:
+  name: react-native-client
+  identifier: reactnativeclient
+  orgIdentifier: PROD
+  projectIdentifier: Harness_Split
+  pipeline:
+    identifier: reactnativeclient
+    properties:
+      ci:
+        codebase:
+          build:
+            type: branch
+            spec:
+              branch: <+trigger.branch>
