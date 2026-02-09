@@ -1,5 +1,6 @@
 inputSet:
   name: react-native-client
+  tags: {}
   identifier: reactnativeclient
   orgIdentifier: PROD
   projectIdentifier: Harness_Split
