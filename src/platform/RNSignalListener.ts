@@ -1,5 +1,6 @@
 import { ISignalListener } from '@splitsoftware/splitio-commons/src/listeners/types';
 import { CLEANUP_REGISTERING, CLEANUP_DEREGISTERING } from '@splitsoftware/splitio-commons/src/logger/constants';
+import { ISdkFactoryContext } from '@splitsoftware/splitio-commons/src/sdkFactory/types';
 import { ISyncManager } from '@splitsoftware/splitio-commons/src/sync/types';
 import { ISettings } from '@splitsoftware/splitio-commons/src/types';
 import { AppState, AppStateStatus } from 'react-native';
@@ -21,8 +22,13 @@ export class RNSignalListener implements ISignalListener {
   private _lastTransition: Transition | undefined;
   private _appStateSubscription: NativeEventSubscription | undefined;
   private _lastBgTimestamp: number | undefined;
+  private settings: ISettings & { flushDataOnBackground?: boolean };
+  private syncManager: ISyncManager;
 
-  constructor(private syncManager: ISyncManager, private settings: ISettings & { flushDataOnBackground?: boolean }) {}
+  constructor({ syncManager, settings }: Pick<ISdkFactoryContext, 'syncManager' | 'settings'>) {
+    this.settings = settings;
+    this.syncManager = syncManager!;
+  }
 
   private _getTransition(nextAppState: AppStateStatus): Transition {
     // 'inactive' iOS state and 'active' state are considered foreground states.

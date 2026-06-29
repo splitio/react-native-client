@@ -24,6 +24,7 @@ const platform = {
   EventEmitter,
   getEventSource,
   now,
+  SignalListener: RNSignalListener,
 };
 
 const syncManagerOnlineCSFactory = syncManagerOnlineFactory(pollingManagerCSFactory, pushManagerFactory);
@@ -36,15 +37,13 @@ export function getModules(settings: ISettings): ISdkFactoryParams {
 
     storageFactory: settings.storage as ISdkFactoryParams['storageFactory'],
 
-    splitApiFactory,
+    serviceApiFactory: splitApiFactory,
 
     syncManagerFactory: syncManagerOnlineCSFactory,
 
     sdkManagerFactory,
 
     sdkClientMethodFactory: sdkClientMethodCSFactory,
-
-    SignalListener: RNSignalListener as ISdkFactoryParams['SignalListener'],
 
     impressionsObserverFactory: impressionObserverCSFactory,
 
@@ -56,9 +55,8 @@ export function getModules(settings: ISettings): ISdkFactoryParams {
   };
 
   if (settings.mode === LOCALHOST_MODE) {
-    modules.splitApiFactory = undefined;
+    modules.serviceApiFactory = undefined;
     modules.syncManagerFactory = localhostFromObjectFactory;
-    modules.SignalListener = undefined;
   }
 
   return modules;

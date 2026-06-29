@@ -1,3 +1,11 @@
+1.6.0 (XXX XX, 2026)
+ - Updated TypeScript declaration to use `namespace` instead of `module` for compatibility with TypeScript 7 (Related to issue https://github.com/splitio/javascript-client/issues/920).
+ - Updated @splitsoftware/splitio-commons package to version 3.0.1, which:
+    - adds functionality to provide metadata alongside SDK update and READY events. Read more in our docs.
+    - updates the order of storage operations to prevent inconsistent states when using the `InLocalStorage` module and the browser’s `localStorage` fails due to quota limits.
+    - updates internal modules to handle `null` values from `/splitChanges` response.
+    - updates some dependencies for vulnerability fixes.
+
 1.5.0 (October 31, 2025)
  - Added new configuration for Fallback Treatments, which allows setting a treatment value and optional config to be returned in place of "control", either globally or by flag. Read more in our docs.
  - Added `client.getStatus()` method to retrieve the client readiness status properties (`isReady`, `isReadyFromCache`, etc).
