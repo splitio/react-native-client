@@ -25,7 +25,7 @@ describe('RNSignalListener', () => {
 
   test('starting in foreground', async () => {
     // @ts-expect-error. SyncManager mock partially implemented
-    const signalListener = new RNSignalListener(syncManagerMockWithPushManager, settingsMock);
+    const signalListener = new RNSignalListener({ syncManager: syncManagerMockWithPushManager, settings: settingsMock });
 
     // Starting with app in foreground
     AppStateMock.currentState = 'active';
@@ -82,8 +82,11 @@ describe('RNSignalListener', () => {
   });
 
   test('starting in background & without flushDataOnBackground', () => {
-    // @ts-expect-error. SyncManager mock partially implemented
-    const signalListener = new RNSignalListener(syncManagerMockWithPushManager, { ...settingsMock, flushDataOnBackground: undefined });
+    const signalListener = new RNSignalListener({
+      // @ts-expect-error. SyncManager mock partially implemented
+      syncManager: syncManagerMockWithPushManager, // @ts-expect-error. Settings mock partially implemented
+      settings: { ...settingsMock, flushDataOnBackground: undefined },
+    });
 
     // Starting with app in background
     AppStateMock.currentState = 'background';
