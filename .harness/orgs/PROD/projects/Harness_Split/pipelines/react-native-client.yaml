@@ -104,7 +104,7 @@ pipeline:
                       sonar-scanner \
                         -Dsonar.projectKey=react-native-client \
                         -Dsonar.sources=src \
-                        -Dsonar.tests=__tests__ \
+                        -Dsonar.test.inclusions="**/__tests__/**" \
                         -Dsonar.host.url=https://sonar.harness.io \
                         -Dsonar.token=<+secrets.getValue("sonarqube-token")> \
                         -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info \
